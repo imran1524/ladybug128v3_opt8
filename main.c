@@ -60,11 +60,11 @@ int main() {
     //ENCRYPTION
 
     printf("Encryption:\n");
-    encrypt(&s, NMNT, 3);
+    encrypt(&s, O2NMNT, ROUNDS);
     printf("Updated state: 0x%llx\n", s.x[0]);
     printf("\n");
     printf("Decryption:\n");
-    decrypt(&s, NMNT, 3);
+    decrypt(&s, O2NMNT, ROUNDS);
     printf("Updated state: 0x%llx\n", s.x[0]);
 
 #if 0
