@@ -25,14 +25,7 @@ int main() {
     data_struct t;
     uint8_t data[N] = "disc0mBo"; // Example data as an array
     memcpy(&s.x[0], data, sizeof(s.x[0]));
-    //printf("s.x[0] = 0x%llx\n", s.x[0]);
 
-//    for(int i = 0; i < N; i++){
-//        for(int j = 0; j < N; j++){
-//            uint8_t byte_offset = N *(N-1-j);
-//            printf("byte_offset = %d\n", byte_offset);
-//        }
-//    }
     uint8_t NMNT[N][N] = {{1, 1,   1,   1,   1,   1,   1,   1},
                           {1, 111, 1,   0,   126, 16,  126, 0},
                           {1, 1,   126, 126, 1,   1,   126, 126},
@@ -106,7 +99,6 @@ void encryption_round_function(data_struct *state, uint8_t transform_matrix[N][N
 
     //PRINTING STATE
     printf("state before encryption: 0x%llx\n", state->x[0]);
-    printf("\n");
 
     //CALLING THE FUNCTION TO SPLIT THE 64-BIT STATE INTO 8 X 8-BIT DATA BYTE IN LITTLE ENDIAN WAY
     split_state_into_data_bytes(state, data_byte);
@@ -140,14 +132,10 @@ void encrypt(data_struct *state, uint8_t transform_matrix[N][N], int rounds) {
 void decryption_round_function(data_struct *state, uint8_t transform_matrix[N][N], uint8_t inverseN){
     uint64_t sum_NMNT[N] = {0}; // Initialize sum array to zero
     uint8_t data_byte[N] = {0};
-    for(int j = 0; j < N; j++){
-        uint8_t byte_offset = 8 * (N-1-j);
-        data_byte[j] = (state->x[0] >> byte_offset) & 0xFF;
-    }
-
+    split_state_into_data_bytes(state, data_byte);
     for (int j = 0; j < N; ++j) {
         for (int i = 0; i < N; ++i) {
-//            printf("data[%d] = %d\n", i, data[i]);
+//            printf("data_byte[%d] = %d\n", i, data_byte[i]);
 //            printf("transform_matrix[%d][%d] = %d\n",i, j, transform_matrix[i][j]);
             sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
         }
@@ -160,11 +148,7 @@ void decryption_round_function(data_struct *state, uint8_t transform_matrix[N][N
     }
 
     state->x[0] = 0;
-    for(int i = 0; i < N; i++){
-        uint64_t temp = data_byte[i];
-        uint8_t byte_offset = 8 * (N - 1 -i); // Correct calculation of byte_offset
-        state->x[0] |= temp << byte_offset;
-    }
+    combine_data_bytes_to_state(data_byte, state);
 }
 
 //DECRYPTION OPERATION
