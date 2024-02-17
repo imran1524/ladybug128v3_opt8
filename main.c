@@ -19,6 +19,7 @@ void encrypt(data_struct *state, uint8_t transform_matrix[N][N], int rounds);
 void decrypt(data_struct *state, uint8_t transform_matrix[N][N], int roundsvoid);
 void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte);
 void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state);
+void transpose_ONMNT(uint8_t matrix[N][N]);
 
 int main() {
     data_struct s;
@@ -52,43 +53,25 @@ int main() {
                             {99, 72, 55, 28, 19, 122, 122, 19},
                             {28, 72, 72, 28, 108, 122, 5, 19},
                             {122, 28, 99, 5, 72, 19, 19, 72}};
-//    printf("Original: \n");
-//    for(int i = 0; i < N; i++) {
-//        printf("data[%d] = %d\n", i, data[i]);
-//    }
+
     printf("\n");
     //ENCRYPTION
-
     printf("Encryption:\n");
-    encrypt(&s, O2NMNT, ROUNDS);
+    encrypt(&s, ONMNT, ROUNDS);
     printf("Updated state: 0x%llx\n", s.x[0]);
     printf("\n");
+
+    //DECRYPTION
     printf("Decryption:\n");
-    decrypt(&s, O2NMNT, ROUNDS);
+    transpose_ONMNT(ONMNT);
+    decrypt(&s, ONMNT, ROUNDS);
     printf("Updated state: 0x%llx\n", s.x[0]);
 
-#if 0
-    //encrypt(data, O2NMNT, ROUNDS);
-    printf("\n");
-    printf("Encrypted: \n");
-    for(int i = 0; i < N; i++) {
-        printf("data[%d] = %d\n", i, data[i]);
-    }
+
 //    printf("\n");
 //    printMatrix(ONMNT);
-    transpose_ONMNT(NMNT);
-    //PRINTING TRANSPOSE
-    printf("\n");
-//    printMatrix(ONMNT);
 
-    decrypt(data, O2NMNT, ROUNDS);
-    printf("\n");
-    printf("Decrypted: \n");
-    for(int i = 0; i < N; i++) {
-        printf("recovered[%d] = %d\n", i, data[i]);
-    }
 
-#endif
     return 0;
 }
 
@@ -206,3 +189,4 @@ void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state){
     }
     printf("state after encryption: 0x%llx\n", state->x[0]);
 }
+
