@@ -77,12 +77,12 @@ int main() {
         printf("\n");
     }
 
-    encrypt(&s, O2NMNT, ROUNDS);
+    encrypt(&s, ONMNT, ROUNDS);
 
     printf("RECOVERED PLAINTEXT:\n");
     //TRANSPOSE MATRIX ONLY FOR ONMNT
-    //transpose_ONMNT(ONMNT);
-    decrypt(&s, O2NMNT, ROUNDS);
+    transpose_ONMNT(ONMNT);
+    decrypt(&s, ONMNT, ROUNDS);
     for(int block_index = 0; block_index < block_number; block_index++){
         printf("BLOCK #%d\n", block_index + 1);
         printf("state: 0x%llx\n", s.x[block_index]);
@@ -105,7 +105,6 @@ void encryption_round_function(data_struct *state, uint8_t transform_matrix[N][N
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
         }
-
         for(int i = 0; i < N; i++){
             data_byte[i] = sum_NMNT[i] % Mp; // Apply modulus and update data
         }
