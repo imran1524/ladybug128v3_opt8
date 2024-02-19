@@ -77,12 +77,12 @@ int main() {
         printf("\n");
     }
 
-    encrypt(&s, NMNT, ROUNDS);
+    encrypt(&s, O2NMNT, ROUNDS);
 
     printf("RECOVERED PLAINTEXT:\n");
     //TRANSPOSE MATRIX ONLY FOR ONMNT
     //transpose_ONMNT(ONMNT);
-    decrypt(&s, NMNT, ROUNDS);
+    decrypt(&s, O2NMNT, ROUNDS);
     for(int block_index = 0; block_index < block_number; block_index++){
         printf("BLOCK #%d\n", block_index + 1);
         printf("state: 0x%llx\n", s.x[block_index]);
