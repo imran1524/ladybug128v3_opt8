@@ -5,28 +5,26 @@
 #define N 8
 #define p 7
 #define Mp ((1 << p) - 1) // Modulus for encryption operation
+#define block_number 5
 uint8_t invN = (1 << p) / N;
 #define BIT_SIZE (N * 8) // Number of bits in the array
 
 typedef struct state{
-    uint64_t x[1];
+    uint64_t x[block_number];
 }data_struct;
 
-#define ROUNDS 10
+#define ROUNDS 3
 void encryption_round_function(data_struct *state,  uint8_t transform_matrix[N][N]);
 void decryption_round_function(data_struct *state,  uint8_t transform_matrix[N][N],  uint8_t inverseN);
 void encrypt(data_struct *state, uint8_t transform_matrix[N][N], int rounds);
-void decrypt(data_struct *state, uint8_t transform_matrix[N][N], int roundsvoid);
-void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte);
-void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state);
+void decrypt(data_struct *state, uint8_t transform_matrix[N][N], int rounds);
+void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte, int block_index);
+void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state, int block_index);
 void transpose_ONMNT(uint8_t matrix[N][N]);
+void print_vector(uint8_t *vector, int size);
+void printMatrix(uint8_t matrix[N][N]);
 
 int main() {
-    data_struct s;
-    data_struct t;
-    uint8_t data[N] = "disc0mBo"; // Example data as an array
-    memcpy(&s.x[0], data, sizeof(s.x[0]));
-
     uint8_t NMNT[N][N] = {{1, 1,   1,   1,   1,   1,   1,   1},
                           {1, 111, 1,   0,   126, 16,  126, 0},
                           {1, 1,   126, 126, 1,   1,   126, 126},
@@ -54,92 +52,99 @@ int main() {
                             {28, 72, 72, 28, 108, 122, 5, 19},
                             {122, 28, 99, 5, 72, 19, 19, 72}};
 
-    printf("\n");
-    //ENCRYPTION
-    printf("Encryption:\n");
-    encrypt(&s, ONMNT, ROUNDS);
-    printf("Updated state: 0x%llx\n", s.x[0]);
-    printf("\n");
+    data_struct s;
+    data_struct t;
+    uint8_t data_block_0[N] = "disc0mB0"; //Message block 1
+    uint8_t data_block_1[N] = "disc0mB1"; //Message block 2
+    uint8_t data_block_2[N] = "disc0mB2"; //Message block 3
+    uint8_t data_block_3[N] = "disc0mB3"; //Message block 4
+    uint8_t data_block_4[N] = "disc0mB4"; //Message block 5
 
-    //DECRYPTION
-    printf("Decryption:\n");
-    transpose_ONMNT(ONMNT);
-    decrypt(&s, ONMNT, ROUNDS);
-    printf("Updated state: 0x%llx\n", s.x[0]);
+    //LOAD DATABLOCK FROM STATE
+    memcpy(&s.x[0], data_block_0, sizeof(s.x[0]));
+    memcpy(&s.x[1], data_block_1, sizeof(s.x[1]));
+    memcpy(&s.x[2], data_block_2, sizeof(s.x[2]));
+    memcpy(&s.x[3], data_block_3, sizeof(s.x[3]));
+    memcpy(&s.x[4], data_block_4, sizeof(s.x[4]));
 
+    printf("PLAINTEXT:\n");
+    for(int block_index = 0; block_index < block_number; block_index++){
+        printf("BLOCK #%d\n", block_index + 1);
+        printf("state: 0x%llx\n", s.x[block_index]);
+        uint8_t data_byte[N] = {0};
+        split_state_into_data_bytes(&s, data_byte, block_index);
+        print_vector(data_byte, N);
+        printf("\n");
+    }
 
-//    printf("\n");
-//    printMatrix(ONMNT);
+    encrypt(&s, NMNT, ROUNDS);
 
-
+    printf("RECOVERED PLAINTEXT:\n");
+    //TRANSPOSE MATRIX ONLY FOR ONMNT
+    //transpose_ONMNT(ONMNT);
+    decrypt(&s, NMNT, ROUNDS);
+    for(int block_index = 0; block_index < block_number; block_index++){
+        printf("BLOCK #%d\n", block_index + 1);
+        printf("state: 0x%llx\n", s.x[block_index]);
+        uint8_t data_byte[N] = {0};
+        split_state_into_data_bytes(&s, data_byte, block_index);
+        print_vector(data_byte, N);
+        printf("\n");
+    }
     return 0;
 }
 
 //ENCRYPTION ROUND FUNCTION
 void encryption_round_function(data_struct *state, uint8_t transform_matrix[N][N]) {
-    uint64_t sum_NMNT[N] = {0}; // Initialize sum array to zero
-    uint8_t data_byte[N] = {0};
-
-    //PRINTING STATE
-    printf("state before encryption: 0x%llx\n", state->x[0]);
-
-    //CALLING THE FUNCTION TO SPLIT THE 64-BIT STATE INTO 8 X 8-BIT DATA BYTE IN LITTLE ENDIAN WAY
-    split_state_into_data_bytes(state, data_byte);
-    for (int j = 0; j < N; ++j) {
-        for (int i = 0; i < N; ++i) {
-//            printf("data_byte[%d] = %d\n",i,  data_byte[i]);
-//            printf("transform_matrix[%d][%d] = %d\n", i, j, transform_matrix[i][j]);
-            sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
+    for(int block_index = 0; block_index < 5; block_index++){
+        uint64_t sum_NMNT[N] = {0}; // Initialize sum array to zero
+        uint8_t data_byte[N] = {0};
+        split_state_into_data_bytes(state, data_byte, block_index);
+        for (int j = 0; j < N; ++j) {
+            for (int i = 0; i < N; ++i) {
+                sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
+            }
         }
-    }
-    printf("\n");
-    for(int i = 0; i < N; i++){
-        data_byte[i] = sum_NMNT[i] % Mp; // Apply modulus and update data
-        printf("ciphertext[%d] = %d\n", i,  data_byte[i]);
-    }
 
-    //CALLING THE FUNCTION TO COMBINE 8 8-BIT DATA BYTES INTO 64-BIT STATE IN LITTLE ENDIAN WAY
-    combine_data_bytes_to_state(data_byte, state);
+        for(int i = 0; i < N; i++){
+            data_byte[i] = sum_NMNT[i] % Mp; // Apply modulus and update data
+        }
+        combine_data_bytes_to_state(data_byte, state, block_index);
+    }
 }
 
 //ENCRYPTION OPERATION
 void encrypt(data_struct *state, uint8_t transform_matrix[N][N], int rounds) {
     for (int i = 0; i < rounds; ++i) {
-        printf("round number = %d\n", i+1);
+//        printf("round number = %d\n", i+1);
         encryption_round_function(state, transform_matrix); // Corrected passing of state
-        printf("\n");
+//        printf("\n");
     }
 }
 
 //DECRYPTION ROUND FUNCTION
 void decryption_round_function(data_struct *state, uint8_t transform_matrix[N][N], uint8_t inverseN){
-    uint64_t sum_NMNT[N] = {0}; // Initialize sum array to zero
-    uint8_t data_byte[N] = {0};
-    split_state_into_data_bytes(state, data_byte);
-    for (int j = 0; j < N; ++j) {
-        for (int i = 0; i < N; ++i) {
-//            printf("data_byte[%d] = %d\n", i, data_byte[i]);
-//            printf("transform_matrix[%d][%d] = %d\n",i, j, transform_matrix[i][j]);
-            sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
+    for(int block_index = 0; block_index < block_number; block_index++){
+        uint64_t sum_NMNT[N] = {0}; // Initialize sum array to zero
+        uint8_t data_byte[N] = {0};
+        split_state_into_data_bytes(state, data_byte, block_index);
+        for (int j = 0; j < N; ++j) {
+            for (int i = 0; i < N; ++i) {
+                sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
+            }
         }
-//        printf("\n");
+        for(int i = 0; i < N; i++){
+            data_byte[i] = (sum_NMNT[i] * inverseN) % Mp;
+        }
+        state->x[block_index] = 0;
+        combine_data_bytes_to_state(data_byte, state, block_index);
     }
-
-    for(int i = 0; i < N; i++){
-        data_byte[i] = (sum_NMNT[i] * inverseN) % Mp;
-        printf("recovered_plaintext[%d] = %d\n", i, data_byte[i]);
-    }
-
-    state->x[0] = 0;
-    combine_data_bytes_to_state(data_byte, state);
 }
 
 //DECRYPTION OPERATION
 void decrypt(data_struct *state,  uint8_t transform_matrix[N][N], int rounds) {
     for (int i = 0; i < rounds; ++i) {
-        printf("round number = %d\n", i+1);
         decryption_round_function(state, transform_matrix,  invN);
-        printf("\n");
     }
 }
 
@@ -148,7 +153,6 @@ void transpose_ONMNT(uint8_t matrix[N][N]){
     uint8_t temp;
     for (int i = 0; i < N; i++) {
         for (int j = i + 1; j < N; j++) {
-            // Swap element [i][j] with element [j][i]
             temp = matrix[i][j];
             matrix[i][j] = matrix[j][i];
             matrix[j][i] = temp;
@@ -160,33 +164,32 @@ void transpose_ONMNT(uint8_t matrix[N][N]){
 void printMatrix(uint8_t matrix[N][N]) {
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
-            printf("%d\t", matrix[i][j]);
+            printf("%d", matrix[i][j]);
         }
-        printf("\n");
     }
 }
 
-void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte){
-    for (int i = 0; i < N; ++i) {
-        uint8_t byte_offset = 8 * i; // Corrected byte offset calculation
-        data_byte[i] = (state->x[0] >> byte_offset) & 0xFF;
-    }
-
-    //PRINTING THE DATA BYTES
-    for (int i = 0; i < N; ++i) {
-//        printf("data_byte[%d] = %d\n", i, data_byte[i]);
+void print_vector(uint8_t *vector, int size){
+    for(int i = 0; i < size; i++){
+        printf("vector[%i] = %d\n", i, vector[i]);
     }
 }
-
-void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state){
-    // Reconstruct state->x[0] from data_byte array in little endian format
-    state->x[0] = 0; // Reset state->x[0]
-    for (int i = 0; i < N; i++) {
-        uint64_t temp = data_byte[i];
-        // For little endian, we start shifting from 0 for the first byte
+void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte, int block_index) {
+    // Only work on the specific block at block_index
+    for (int i = 0; i < N; ++i) {
         uint8_t byte_offset = 8 * i;
-        state->x[0] |= temp << byte_offset;
+        data_byte[i] = (state->x[block_index] >> byte_offset) & 0xFF;
     }
-    printf("state after encryption: 0x%llx\n", state->x[0]);
 }
+
+void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state, int block_index){
+        // Reconstruct state->x[0] from data_byte array in little endian format
+        state->x[block_index] = 0; // Reset state->x[0]
+        for (int i = 0; i < N; i++) {
+            uint64_t temp = data_byte[i];
+            uint8_t byte_offset = 8 * i;
+            state->x[block_index] |= temp << byte_offset;
+        }
+}
+
 
