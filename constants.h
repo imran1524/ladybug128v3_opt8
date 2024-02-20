@@ -3,5 +3,6 @@
 
 #define ROUNDS 3
 #define BLOCK_NUMBER 5
+#define s_box_size 5
 
 #endif //DIFFUSION_LAYER_CONSTANTS_H

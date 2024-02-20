@@ -67,6 +67,12 @@ build CMakeFiles/diffusion_layer.dir/confusion_layer.c.o: C_COMPILER__diffusion_
   OBJECT_DIR = CMakeFiles/diffusion_layer.dir
   OBJECT_FILE_DIR = CMakeFiles/diffusion_layer.dir
 
+build CMakeFiles/diffusion_layer.dir/utils.c.o: C_COMPILER__diffusion_layer_unscanned_Debug /Users/ikhan/Documents/ClionProjects/diffusion_layer/utils.c || cmake_object_order_depends_target_diffusion_layer
+  DEP_FILE = CMakeFiles/diffusion_layer.dir/utils.c.o.d
+  FLAGS = -fcoverage-mapping -fprofile-instr-generate -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/diffusion_layer.dir
+  OBJECT_FILE_DIR = CMakeFiles/diffusion_layer.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target diffusion_layer
@@ -75,7 +81,7 @@ build CMakeFiles/diffusion_layer.dir/confusion_layer.c.o: C_COMPILER__diffusion_
 #############################################
 # Link the executable diffusion_layer
 
-build diffusion_layer: C_EXECUTABLE_LINKER__diffusion_layer_Debug CMakeFiles/diffusion_layer.dir/main.c.o CMakeFiles/diffusion_layer.dir/diffusion_layer.c.o CMakeFiles/diffusion_layer.dir/confusion_layer.c.o
+build diffusion_layer: C_EXECUTABLE_LINKER__diffusion_layer_Debug CMakeFiles/diffusion_layer.dir/main.c.o CMakeFiles/diffusion_layer.dir/diffusion_layer.c.o CMakeFiles/diffusion_layer.dir/confusion_layer.c.o CMakeFiles/diffusion_layer.dir/utils.c.o
   FLAGS = -fcoverage-mapping -fprofile-instr-generate -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk
   OBJECT_DIR = CMakeFiles/diffusion_layer.dir
   POST_BUILD = :

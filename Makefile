@@ -1,16 +1,16 @@
 CC=clang # Compiler in use
-CFLAGS=-Wall -g -arch arm64 -I/opt/homebrew/include# Compilation flags: -Wall for all warning, -g for debugging information, specify architecture
-LDFLAGS=-L/opt/homebrew/lib -lm # Example for the math library
-SOURCES=main.c diffusion_layer.c# List of all source files. Add more files separated by space
-OBJECTS=$(SOURCES:.c=.o) # Object files corresponding to source files
-EXECUTABLE=diffusion_layer
+CFLAGS=-Wall -g -arch arm64 -I/opt/homebrew/include # Compilation flags
+LDFLAGS=-L/opt/homebrew/lib -lm # Linking flags, example for the math library
+SOURCES=main.c diffusion_layer.c confusion_layer.c utils.c# All source files
+OBJECTS=$(SOURCES:.c=.o) # Convert source files to object files
+EXECUTABLE=diffusion_layer # Name of the final executable
 
-# Default target
+# Default target builds the executable
 all: $(EXECUTABLE)
 
-# Link the program
+# Link the program using object files and output an executable
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 
 # Compile the source files into object files
 .c.o:

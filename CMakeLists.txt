@@ -8,4 +8,6 @@ add_executable(diffusion_layer main.c
         diffusion_layer.h
         constants.h
         confusion_layer.c
-        confusion_layer.h)
+        confusion_layer.h
+        utils.c
+        utils.h)
