@@ -1,6 +1,8 @@
 #include "diffusion_layer.h"
+#include "constants.h"
+
 //ENCRYPTION ROUND FUNCTION
-void encryption_round_function(data_struct *state, const uint8_t transform_matrix[N][N]) {
+void forward_transform_round_function(data_struct *state, const uint8_t transform_matrix[N][N]) {
     for(int block_index = 0; block_index < 5; block_index++){
         uint64_t sum_NMNT[N] = {0}; // Initialize sum array to zero
         uint8_t data_byte[N] = {0};
@@ -18,16 +20,14 @@ void encryption_round_function(data_struct *state, const uint8_t transform_matri
 }
 
 //ENCRYPTION OPERATION
-void encrypt(data_struct *state, const uint8_t transform_matrix[N][N], int rounds) {
+void forward_transform(data_struct *state, const uint8_t transform_matrix[N][N], int rounds) {
     for (int i = 0; i < rounds; ++i) {
-//        printf("round number = %d\n", i+1);
-        encryption_round_function(state, transform_matrix); // Corrected passing of state
-//        printf("\n");
+        forward_transform_round_function(state, transform_matrix); // Corrected passing of state
     }
 }
 
 //DECRYPTION ROUND FUNCTION
-void decryption_round_function(data_struct *state, const uint8_t transform_matrix[N][N], uint8_t inverseN){
+void inverse_transform_round_function(data_struct *state, const uint8_t transform_matrix[N][N], uint8_t inverseN){
     for(int block_index = 0; block_index < block_number; block_index++){
         uint64_t sum_NMNT[N] = {0}; // Initialize sum array to zero
         uint8_t data_byte[N] = {0};
@@ -46,9 +46,9 @@ void decryption_round_function(data_struct *state, const uint8_t transform_matri
 }
 
 //DECRYPTION OPERATION
-void decrypt(data_struct *state,  const uint8_t transform_matrix[N][N], int rounds) {
+void inverse_transform(data_struct *state,  const uint8_t transform_matrix[N][N], int rounds) {
     for (int i = 0; i < rounds; ++i) {
-        decryption_round_function(state, transform_matrix,  invN);
+        inverse_transform_round_function(state, transform_matrix,  invN);
     }
 }
 
@@ -60,9 +60,6 @@ void transpose_ONMNT(const uint8_t input[N][N], uint8_t output[N][N]) {
         }
     }
 }
-
-
-
 void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte, int block_index) {
     // Only work on the specific block at block_index
     for (int i = 0; i < N; ++i) {
@@ -81,7 +78,14 @@ void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state, int blo
     }
 }
 
-void print_vector(data_struct state) {
+void print_state(data_struct state){
+    for(int i = 0; i < BLOCK_NUMBER; i++){
+        printf("state.x[%d] = %llx\n", i, state.x[i]);
+    }
+}
+
+
+void print_data_byte(data_struct state) {
     for (int block_index = 0; block_index < block_number; block_index++) {
         printf("BLOCK #%d\n", block_index + 1);
         printf("state: 0x%llx\n", state.x[block_index]);

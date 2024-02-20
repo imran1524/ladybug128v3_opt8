@@ -44,13 +44,14 @@ static const uint8_t O2NMNT[N][N] = {{72, 19, 19, 72, 5, 99, 28, 122},
                                      {122, 28, 99, 5, 72, 19, 19, 72}};
 
 
-void encryption_round_function(data_struct *state,  const uint8_t transform_matrix[N][N]);
-void decryption_round_function(data_struct *state,  const uint8_t transform_matrix[N][N],  uint8_t inverseN);
-void encrypt(data_struct *state, const uint8_t transform_matrix[N][N], int rounds);
-void decrypt(data_struct *state, const uint8_t transform_matrix[N][N], int rounds);
+void forward_transform_round_function(data_struct *state,  const uint8_t transform_matrix[N][N]);
+void inverse_transform_round_function(data_struct *state,  const uint8_t transform_matrix[N][N],  uint8_t inverseN);
+void forward_transform(data_struct *state, const uint8_t transform_matrix[N][N], int rounds);
+void inverse_transform(data_struct *state, const uint8_t transform_matrix[N][N], int rounds);
 void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte, int block_index);
 void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state, int block_index);
 void transpose_ONMNT(const uint8_t input[N][N], uint8_t output[N][N]);
-void print_vector(data_struct state);
+void print_data_byte(data_struct state);
+void print_state(data_struct state);
 
 #endif //DIFFUSION_LAYER_DIFFUSION_LAYER_H
