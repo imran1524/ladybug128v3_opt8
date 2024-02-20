@@ -3,4 +3,7 @@ project(diffusion_layer C)
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(diffusion_layer main.c)
+add_executable(diffusion_layer main.c
+        diffusion_layer.c
+        diffusion_layer.h
+        constants.h)
