@@ -68,16 +68,22 @@ int main() {
         bundles[i] |= ((s.x[4] >> (63-i)) & 0x1) << 0;
     }
 
-    printf("Final State (Should match initial):\n");
+    printf("State before applying forward transform:\n");
     print_state(s);
     printf("\n");
 
-//    print_state(s);
-//    printf("\n");
-//    forward_transform(&s, ONMNT, ROUNDS);
-//    uint8_t transposedONMNT[N][N];
-//    transpose_ONMNT(ONMNT, transposedONMNT);
-//    inverse_transform(&s, transposedONMNT, ROUNDS);
+    forward_transform(&s, ONMNT, ROUNDS);
+
+    printf("State after applying forward transform:\n");
+    uint8_t transposedONMNT[N][N];
+    transpose_ONMNT(ONMNT, transposedONMNT);
+    print_state(s);
+    printf("\n");
+
+    inverse_transform(&s, transposedONMNT, ROUNDS);
+    printf("\n");
+    printf("State after applying inverse transform:\n");
+    print_state(s);
     return 0;
 }
 
