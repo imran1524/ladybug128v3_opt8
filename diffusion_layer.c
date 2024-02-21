@@ -78,11 +78,6 @@ void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state, int blo
     }
 }
 
-void print_state(data_struct state){
-    for(int i = 0; i < BLOCK_NUMBER; i++){
-        printf("state.x[%d] = %llx\n", i, state.x[i]);
-    }
-}
 
 
 void print_data_byte(data_struct state) {

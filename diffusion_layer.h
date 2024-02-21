@@ -52,6 +52,5 @@ void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte, int blo
 void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state, int block_index);
 void transpose_ONMNT(const uint8_t input[N][N], uint8_t output[N][N]);
 void print_data_byte(data_struct state);
-void print_state(data_struct state);
 
 #endif //DIFFUSION_LAYER_DIFFUSION_LAYER_H
