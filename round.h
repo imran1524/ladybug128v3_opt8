@@ -1,9 +1,12 @@
-#ifndef DIFFUSION_LAYER_DIFFUSION_LAYER_H
-#define DIFFUSION_LAYER_DIFFUSION_LAYER_H
+#ifndef DIFFUSION_LAYER_ROUND_H
+#define DIFFUSION_LAYER_ROUND_H
 
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdint.h>
+
+#include "constants.h"
 
 
 #define N 8
@@ -51,6 +54,6 @@ void inverse_transform(data_struct *state, const uint8_t transform_matrix[N][N],
 void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte, int block_index);
 void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state, int block_index);
 void transpose_ONMNT(const uint8_t input[N][N], uint8_t output[N][N]);
-void print_data_byte(data_struct state);
+void print_data_byte(data_struct *state);
 
-#endif //DIFFUSION_LAYER_DIFFUSION_LAYER_H
+#endif //DIFFUSION_LAYER_ROUND_H
