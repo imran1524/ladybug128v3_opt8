@@ -1,4 +1,3 @@
-#include "constants.h"
 #include "utils.h"
 #include "permutations.h"
 #include "round.h"

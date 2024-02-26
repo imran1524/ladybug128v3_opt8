@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
 #include "utils.h"
 #include "constants.h"
 
@@ -41,7 +39,11 @@ void text_to_64bit_blocks_data_struct(const char* text, data_struct* s) {
     if (textLength > maxTextLength) {
         textLength = maxTextLength; // Truncate text to fit in 320 bits
     }
-
+    printf("Plaintext:\n");
+    for(uint8_t i = 0; i < maxTextLength; i++){
+        printf("%c", text[i]);
+    }
+    printf("\n");
     // Initialize blocks to 0
     memset(s->x, 0, block_number * sizeof(uint64_t));
 

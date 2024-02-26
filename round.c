@@ -13,12 +13,6 @@ void forward_transform_round_function(data_struct *state, const uint8_t transfor
         split_state_into_data_bytes(state, data_byte, block_index);
         for (int j = 0; j < N; ++j) {
             for (int i = 0; i < N; ++i) {
-//                printf("data_byte[%d] = %d\n", i, data_byte[i]);
-//                for(int8_t bit_index = N - 1; bit_index >= 0; bit_index--) {
-//                    printf("%d", (data_byte[i] >> bit_index) & 0x01);
-//                }
-//                printf("\n");
-//                printf("transform_matrix[%d][%d] = %d\n", i, j, transform_matrix[i][j]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
         }
@@ -32,13 +26,7 @@ void forward_transform_round_function(data_struct *state, const uint8_t transfor
 //ENCRYPTION OPERATION
 void forward_transform(data_struct *state, const uint8_t transform_matrix[N][N], int rounds) {
     for (int i = 0; i < rounds; ++i) {
-//        printf("Round #%d\n", i + 1);
-//        printf("Blocks before forward transform\n");
-//        print_data_byte(state);
         forward_transform_round_function(state, transform_matrix); // Corrected passing of state
-//        printf("Blocks after forward transform\n");
-//        print_data_byte(state);
-//        printf("\n");
     }
 }
 
@@ -50,12 +38,6 @@ void inverse_transform_round_function(data_struct *state, const uint8_t transfor
         split_state_into_data_bytes(state, data_byte, block_index);
         for (int j = 0; j < N; ++j) {
             for (int i = 0; i < N; ++i) {
-//                printf("data_byte[%d] = %d\n", i, data_byte[i]);
-//                for(int8_t bit_index = N - 1; bit_index >= 0; bit_index--) {
-//                    printf("%d", (data_byte[i] >> bit_index) & 0x01);
-//                }
-//                printf("\n");
-//                printf("transform_matrix[%d][%d] = %d\n", i, j, transform_matrix[i][j]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
         }
@@ -70,13 +52,7 @@ void inverse_transform_round_function(data_struct *state, const uint8_t transfor
 //DECRYPTION OPERATION
 void inverse_transform(data_struct *state,  const uint8_t transform_matrix[N][N], int rounds) {
     for (int i = 0; i < rounds; ++i) {
-//        printf("Round #%d\n", i + 1);
-//        printf("Before inverse transform\n");
-//        print_data_byte(state);
         inverse_transform_round_function(state, transform_matrix,  invN);
-//        print_data_byte(state);
-//        printf("After inverse transform\n");
-//        printf("\n");
     }
 }
 

@@ -45,6 +45,9 @@ static const uint8_t O2NMNT[N][N] = {{72, 19, 19, 72, 5, 99, 28, 122},
                                      {28, 72, 72, 28, 108, 122, 5, 19},
                                      {122, 28, 99, 5, 72, 19, 19, 72}};
 
+
+
+
 void forward_transform_round_function(data_struct *state,  const uint8_t transform_matrix[N][N]);
 void inverse_transform_round_function(data_struct *state,  const uint8_t transform_matrix[N][N],  uint8_t inverseN);
 void forward_transform(data_struct *state, const uint8_t transform_matrix[N][N], int rounds);
