@@ -1,11 +1,9 @@
 #include "round.h"
-
 uint8_t forward_s_box[32] = {28, 25, 0, 10, 20, 22, 21, 6, 23, 8, 26, 17, 29, 24, 19, 27, 9,
                              3, 15, 18,1, 31, 2, 11, 12, 4, 30, 5, 16, 7, 13, 14};
 
 uint8_t inverse_s_box[32] = {2, 20, 22, 17, 25, 27, 7, 29, 9, 16, 3, 23, 24, 30, 31, 18, 28,
                              11, 19,14, 4, 6, 5, 8, 13, 1, 10, 15, 0, 12, 26, 21};
-
 
 //ENCRYPTION ROUND FUNCTION
 void forward_transform_round_function(data_struct *state, const uint8_t transform_matrix[N][N]) {
@@ -15,6 +13,12 @@ void forward_transform_round_function(data_struct *state, const uint8_t transfor
         split_state_into_data_bytes(state, data_byte, block_index);
         for (int j = 0; j < N; ++j) {
             for (int i = 0; i < N; ++i) {
+//                printf("data_byte[%d] = %d\n", i, data_byte[i]);
+//                for(int8_t bit_index = N - 1; bit_index >= 0; bit_index--) {
+//                    printf("%d", (data_byte[i] >> bit_index) & 0x01);
+//                }
+//                printf("\n");
+//                printf("transform_matrix[%d][%d] = %d\n", i, j, transform_matrix[i][j]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
         }
@@ -46,6 +50,12 @@ void inverse_transform_round_function(data_struct *state, const uint8_t transfor
         split_state_into_data_bytes(state, data_byte, block_index);
         for (int j = 0; j < N; ++j) {
             for (int i = 0; i < N; ++i) {
+//                printf("data_byte[%d] = %d\n", i, data_byte[i]);
+//                for(int8_t bit_index = N - 1; bit_index >= 0; bit_index--) {
+//                    printf("%d", (data_byte[i] >> bit_index) & 0x01);
+//                }
+//                printf("\n");
+//                printf("transform_matrix[%d][%d] = %d\n", i, j, transform_matrix[i][j]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
         }
@@ -86,7 +96,7 @@ void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte, int blo
     }
 }
 
-void combine_data_bytes_to_state(uint8_t *data_byte, data_struct *state, int block_index){
+void combine_data_bytes_to_state(const uint8_t *data_byte, data_struct *state, int block_index){
     // Reconstruct state->x[0] from data_byte array in little endian format
     state->x[block_index] = 0; // Reset state->x[0]
     for (int i = 0; i < N; i++) {

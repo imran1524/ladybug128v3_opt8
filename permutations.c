@@ -1,42 +1,51 @@
 #include "permutations.h"
 
+//TODO: Add round constant as input parameter
+//FORWARD PERMUTATION
 void forward_permutation(data_struct *s) {
-    printf("Initial state at forward permutation:\n");
+    printf("FORWARD PERMUTATION:\n");
+    printf("State before applying forward permutation:\n");
     print_state(s);  // Correctly passing 's' as it's already a pointer
     printf("\n");
 
+    // FORWARD TRANSFORM
+    forward_transform(s, ONMNT, ROUNDS);  // Directly passing 's' since it's a pointer
+    printf("State after applying forward transform:\n");
+    print_state(s);  // Correctly passing 's'
+    printf("\n");
 
-#if 0
-    uint8_t bundles[64] = {0};
-
+#if 1
     //Creating 64 5-bit bundles from 5 64-bit blocks
+    uint8_t bundles[64] = {0};
     printf("64 5-bit bundle from 5 64-bit blocks:\n");
     for(int i = 0; i < 64; i++) {
         for(int j = 0; j < BLOCK_NUMBER; j++) {
             bundles[i] |= ((s->x[j] >> (63-i)) & 0x1) << (BLOCK_NUMBER - 1 - j);
         }
-        printf("bundles[%d] = %d\n", i, bundles[i]);
-        print_bitstring(bundles[i], BLOCK_NUMBER);
-        printf("\n");
+//        printf("bundles[%d] = %d\n", i, bundles[i]);
+//        print_bitstring(bundles[i], BLOCK_NUMBER);
+//        printf("\n");
     }
 
-    for(int i = 0; i < 64; i++){
-        printf("bundle[%d] = %d\n", i, bundles[i]);
-    }
+    printf("Before applying S-box:\n");
+    print_bundles(bundles, 64);
 
     printf("\n");
     // Apply Forward S-Box
     for(int i = 0; i < 64; i++) {
-//        printf("Before S-box:\n");
+//        printf("Before applying S-box:\n");
 //        printf("bundles[%d] = %d\n", i, bundles[i]);
 //        print_bitstring(bundles[i], BLOCK_NUMBER);
         bundles[i] = forward_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
 //        printf("\n");
-//        printf("After S-box:\n");
+//        printf("After applying S-box:\n");
 //        printf("bundles[%d] = %d\n", i, bundles[i]);
-        print_bitstring(bundles[i], BLOCK_NUMBER);
-        printf("\n");
+//        print_bitstring(bundles[i], BLOCK_NUMBER);
+//        printf("\n");
     }
+
+    printf("After applying S-box:\n");
+    print_bundles(bundles, 64);
 
     // Clear the blocks before reassembling
     memset(s->x, 0, sizeof(s->x));  // Clear existing blocks to ensure accurate reassembly
@@ -58,7 +67,7 @@ void forward_permutation(data_struct *s) {
         bundles[i] |= ((s->x[4] >> (63-i)) & 0x1) << 0;
     }
 
-    printf("State before applying forward transform:\n");
+    printf("State after applying applying forward transform\n");
     print_state(s);
 
 //    for(int i = 0; i < BLOCK_NUMBER; i++){
@@ -69,17 +78,55 @@ void forward_permutation(data_struct *s) {
 
     printf("\n");
 #endif
-
-
-    // FORWARD TRANSFORM
-    forward_transform(s, ONMNT, ROUNDS);  // Directly passing 's' since it's a pointer
-    printf("State after applying forward transform:\n");
-    print_state(s);  // Correctly passing 's'
-    printf("\n");
 }
 
+//INVERSE PERMUTATION
+//TODO: Add round constant as input parameter
 void inverse_permutation(data_struct *s){
-    printf("Initial state at inverse permutation\n");
+    printf("INVERSE PERMUTATION:\n");
+    printf("State before applying inverse transform\n");
+    print_state(s);
+#if 1
+    uint8_t bundles[64] = {0};
+    // Creating 64 5-bit bundles from 5 64-bit blocks
+    for(int i = 0; i < 64; i++) {
+        for(int j = 0; j < BLOCK_NUMBER; j++) {
+            bundles[i] |= ((s->x[j] >> (63-i)) & 0x1) << (BLOCK_NUMBER - 1 - j);
+        }
+    }
+    printf("Before applying inverse 5-bit S-box:\n");
+    print_bundles(bundles, 64);
+
+    // Apply Inverse S-Box
+    for(int i = 0; i < 64; i++) {
+//        printf("Before applying inverse 5-bit S-box:\n");
+//        printf("bundles[%d] = %d\n", i, bundles[i]);
+//        print_bitstring(bundles[i], BLOCK_NUMBER);
+          bundles[i] = inverse_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
+//        printf("After applying inverse 5-bit S-box:\n");
+//        printf("bundles[%d] = %d\n", i, bundles[i]);
+//        print_bitstring(bundles[i], BLOCK_NUMBER);
+//        printf("\n");
+    }
+
+    printf("\n");
+    printf("After applying inverse 5-bit S-box:\n");
+    print_bundles(bundles, 64);
+    // Reassembling 5 64-bit blocks from 64 5-bit bundles
+//    for(int bit = 0; bit < 64; bit++) {
+////        printf("test_bundle[%d] = %d\n", bit, bundles[bit]);
+////        print_bitstring(bundles[bit], BLOCK_NUMBER);
+//        for(int block_index = 0; block_index < BLOCK_NUMBER; block_index++) {
+//            uint64_t bitValue = (bundles[bit] >> (BLOCK_NUMBER - 1 - block_index)) & 0x01;
+//            printf("%llu", bitValue);
+//            s->x[block_index] |= bitValue << (63-bit);
+//            printf("\n");
+//        }
+//    }
+    create_blocks_from_bundles(bundles, s);
+
+#endif
+    printf("State before applying inverse transform:\n");
     print_state(s);  // Correctly passing 's'
     printf("\n");
 
@@ -93,41 +140,6 @@ void inverse_permutation(data_struct *s){
     print_state(s);  // Correctly passing 's'
     printf("\n");
 
-
-#if 0
-    uint8_t bundles[64] = {0};
-    // Creating 64 5-bit bundles from 5 64-bit blocks
-    for(int i = 0; i < 64; i++) {
-        for(int j = 0; j < BLOCK_NUMBER; j++) {
-            bundles[i] |= ((s->x[j] >> (63-i)) & 0x1) << (BLOCK_NUMBER - 1 - j);
-        }
-    }
-
-    // Apply Forward S-Box
-    for(int i = 0; i < 64; i++) {
-        printf("Before applying inverse 5-bit S-box:\n");
-        printf("bundles[%d] = %d\n", i, bundles[i]);
-        print_bitstring(bundles[i], BLOCK_NUMBER);
-        printf("\n");
-    }
-    printf("\n");
-    for(int i = 0; i < 64; i++) {
-        printf("After applying inverse 5-bit S-box:\n");
-        bundles[i] = inverse_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
-        printf("bundles[%d] = %d\n", i, bundles[i]);
-        print_bitstring(bundles[i], BLOCK_NUMBER);
-        printf("\n\n");
-    }
-    printf("\n");
-    // Reassembling 5 64-bit blocks from 64 5-bit bundles
-    for(int bit = 0; bit < 64; bit++) {
-        for(int block_index = 0; block_index < BLOCK_NUMBER; block_index++) {
-            uint64_t bitValue = (bundles[bit] >> (BLOCK_NUMBER - 1 - block_index)) & 0x01;
-            s->x[block_index] |= bitValue << (63-bit);
-        }
-    }
-
-#endif
     char retrievedText[41]; // Enough for 40 characters and a null terminator
     blocks_to_text(s, retrievedText, sizeof(retrievedText));  // Assuming blocks_to_text is updated to take a pointer
     printf("Retrieved Text: %s\n", retrievedText);
