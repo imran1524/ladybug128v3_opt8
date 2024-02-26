@@ -1,6 +1,27 @@
 #include "permutations.h"
 
 //TODO: Add round constant as input parameter
+
+void FP3 (data_struct *s){
+    printf("Round # 1\n");
+    forward_permutation(s);
+//    printf("Round # 2\n");
+//    forward_permutation(s);
+//    printf("Round # 3\n");
+//    forward_permutation(s);
+};
+
+void IP3 (data_struct *s){
+    printf("Round # 1\n");
+    inverse_permutation(s);
+//    printf("Round # 2\n");
+//    inverse_permutation(s);
+//    printf("Round # 3\n");
+//    inverse_permutation(s);
+
+
+};
+
 //FORWARD PERMUTATION
 void forward_permutation(data_struct *s) {
     printf("FORWARD PERMUTATION:\n");
@@ -9,7 +30,7 @@ void forward_permutation(data_struct *s) {
     printf("\n");
 
     //FORWARD TRANSFORM
-    forward_transform(s, NMNT, ROUNDS);  // Directly passing 's' since it's a pointer
+    forward_transform(s, O2NMNT, ROUNDS);  // Directly passing 's' since it's a pointer
     printf("State after applying forward transform:\n");
     print_state(s);  // Correctly passing 's'
     printf("\n");
@@ -89,9 +110,10 @@ void inverse_permutation(data_struct *s){
     // INVERSE TRANSFORM
     // TRANSPOSE ONMNT MATRIX
     uint8_t transposedONMNT[N][N];
-    transpose_ONMNT(NMNT, transposedONMNT);
+    transpose_ONMNT(ONMNT, transposedONMNT);
 
-    inverse_transform(s, transposedONMNT, ROUNDS);  // Directly passing 's' since it's a pointer
+//    inverse_transform(s, transposedONMNT, ROUNDS);  // Directly passing 's' since it's a pointer
+    inverse_transform(s, O2NMNT, ROUNDS);  // Directly passing 's' since it's a pointer
     printf("State after applying inverse transform:\n");
     print_state(s);  // Correctly passing 's'
     printf("\n");

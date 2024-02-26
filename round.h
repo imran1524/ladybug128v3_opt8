@@ -7,7 +7,6 @@
 #include <stdint.h>
 #include "constants.h"
 
-
 #define N 8
 #define p 7
 #define Mp ((1 << p) - 1) // Modulus for encryption operation
@@ -44,8 +43,6 @@ static const uint8_t O2NMNT[N][N] = {{72, 19, 19, 72, 5, 99, 28, 122},
                                      {99, 72, 55, 28, 19, 122, 122, 19},
                                      {28, 72, 72, 28, 108, 122, 5, 19},
                                      {122, 28, 99, 5, 72, 19, 19, 72}};
-
-
 
 
 void forward_transform_round_function(data_struct *state,  const uint8_t transform_matrix[N][N]);
