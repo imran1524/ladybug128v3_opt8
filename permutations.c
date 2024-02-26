@@ -30,7 +30,7 @@ void forward_permutation(data_struct *s) {
     printf("\n");
 
     //FORWARD TRANSFORM
-    forward_transform(s, O2NMNT, ROUNDS);  // Directly passing 's' since it's a pointer
+    forward_transform(s, NMNT, ROUNDS);  // Directly passing 's' since it's a pointer
     printf("State after applying forward transform:\n");
     print_state(s);  // Correctly passing 's'
     printf("\n");
@@ -110,10 +110,10 @@ void inverse_permutation(data_struct *s){
     // INVERSE TRANSFORM
     // TRANSPOSE ONMNT MATRIX
     uint8_t transposedONMNT[N][N];
-    transpose_ONMNT(ONMNT, transposedONMNT);
+    transpose_ONMNT(NMNT, transposedONMNT);
 
 //    inverse_transform(s, transposedONMNT, ROUNDS);  // Directly passing 's' since it's a pointer
-    inverse_transform(s, O2NMNT, ROUNDS);  // Directly passing 's' since it's a pointer
+    inverse_transform(s, NMNT, ROUNDS);  // Directly passing 's' since it's a pointer
     printf("State after applying inverse transform:\n");
     print_state(s);  // Correctly passing 's'
     printf("\n");
