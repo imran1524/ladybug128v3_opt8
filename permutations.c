@@ -7,8 +7,8 @@
  void FP3 (data_struct *s){
     printf("Round # 1\n");
     forward_permutation(s);
-//    printf("Round # 2\n");
-//    forward_permutation(s);
+    printf("Round # 2\n");
+    forward_permutation(s);
 //    printf("Round # 3\n");
 //    forward_permutation(s);
 };
@@ -17,8 +17,8 @@
 void IP3 (data_struct *s){
     printf("Round # 1\n");
     inverse_permutation(s);
-//    printf("Round # 2\n");
-//    inverse_permutation(s);
+    printf("Round # 2\n");
+    inverse_permutation(s);
 //    printf("Round # 3\n");
 //    inverse_permutation(s);
 };
@@ -49,7 +49,7 @@ void forward_permutation(data_struct *s) {
     print_bundles(bundles, 64);
 
     printf("\n");
-    // Apply Forward S-Box
+    //APPLY FORWARD S-BOX
     for(int i = 0; i < 64; i++) {
         bundles[i] = forward_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
     }
@@ -79,7 +79,7 @@ void forward_permutation(data_struct *s) {
 //TODO: Add round constant as input parameter
 void inverse_permutation(data_struct *s){
     printf("INVERSE PERMUTATION:\n");
-    printf("State before applying inverse transform\n");
+    printf("State before applying inverse S-box\n");
     print_state(s);
 
     uint8_t bundles[64] = {0};

@@ -13,6 +13,7 @@ void forward_transform_round_function(data_struct *state, const uint8_t transfor
         split_state_into_data_bytes(state, data_byte, block_index);
         for (int j = 0; j < N; ++j) {
             for (int i = 0; i < N; ++i) {
+                printf("data_byte[%d] = %d\n", i, data_byte[i]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
         }
@@ -25,7 +26,6 @@ void forward_transform_round_function(data_struct *state, const uint8_t transfor
 
 void forward_transform(data_struct *state, const uint8_t transform_matrix[N][N]) {
     forward_transform_round_function(state, transform_matrix); // Corrected passing of state
-
 }
 
 //DECRYPTION ROUND FUNCTION
@@ -36,6 +36,7 @@ void inverse_transform_round_function(data_struct *state, const uint8_t transfor
         split_state_into_data_bytes(state, data_byte, block_index);
         for (int j = 0; j < N; ++j) {
             for (int i = 0; i < N; ++i) {
+                printf("data_byte[%d] = %d\n", i, data_byte[i]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
         }
