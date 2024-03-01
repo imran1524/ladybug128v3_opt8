@@ -23,11 +23,9 @@ void forward_transform_round_function(data_struct *state, const uint8_t transfor
     }
 }
 
-//ENCRYPTION OPERATION
-void forward_transform(data_struct *state, const uint8_t transform_matrix[N][N], int rounds) {
-    for (int i = 0; i < rounds; ++i) {
-        forward_transform_round_function(state, transform_matrix); // Corrected passing of state
-    }
+void forward_transform(data_struct *state, const uint8_t transform_matrix[N][N]) {
+    forward_transform_round_function(state, transform_matrix); // Corrected passing of state
+
 }
 
 //DECRYPTION ROUND FUNCTION
@@ -49,11 +47,8 @@ void inverse_transform_round_function(data_struct *state, const uint8_t transfor
     }
 }
 
-//DECRYPTION OPERATION
-void inverse_transform(data_struct *state,  const uint8_t transform_matrix[N][N], int rounds) {
-    for (int i = 0; i < rounds; ++i) {
-        inverse_transform_round_function(state, transform_matrix,  invN);
-    }
+void inverse_transform(data_struct *state,  const uint8_t transform_matrix[N][N]) {
+    inverse_transform_round_function(state, transform_matrix,  invN);
 }
 
 //TRANSPOSE ONMNT
