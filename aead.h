@@ -1,0 +1,9 @@
+#ifndef DIFFUSION_LAYER_AEAD_H
+#define DIFFUSION_LAYER_AEAD_H
+
+
+
+
+
+
+#endif //DIFFUSION_LAYER_AEAD_H

@@ -5,8 +5,8 @@
 #include "constants.h"
 #include "round.h"
 
-void FP3 (data_struct *s);
-void IP3 (data_struct *s);
+void FP1 (data_struct *s);
+void IP1 (data_struct *s);
 
 void forward_permutation(data_struct *s);
 void inverse_permutation(data_struct *s);

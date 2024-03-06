@@ -10,8 +10,8 @@ int main() {
 //    forward_permutation(&s);
 //    inverse_permutation(&s);
 
-    FP3(&s);
-    IP3(&s);
+    FP1(&s);
+    IP1(&s);
 
     return 0;
 }

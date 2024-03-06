@@ -11,4 +11,7 @@ add_executable(diffusion_layer main.c
         permutations.h
         permutations.h
         round.c
-        round.h)
+        round.h
+        aead.c
+        aead.h
+        api.h)

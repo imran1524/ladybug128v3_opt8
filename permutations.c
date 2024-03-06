@@ -4,21 +4,21 @@
 //TODO: Add round constant as input parameter
 
 //FORWARD PERMUTATION WITH 3 ROUNDS
- void FP3 (data_struct *s){
+ void FP1(data_struct *s){
     printf("Round # 1\n");
     forward_permutation(s);
-    printf("Round # 2\n");
-    forward_permutation(s);
+//    printf("Round # 2\n");
+//    forward_permutation(s);
 //    printf("Round # 3\n");
 //    forward_permutation(s);
 };
 
 //IP: INVERSE PERMUTATION WITH 3 ROUNDS
-void IP3 (data_struct *s){
+void IP1(data_struct *s){
     printf("Round # 1\n");
     inverse_permutation(s);
-    printf("Round # 2\n");
-    inverse_permutation(s);
+//    printf("Round # 2\n");
+//    inverse_permutation(s);
 //    printf("Round # 3\n");
 //    inverse_permutation(s);
 };
@@ -45,17 +45,16 @@ void forward_permutation(data_struct *s) {
         }
     }
 
-    printf("Before applying S-box:\n");
-    print_bundles(bundles, 64);
-
-    printf("\n");
+//    printf("Before applying S-box:\n");
+//    print_bundles(bundles, 64);
+//    printf("\n");
     //APPLY FORWARD S-BOX
     for(int i = 0; i < 64; i++) {
         bundles[i] = forward_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
     }
 
-    printf("After applying S-box:\n");
-    print_bundles(bundles, 64);
+//    printf("After applying S-box:\n");
+//    print_bundles(bundles, 64);
 
     // Clear the blocks before reassembling
     memset(s->x, 0, sizeof(s->x));  // Clear existing blocks to ensure accurate reassembly
@@ -89,21 +88,21 @@ void inverse_permutation(data_struct *s){
             bundles[i] |= ((s->x[j] >> (63-i)) & 0x1) << (BLOCK_NUMBER - 1 - j);
         }
     }
-    printf("Before applying inverse 5-bit S-box:\n");
-    print_bundles(bundles, 64);
+//    printf("Before applying inverse 5-bit S-box:\n");
+//    print_bundles(bundles, 64);
 
     // Apply Inverse S-Box
     for(int i = 0; i < 64; i++) {
           bundles[i] = inverse_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
     }
 
-    printf("\n");
-    printf("After applying inverse 5-bit S-box:\n");
-    print_bundles(bundles, 64);
+//    printf("\n");
+//    printf("After applying inverse 5-bit S-box:\n");
+//    print_bundles(bundles, 64);
     //Reassembling 5 64-bit blocks from 64 5-bit bundles
 
     create_blocks_from_bundles(bundles, s);
-
+    printf("\n");
     printf("State before applying inverse transform:\n");
     print_state(s);  // Correctly passing 's'
     printf("\n");
