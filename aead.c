@@ -1,3 +1,4 @@
+#include "api.h"
 #include "aead.h"
 
 //ENCRYPTION

@@ -6,16 +6,15 @@
 #include <string.h>
 #include <stdint.h>
 #include "constants.h"
+#include "aead.h"
+#include "api.h"
 
 #define N 8
 #define p 7
 #define Mp ((1 << p) - 1) // Modulus for encryption operation
-#define block_number 5
 static const uint8_t invN = (1 << p) / N;
 
-typedef struct state{
-    uint64_t x[block_number];
-}data_struct;
+
 
 static const uint8_t NMNT[N][N] = {{1, 1,   1,   1,   1,   1,   1,   1},
                                    {1, 111, 1,   0,   126, 16,  126, 0},
@@ -45,12 +44,12 @@ static const uint8_t O2NMNT[N][N] = {{72, 19, 19, 72, 5, 99, 28, 122},
                                      {122, 28, 99, 5, 72, 19, 19, 72}};
 
 
-void forward_transform_round_function(data_struct *state,  const uint8_t transform_matrix[N][N]);
-void inverse_transform_round_function(data_struct *state,  const uint8_t transform_matrix[N][N],  uint8_t inverseN);
-void forward_transform(data_struct *state, const uint8_t transform_matrix[N][N]);
-void inverse_transform(data_struct *state, const uint8_t transform_matrix[N][N]);
-void split_state_into_data_bytes(data_struct *state, uint8_t *data_byte, int block_index);
-void combine_data_bytes_to_state(const uint8_t *data_byte, data_struct *state, int block_index);
+void forward_transform_round_function(state_t *state,  const uint8_t transform_matrix[N][N]);
+void inverse_transform_round_function(state_t *state,  const uint8_t transform_matrix[N][N],  uint8_t inverseN);
+void forward_transform(state_t *state, const uint8_t transform_matrix[N][N]);
+void inverse_transform(state_t *state, const uint8_t transform_matrix[N][N]);
+void split_state_into_data_bytes(state_t *state, uint8_t *data_byte, int block_index);
+void combine_data_bytes_to_state(const uint8_t *data_byte, state_t *state, int block_index);
 void transpose_ONMNT(const uint8_t input[N][N], uint8_t output[N][N]);
-void print_data_byte(data_struct *state);
+void print_data_byte(state_t *state);
 #endif //DIFFUSION_LAYER_ROUND_H

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "utils.h"
 #include "constants.h"
+#include "aead.h"
 
 void print_vector(uint8_t *vector, int vector_size){
     for(uint8_t i = 0; i < vector_size; i++){
@@ -14,7 +15,7 @@ void print_bundles(uint8_t *bundle, uint8_t size){
     }
 }
 
-void print_state(data_struct *state) {
+void print_state(state_t *state) {
     for (int i = 0; i < BLOCK_NUMBER; i++) {
         printf("state.x[%d] = ", i);
         for (int bit = 63; bit >= 0; bit--) {
@@ -32,8 +33,8 @@ void print_bitstring(uint8_t vector, uint8_t bit_number) {
 }
 
 // Function to convert text to 64-bit blocks and store in data_struct
-void text_to_64bit_blocks_data_struct(const char* text, data_struct* s) {
-    size_t maxTextLength = block_number * 8; // Max text length to fit in 5 x 64-bit blocks
+void text_to_64bit_blocks_data_struct(const char* text, state_t* s) {
+    size_t maxTextLength = BLOCK_NUMBER * 8; // Max text length to fit in 5 x 64-bit blocks
     size_t textLength = strlen(text);
 
     if (textLength > maxTextLength) {
@@ -45,7 +46,7 @@ void text_to_64bit_blocks_data_struct(const char* text, data_struct* s) {
     }
     printf("\n");
     // Initialize blocks to 0
-    memset(s->x, 0, block_number * sizeof(uint64_t));
+    memset(s->x, 0, BLOCK_NUMBER * sizeof(uint64_t));
 
     // Pack characters into 64-bit blocks
     for (size_t i = 0; i < textLength; ++i) {
@@ -56,9 +57,9 @@ void text_to_64bit_blocks_data_struct(const char* text, data_struct* s) {
 }
 
 // Function to combine the data from data_struct and get the text back
-void blocks_to_text(data_struct* s, char* outText, size_t maxTextLength) {
+void blocks_to_text(state_t* s, char* outText, size_t maxTextLength) {
     size_t byteIndex = 0;
-    for (size_t i = 0; i < block_number; ++i) {
+    for (size_t i = 0; i < BLOCK_NUMBER; ++i) {
         for (size_t j = 0; j < 8; ++j) { // 8 bytes per block
             if (byteIndex < maxTextLength - 1) { // Leave space for null terminator
                 uint8_t currentByte = (s->x[i] >> (j * 8)) & 0xFF;
@@ -71,7 +72,7 @@ void blocks_to_text(data_struct* s, char* outText, size_t maxTextLength) {
     outText[byteIndex] = '\0'; // Null-terminate the output string
 }
 
-void create_blocks_from_bundles(uint8_t bundles[64], data_struct *s) {
+void create_blocks_from_bundles(uint8_t bundles[64], state_t* s) {
     // Clear the blocks to start with a clean state
     memset(s->x, 0, sizeof(s->x[0]) * BLOCK_NUMBER);
 

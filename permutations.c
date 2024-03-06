@@ -4,7 +4,7 @@
 //TODO: Add round constant as input parameter
 
 //FORWARD PERMUTATION WITH 3 ROUNDS
- void FP1(data_struct *s){
+ void FP1(state_t *s){
     printf("Round # 1\n");
     forward_permutation(s);
 //    printf("Round # 2\n");
@@ -14,7 +14,7 @@
 };
 
 //IP: INVERSE PERMUTATION WITH 3 ROUNDS
-void IP1(data_struct *s){
+void IP1(state_t *s){
     printf("Round # 1\n");
     inverse_permutation(s);
 //    printf("Round # 2\n");
@@ -24,7 +24,7 @@ void IP1(data_struct *s){
 };
 
 //FORWARD PERMUTATION
-void forward_permutation(data_struct *s) {
+void forward_permutation(state_t *s) {
     printf("FORWARD PERMUTATION:\n");
     printf("State before applying forward permutation:\n");
     print_state(s);  // Correctly passing 's' as it's already a pointer
@@ -76,7 +76,7 @@ void forward_permutation(data_struct *s) {
 
 //INVERSE PERMUTATION
 //TODO: Add round constant as input parameter
-void inverse_permutation(data_struct *s){
+void inverse_permutation(state_t *s){
     printf("INVERSE PERMUTATION:\n");
     printf("State before applying inverse S-box\n");
     print_state(s);

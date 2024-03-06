@@ -4,12 +4,13 @@
 #include "utils.h"
 #include "constants.h"
 #include "round.h"
+#include "aead.h"
 
-void FP1 (data_struct *s);
-void IP1 (data_struct *s);
+void FP1 (state_t *s);
+void IP1 (state_t *s);
 
-void forward_permutation(data_struct *s);
-void inverse_permutation(data_struct *s);
+void forward_permutation(state_t *s);
+void inverse_permutation(state_t *s);
 
 extern uint8_t forward_s_box[1 << s_box_size];
 extern uint8_t inverse_s_box[1 << s_box_size];
