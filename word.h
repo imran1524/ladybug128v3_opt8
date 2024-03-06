@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+/*Define word related operations*/
+
 //GET BYTE FROM 64-BIT WORD
 #define GET_BYTE(x, i) ((uint8_t)((uint64_t)(x) >>(56 - 8 * (i))))
 
