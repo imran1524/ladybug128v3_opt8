@@ -14,4 +14,5 @@ add_executable(diffusion_layer main.c
         round.h
         aead.c
         api.h
-        aead.h)
+        aead.h
+        word.h)

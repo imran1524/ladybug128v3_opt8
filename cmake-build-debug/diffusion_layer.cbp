@@ -111,6 +111,9 @@
 		<Unit filename="/Users/ikhan/CLionProjects/diffusion_layer/utils.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
+		<Unit filename="/Users/ikhan/CLionProjects/diffusion_layer/word.h">
+			<Option target="diffusion_layer"/>
+		</Unit>
 		<Unit filename="/Users/ikhan/CLionProjects/diffusion_layer/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

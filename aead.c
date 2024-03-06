@@ -1,5 +1,7 @@
 #include "api.h"
 #include "aead.h"
+#include "permutations.h"
+#include "utils.h"
 
 //ENCRYPTION
 //INITIALIZATION DOMAIN
