@@ -1,7 +1,18 @@
 #include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+
+
 #include "utils.h"
 #include "constants.h"
 #include "aead.h"
+#include "api.h"
+
+void generate_nonce(uint8_t *nonce, size_t nonce_len) {
+    arc4random_buf(nonce, nonce_len);
+}
+
+
 
 void print_vector(uint8_t *vector, int vector_size){
     for(uint8_t i = 0; i < vector_size; i++){

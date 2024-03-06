@@ -25,20 +25,20 @@ void IP1(state_t *s){
 
 //FORWARD PERMUTATION
 void forward_permutation(state_t *s) {
-    printf("FORWARD PERMUTATION:\n");
-    printf("State before applying forward permutation:\n");
-    print_state(s);  // Correctly passing 's' as it's already a pointer
-    printf("\n");
+//    printf("FORWARD PERMUTATION:\n");
+//    printf("State before applying forward permutation:\n");
+//    print_state(s);  // Correctly passing 's' as it's already a pointer
+//    printf("\n");
 
     //FORWARD TRANSFORM
     forward_transform(s, NMNT);  // Directly passing 's' since it's a pointer
-    printf("State after applying forward transform:\n");
-    print_state(s);  // Correctly passing 's'
-    printf("\n");
+//    printf("State after applying forward transform:\n");
+//    print_state(s);  // Correctly passing 's'
+//    printf("\n");
 
     //Creating 64 5-bit bundles from 5 64-bit blocks
     uint8_t bundles[64] = {0};
-    printf("64 5-bit bundle from 5 64-bit blocks:\n");
+//    printf("64 5-bit bundle from 5 64-bit blocks:\n");
     for(int i = 0; i < 64; i++) {
         for(int j = 0; j < BLOCK_NUMBER; j++) {
             bundles[i] |= ((s->x[j] >> (63-i)) & 0x1) << (BLOCK_NUMBER - 1 - j);

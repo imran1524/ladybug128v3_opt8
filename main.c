@@ -2,18 +2,28 @@
 #include "permutations.h"
 #include "round.h"
 #include "aead.h"
+#include <string.h> // For strlen
 
 int main() {
-    char text[] = "Hello, this is a test string to convert into 64-bit blocks!";
-    state_t s; // Initialize the data_struct
+    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks!";
+    unsigned long long mlen = strlen((char *)text);
+    unsigned char c[1024]; // Assuming 1024 is sufficient; adjust based on your needs
+    unsigned long long clen;
 
-    text_to_64bit_blocks_data_struct(text, &s);  // Assuming this function is updated to take a pointer
-//    forward_permutation(&s);
-//    inverse_permutation(&s);
+    //GENERATING NONCE
+    uint8_t npub[16];
+    generate_nonce(npub, 16);
+//    printf("Generating nonce\n");
+//    print_vector(npub, 16);
+    printf("\n");
+    unsigned char ad[] = "Associated Data";
+    unsigned long long ad_len = strlen((char *)ad);
 
-    FP1(&s);
-    IP1(&s);
+    unsigned char k[16] = {0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0x00};
+
+    //ENCRYPT AEAD
+    crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
+
 
     return 0;
 }
-
