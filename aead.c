@@ -128,24 +128,128 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     return 0;
 }
 
-//DECRYPTION
-size_t crypto_aead_decryption(){
+//DECRYPTION AEAD
+size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
+                              unsigned char* nsec,
+                              const unsigned char* c, unsigned long long clen,
+                              const unsigned char *ad, unsigned long long adlen,
+                              const unsigned char* npub,
+                              const unsigned char* k){
 
+    (void)nsec;
 
-    size_t i = 0;
+    if(clen < AD_BYTES){
+        return -1;
+    }
+
+    //SET PLAINTEXT SIZE
+    *mlen = clen - AD_BYTES;
+
+    //LOAD KEY AND NONCE
+    const uint64_t K0 = LOAD_BYTES(k, 8);
+    const uint64_t K1 = LOAD_BYTES(k + 8, 8);
+    const uint64_t N0 = LOAD_BYTES(npub, 8);
+    const uint64_t N1 = LOAD_BYTES(npub + 8, 8);
+
+//START OF INITIALIZATION DOMAIN
+    state_t s;
+    s.x[0] = AEAD_128_IV;
+    s.x[1] = K0;
+    s.x[2] = K1;
+    s.x[3] = N0;
+    s.x[4] = N1;
+    printf("Initialization first key xor\n");
+    print_state(&s);
+    printf("\n");
+
+    //APPLY FORWARD PERMUTATION
+    FP1(&s);
+    s.x[3] ^= K0;
+    s.x[4] ^= K1;
+    printf("Inilialization second key xor\n");
+  //END OF INILIALIZATION DOMAIN
+
+//START OF ASSOCIATED DATA DOMAIN
+    if(adlen){
+        //FULL ASSOCIATED DATA BLOCKS
+        while(adlen >= RATE){
+            s.x[0] ^= LOAD_BYTES(ad, 8);
+            printf("Absorb associated data\n");
+            print_state(&s);
+
+            //APPLY FORWARD PERMUTATION
+            FP1(&s);
+            ad += RATE;
+            adlen -= RATE;
+        }
+        //FINAL ASSOCIATED DATA BLOCK
+        s.x[0] ^= LOAD_BYTES(ad, adlen);
+        s.x[0] ^= PAD(adlen);
+
+        //APPLY FORWARD PERMUTATION ON THE PADDED AD
+        printf("PADDED ASSOCIATED DATA\n");
+        //APPLY INVERSE PERMUTATION
+        IP1(&s);
+        print_state(&s);
+    }
+//END OF ASSOCIATED DATA DOMAIN
+//DOMAIN SEPARATION BETWEEN ASSOCIATED DATA AND CIPHERTEXT
+    s.x[4] ^= 1;
+    printf("Domain separation\n");
+    print_state(&s);
+
+//START OF CIPHERTEXT DOMAIN
+//FULL CIPHERTWEXT BLOCK
+    clen -= AD_BYTES;
+    while(clen >= RATE){
+        uint64_t c0 = LOAD_BYTES(c, 8);
+        STORE_BYTES(m, s.x[0] ^ c0, 8);
+        s.x[0] = c0;
+        printf("Insert ciphertext:\n");
+        print_state(&s);
+
+        //INVERSE PERMUTATION
+        IP1(&s);
+        m += RATE;
+        c += RATE;
+        clen -= RATE;
+    }
+    //FINAL CIPHERTEXT BLOCK
+    uint64_t c0 = LOAD_BYTES(c, clen);
+    STORE_BYTES(m, s.x[0] ^c0, clen);
+    s.x[0] = CLEAR_BYTES(s.x[0], clen);
+    s.x[0] |= c0;
+    s.x[0] ^= PAD(clen);
+    c += clen;
+    printf("Print the padded ciphertext\n");
+    print_state(&s);
+
+    //FINALIZE
+    s.x[1] ^= K0;
+    s.x[2] ^= K1;
+    printf("Final first key XOR\n");
+    print_state(&s);
+
+    //APPLY INVERSE PERMUTATION
+    IP1(&s);
+    s.x[3] ^= K0;
+    s.x[4] ^= K1;
+    printf("Final second key XOR\n");
+    print_state(&s);
+
+    //SET TAG
+    uint8_t  t[16];
+    STORE_BYTES(t, s.x[3], 8);
+    STORE_BYTES(t + 8, s.x[4], 8);
+
+    //VERIFY TAG
+    size_t i;
     size_t result = 0;
+    for(i = 0; i < AD_BYTES; i++){
+        result |= c[i] ^ t[i];
+    }
+    result = (((result - 1) >> 8 & 1) - 1);
+
     return result;
 }
-//INITIALIZATION DOMAIN
 
-
-
-//ASSOCIATED DATA DOMAIN
-
-
-
-//CIPHERTEXT DOMAIN
-
-
-
-//FINALIZATION

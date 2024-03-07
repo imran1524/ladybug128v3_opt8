@@ -120,9 +120,9 @@ void inverse_permutation(state_t *s){
 
     char retrievedText[41]; // Enough for 40 characters and a null terminator
     blocks_to_text(s, retrievedText, sizeof(retrievedText));  // Assuming blocks_to_text is updated to take a pointer
-    printf("Recovered plaintext:\n");
-    for(uint8_t i = 0; i < 40; i++){
-        printf("%c", retrievedText[i]);
-    }
+//    printf("Recovered plaintext:\n");
+//    for(uint8_t i = 0; i < 40; i++){
+//        printf("%c", retrievedText[i]);
+//    }
 
 }
