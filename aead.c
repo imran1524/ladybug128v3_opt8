@@ -35,22 +35,98 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     FP1(&s);
     printf("\n");
 
+    //XORing key with state after initialing layer
+    s.x[3] ^= K0;
+    s.x[4] ^= K1;
 
-    //ASSOCIATED DATA DOMAIN
+    printf("State after inilialization WITH KEY\n");
+    print_state(&s);
 
+    //END OF INITIALIZATIO
 
+    //START OF ASSOCIATED DATA DOMAIN
 
-    //PLAINTEXT DOMAIN
+    //START OF PLAINTEXT DOMAIN
+    printf("Associated data\n");
+    if (adlen){
+        size_t block = 0;
+        while(adlen >= RATE){
+            printf("Block = %d\n", block);
+            s.x[0] ^= LOAD_BYTES(ad, 8);
+            FP1(&s);
+            ad += RATE;
+            adlen -= RATE;
+            block++;
+        }
+        //FINAL ASSOCIATED DATA BLOCK
+        s.x[0] ^= LOAD_BYTES(ad, adlen);
+        s.x[0] ^= PAD(adlen);
+        print_state(&s);
+        FP1(&s);
+    }
+    //DOMAIN SEPARATION BETWEEN ASSOCIATED DATA AND PLAINTEXT
+    s.x[4] ^= 1;
+    printf("State after domain separation\n");
+    print_state(&s);
 
+    //END OF ASSOCIATED DOMAIN
 
+    //START OF PLAINTEXT DOMAIN
+    while (mlen >= RATE){
+        //LOADING 8 BYTES FROM THE MESSAGE AND XOR WITH THE FIRST BLOCK OF THE STATE
+        LOAD_BYTES(m, 8);
+        printf("Message block:\n");
+        printf("\n");
+        print_vector(m, 8);
+        s.x[0] ^= LOAD_BYTES(m, 8);
+        printf("\n");
+        STORE_BYTES(c, s.x[0], 8);
+
+        printf("Ciphertext block:\n");
+        print_vector(c, 8);
+
+        printf("\n");
+        printf("absorb plaintext\n");
+        print_state(&s);
+
+        m += RATE;
+        c += RATE;
+        mlen -= RATE;
+    }
+
+    //FINAL PLAINTEXT BLOCK
+    s.x[0] ^= LOAD_BYTES(m, mlen);
+    STORE_BYTES(c, s.x[0], mlen);
+    s.x[0] ^= PAD(mlen);
+    c += mlen;
+    printf("\n");
+    printf("Padded plaintext\n");
+    print_state(&s);
+    printf("\n");
+    //END OF PLAINtext
 
     //FINALIZATION DOMAIN
+    //START OF FINALIZATION
+    s.x[1] ^= K0;
+    s.x[2] ^= K1;
+    printf("STATE AFTER FIRST KEY XOR\n");
+    print_state(&s);
+
+    printf("\n");
+    //APPLY FORWARD PERMUTATION
+    FP1(&s);
+    s.x[3] ^= K0;
+    s.x[4] ^= K1;
+    printf("STATE AFTER second KEY XOR\n");
+    print_state(&s);
+
+
+    //SET TAG
+    STORE_BYTES(c, s.x[3], 8);
+    STORE_BYTES(c + 8, s.x[4], 8);
 
     return 0;
 }
-
-
-
 
 //DECRYPTION
 size_t crypto_aead_decryption(){

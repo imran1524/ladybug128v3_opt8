@@ -10,6 +10,8 @@ int main() {
     unsigned char c[1024]; // Assuming 1024 is sufficient; adjust based on your needs
     unsigned long long clen;
 
+    print_vector(text, sizeof(text)/sizeof(text[0]));
+
     //GENERATING NONCE
     uint8_t npub[16];
     generate_nonce(npub, 16);
