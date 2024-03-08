@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /Users/ik/Documents/diffusion_layer -B /Users/ik/Documents/diffusion_layer/cmake-build-debug
+/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /Users/ik/Documents/Yousuf/Sourcecode/diffusion_layer -B /Users/ik/Documents/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug
 CMake Deprecation Warning:
   Support for "Extra Generators" like
 
@@ -14,6 +14,6 @@ CMake Deprecation Warning:
 -- Check for working C compiler: /Library/Developer/CommandLineTools/usr/bin/cc - skipped
 -- Detecting C compile features
 -- Detecting C compile features - done
--- Configuring done (0.3s)
+-- Configuring done (0.9s)
 -- Generating done (0.0s)
--- Build files have been written to: /Users/ik/Documents/diffusion_layer/cmake-build-debug
+-- Build files have been written to: /Users/ik/Documents/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug
