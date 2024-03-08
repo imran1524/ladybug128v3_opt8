@@ -5,7 +5,7 @@
 
 //FORWARD PERMUTATION WITH 3 ROUNDS
  void FP1(state_t *s){
-    printf("Round # 1\n");
+//    printf("Round # 1\n");
     forward_permutation(s);
 //    printf("Round # 2\n");
 //    forward_permutation(s);
@@ -15,7 +15,7 @@
 
 //IP: INVERSE PERMUTATION WITH 3 ROUNDS
 void IP1(state_t *s){
-    printf("Round # 1\n");
+//    printf("Round # 1\n");
     inverse_permutation(s);
 //    printf("Round # 2\n");
 //    inverse_permutation(s);
@@ -69,17 +69,17 @@ void forward_permutation(state_t *s) {
         bundles[i] |= ((s->x[4] >> (63-i)) & 0x1) << 0;
     }
 
-    printf("State after applying applying forward transform\n");
-    print_state(s);
-    printf("\n");
+//    printf("State after applying applying forward transform\n");
+//    print_state(s);
+//    printf("\n");
 }
 
 //INVERSE PERMUTATION
 //TODO: Add round constant as input parameter
 void inverse_permutation(state_t *s){
-    printf("INVERSE PERMUTATION:\n");
-    printf("State before applying inverse S-box\n");
-    print_state(s);
+//    printf("INVERSE PERMUTATION:\n");
+//    printf("State before applying inverse S-box\n");
+//    print_state(s);
 
     uint8_t bundles[64] = {0};
     // Creating 64 5-bit bundles from 5 64-bit blocks
@@ -102,10 +102,10 @@ void inverse_permutation(state_t *s){
     //Reassembling 5 64-bit blocks from 64 5-bit bundles
 
     create_blocks_from_bundles(bundles, s);
-    printf("\n");
-    printf("State before applying inverse transform:\n");
-    print_state(s);  // Correctly passing 's'
-    printf("\n");
+//    printf("\n");
+//    printf("State before applying inverse transform:\n");
+//    print_state(s);  // Correctly passing 's'
+//    printf("\n");
 
     // INVERSE TRANSFORM
     // TRANSPOSE ONMNT MATRIX
@@ -114,9 +114,9 @@ void inverse_permutation(state_t *s){
 
     inverse_transform(s, NMNT);  // Directly passing 's' since it's a pointer
 //    inverse_transform(s, ONMNT, ROUNDS);  // Directly passing 's' since it's a pointer
-    printf("State after applying inverse transform:\n");
-    print_state(s);  // Correctly passing 's'
-    printf("\n");
+//    printf("State after applying inverse transform:\n");
+//    print_state(s);  // Correctly passing 's'
+//    printf("\n");
 
     char retrievedText[41]; // Enough for 40 characters and a null terminator
     blocks_to_text(s, retrievedText, sizeof(retrievedText));  // Assuming blocks_to_text is updated to take a pointer
