@@ -26,13 +26,12 @@ int main() {
     unsigned char k[16] = {0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0x00};
 
     //ENCRYPT AEAD
-    printf("AEAD Encryption\n");
+    printf("==================AEAD Encryption==================\n");
     crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
-
-//    printf("\n");
+    printf("\n");
     //DECRYPTION AEAD
-    printf("AEAD Deceryption\n");
-    crypto_aead_decrypt(m, &mlen, &nsec, c, clen, ad, adlen, npub, k);
+    printf("==================AEAD Decryption==================\n");
+    crypto_aead_decrypt(m, &mlen, c, clen, ad, adlen, NULL, npub, k);
 
     return 0;
 }
