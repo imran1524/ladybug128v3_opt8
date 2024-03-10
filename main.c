@@ -7,6 +7,8 @@
 int main() {
     unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks";
     unsigned long long mlen = strlen((char *)text);
+//    print_vector(text, mlen);
+//    printf("\n");
     unsigned char c[1024]; // Assuming 1024 is sufficient; adjust based on your needs
     unsigned long long clen;
     unsigned char m[N];  // buffer for decrypted message

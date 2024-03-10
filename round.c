@@ -16,6 +16,7 @@ void forward_transform_round_function(state_t *state, const uint8_t transform_ma
 //                printf("data_byte[%d] = %d\n", i, data_byte[i]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
+//            printf("\n");
         }
         for(int i = 0; i < N; i++){
             data_byte[i] = sum_NMNT[i] % Mp; // Apply modulus and update data
@@ -85,9 +86,9 @@ void print_data_byte(state_t *state) {
         uint8_t data_byte[N] = {0};
         split_state_into_data_bytes(state, data_byte, block_index);
 
-//        for (int i = 0; i < N; i++) {
-//            printf("data_byte[%i] = %d\n", i, data_byte[i]);
-//        }
-//        printf("\n");
+        for (int i = 0; i < N; i++) {
+            printf("data_byte[%i] = %d\n", i, data_byte[i]);
+        }
+        printf("\n");
     }
 }
