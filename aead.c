@@ -62,6 +62,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
         }
         printf("adlen_final = %d\n", adlen);
+
         //FINAL ASSOCIATED DATA BLOCK
         s.x[0] ^= LOAD_BYTES(ad, adlen);
 //        print_bitstring(PAD(adlen), 8);
@@ -86,16 +87,18 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     size_t block = 0;
     while (mlen >= RATE){
         //LOADING 8 BYTES FROM THE MESSAGE AND XOR WITH THE FIRST BLOCK OF THE STATE
-        printf("Message block: %d\n", block);
+//        printf("Message block: %d\n", block + 1);
 //        printf("mlen = %d\n", mlen);
-        printf("\n");
-        printf("Message Block = %d\n", block);
-        print_vector(m, 8);
-        printf("\n");
+//        printf("\n");
+//        printf("Message Block = %d\n", block + 1);
+//        print_vector(m, 8);
+//        printf("\n");
         s.x[0] ^= LOAD_BYTES(m, 8);
         STORE_BYTES(c, s.x[0], 8);
-        printf("Ciphertext block: %d\n", block);
-        print_vector(c, 8);
+//        printf("Ciphertext block: %d\n", block + 1);
+//        print_vector(c, 8);
+//        printf("Address of c variable = %p\n", (void*)&c);
+        printf("Current address pointed by c = %p\n", (void*)c);
         printf("\n");
 //        printf("absorb plaintext\n");
 //        print_state(&s);
@@ -111,11 +114,12 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     //FINAL PLAINTEXT BLOCK
     printf("Final message size = %d\n", mlen);
     s.x[0] ^= LOAD_BYTES(m, mlen);
-    printf("Final message block\n");
-    print_vector(m, 8);
+//    printf("Final message block\n");
+//    print_vector(m, 8);
+//    printf("\n");
     STORE_BYTES(c, s.x[0], mlen);
-    printf("Final ciphetext:\n");
-    print_vector(c, 8);
+//    printf("Final ciphetext:\n");
+//    print_vector(c, 8);
     s.x[0] ^= PAD(mlen);
     c += mlen;
     printf("\n");
@@ -142,6 +146,9 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //    printf("\n");
 
     //SET TAG
+    //128-bit tag is the last two block of the most updated state and stored at the end of ciohertext
+    printf("Tag\n");
+    printf("Current address pointed by c = %p\n", (void*)c);
     STORE_BYTES(c, s.x[3], 8);
     STORE_BYTES(c + 8, s.x[4], 8);
 
@@ -228,12 +235,12 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     size_t block = 0;
     while(clen >= RATE){
         uint64_t c0 = LOAD_BYTES(c, 8);
-        printf("Ciphetext block = %d\n", block);
+        printf("Ciphetext block = %d\n", block + 1);
         print_vector(c, 8);
         printf("\n");
         STORE_BYTES(m, s.x[0] ^ c0, 8);
         printf("clen = %d\n", clen);
-        printf("Message block = %d\n", block);
+        printf("Message block = %d\n", block + 1);
         print_vector(m, 8);
         printf("\n");
         s.x[0] = c0;
@@ -251,9 +258,9 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 
     //FINAL CIPHERTEXT BLOCK
     uint64_t c0 = LOAD_BYTES(c, clen);
-    printf("Final ciphertext_block\n");
-    print_vector(c, 8);
-    printf("\n");
+//    printf("Final ciphertext_block\n");
+//    print_vector(c, 8);
+//    printf("\n");
     STORE_BYTES(m, s.x[0] ^c0, clen);
     s.x[0] = CLEAR_BYTES(s.x[0], clen);
 

@@ -5,7 +5,7 @@
 #include <string.h> // For strlen
 
 int main() {
-    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks";
+    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks Hello, this is a test string to convert into 64-bit";
     unsigned long long mlen = strlen((char *)text);
 //    print_vector(text, mlen);
 //    printf("\n");

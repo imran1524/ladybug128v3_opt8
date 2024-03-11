@@ -124,5 +124,4 @@ void inverse_permutation(state_t *s){
 //    for(uint8_t i = 0; i < 40; i++){
 //        printf("%c", retrievedText[i]);
 //    }
-
 }
