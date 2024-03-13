@@ -22,19 +22,21 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     const uint64_t N1 = LOAD_BYTES(npub + 8, 8);
 
     //INITIALIZATION:
+
     state_t s;
+    printf("IV: %0llx\n", AEAD_128_IV);
     s.x[0] = AEAD_128_IV;
     s.x[1] = K0;
     s.x[2] = K1;
     s.x[3] = N0;
     s.x[4] = N1;
-    printf("State after initialization\n");
+    printf("STATE AFTER INITALIZATION\n");
     print_state(&s);
     printf("\n");
 
     //APPLY FORWARD PERMUTATION LAYER
     FP1(&s);
-    printf("State after first permutation\n");
+    printf("STATE AFTER FIRST PERMUTATION\n");
     print_state(&s);
     printf("\n");
     //XORING KEY 0*||K
@@ -47,7 +49,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //    END OF INITIALIZATIO DOMAIN
 
 //PROCESSING ASSOCIATED DATA
-    printf("=======================ASSOCIATED DATA (AD) BLOCK=======================\n");
+    printf("=======================PROCESSING ASSOCIATED DATA (AD) =======================\n");
     if (adlen){
         //FULL ASSOCIATED DATA BLOCKS
         while(adlen >= RATE){
@@ -67,7 +69,6 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
             adlen -= RATE;
         }
 
-
         //FINAL ASSOCIATED DATA BLOCK
         s.x[0] ^= LOAD_BYTES(ad, adlen);
 //        print_bitstring(PAD(adlen), 8);
@@ -82,7 +83,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
     //DOMAIN SEPARATION BETWEEN ASSOCIATED DATA AND PLAINTEXT
     s.x[4] ^= 1;
-    printf("STATE AFTER DOMAIN SEPARATION");
+    printf("STATE AFTER DOMAIN SEPARATION\n");
     print_state(&s);
     printf("\n");
     //END OF ASSOCIATED DOMAIN
@@ -144,6 +145,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
     //FINALIZATION DOMAIN
     //START OF FINALIZATION
+    printf("=======================FINALIZATION=======================\n");
     s.x[1] ^= K0;
     s.x[2] ^= K1;
     printf("STATE AFTER FIRST KEY XOR\n");
