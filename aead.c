@@ -5,8 +5,8 @@
 
 //ENCRYPTION
 size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
-                           const unsigned char* m, unsigned long long mlen,
-                           const unsigned char* ad, unsigned long long adlen,
+                           const unsigned char* m, size_t mlen,
+                           const unsigned char* ad, size_t adlen,
                            const unsigned char* nsec,
                            const unsigned char* npub,
                            const unsigned char* k){
@@ -174,8 +174,8 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //======================================================================================================================
 //DECRYPTION AEAD
 size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
-                           const unsigned char* c, unsigned long long clen,
-                           const unsigned char* ad, unsigned long long adlen,
+                           const unsigned char* c, size_t clen,
+                           const unsigned char* ad, size_t adlen,
                            unsigned char* nsec,
                            const unsigned char* npub,
                            const unsigned char* k){
@@ -274,20 +274,36 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     }
 
     //FINAL CIPHERTEXT BLOCK
+//    uint64_t c0 = LOAD_BYTES(c, clen);
+//    printf("Final ciphertext_block\n");
+//    print_vector(c, 8);
+//    printf("\n");
+//    STORE_BYTES(m, s.x[0] ^c0, clen);
+//    printf("Final message_block\n");
+//    print_vector(m, 8);
+//    printf("\n");
+//    s.x[0] = CLEAR_BYTES(s.x[0], clen);
+//
+////    print_vector(s.x[0], 8);
+//    s.x[0] |= c0;
+//    s.x[0] ^= PAD(clen);
+//    c += clen;
+
+
+    //-----
+    // FINAL CIPHERTEXT BLOCK
     uint64_t c0 = LOAD_BYTES(c, clen);
     printf("Final ciphertext_block\n");
     print_vector(c, 8);
     printf("\n");
-    STORE_BYTES(m, s.x[0] ^c0, clen);
+    STORE_BYTES(m, s.x[0] ^ c0, clen);
     printf("Final message_block\n");
     print_vector(m, 8);
     printf("\n");
-    s.x[0] = CLEAR_BYTES(s.x[0], clen);
-
-//    print_vector(s.x[0], 8);
-    s.x[0] |= c0;
     s.x[0] ^= PAD(clen);
     c += clen;
+
+    //-----
 //    printf("Print the padded ciphertext\n");
 //    print_state(&s);
 //    printf("\n");
@@ -317,10 +333,23 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     size_t result = 0;
     for(i = 0; i < AD_BYTES; i++){
         result |= c[i] ^ t[i];
+        printf("Result = %zu\n", result);
     }
 
     //VERIFY TAG (THIS OPERATION MUST BE CONSTANT TIME)
     result = (((result - 1) >> 8) & 1) - 1;
+
+// Initialize 'result' to 0, assuming tags match
+//    size_t result = 0;
+
+// Check each byte of the computed tag and the expected tag
+//    for(size_t i = 0; i < AD_BYTES; i++) {
+//        if(c[i] != t[i]) {
+//            // If any byte doesn't match, set 'result' to 1 (indicating failure) and break
+//            result = 1;
+//            break;
+//        }
+//    }
     return result;
 }
 

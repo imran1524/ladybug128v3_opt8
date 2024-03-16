@@ -6,13 +6,13 @@
 
 int main() {
     unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks.";
-    unsigned long long mlen = strlen((char *)text);
+    size_t mlen = strlen((char *)text);
     for(size_t i = 0; i < mlen; i++){
         printf("%c", text[i]);
     }
     printf("\n");
     print_vector(text, mlen);
-    printf("mlen = %d\n", mlen);
+    printf("mlen = %zu\n", mlen);
     unsigned char c[1024]; // Assuming 1024 is sufficient; adjust based on your needs
     unsigned long long clen;
     unsigned char m[N];  // buffer for decrypted message
@@ -39,7 +39,9 @@ int main() {
     printf("\n");
     //DECRYPTION AEAD
     printf("==================AEAD Decryption==================\n");
-    crypto_aead_decrypt(m, &mlen, c, clen, ad, adlen, NULL, npub, k);
+    size_t result;
+    result = crypto_aead_decrypt(m, &mlen, c, clen, ad, adlen, NULL, npub, k);
+    printf("result = %zu\n", result);
 
     return 0;
 }

@@ -39,8 +39,8 @@ void forward_permutation(state_t *s) {
     //Creating 64 5-bit bundles from 5 64-bit blocks
     uint8_t bundles[64] = {0};
 //    printf("64 5-bit bundle from 5 64-bit blocks:\n");
-    for(int i = 0; i < 64; i++) {
-        for(int j = 0; j < BLOCK_NUMBER; j++) {
+    for(size_t i = 0; i < 64; i++) {
+        for(size_t j = 0; j < BLOCK_NUMBER; j++) {
             bundles[i] |= ((s->x[j] >> (63-i)) & 0x1) << (BLOCK_NUMBER - 1 - j);
         }
     }
@@ -49,7 +49,7 @@ void forward_permutation(state_t *s) {
 //    print_bundles(bundles, 64);
 //    printf("\n");
     //APPLY FORWARD S-BOX
-    for(int i = 0; i < 64; i++) {
+    for(size_t i = 0; i < 64; i++) {
         bundles[i] = forward_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
     }
 
@@ -60,7 +60,7 @@ void forward_permutation(state_t *s) {
     memset(s->x, 0, sizeof(s->x));  // Clear existing blocks to ensure accurate reassembly
     create_blocks_from_bundles(bundles, s);
 
-    for(uint8_t i = 0; i < 64; i++) {
+    for(size_t i = 0; i < 64; i++) {
         bundles[i] = 0; // Make sure to initialize the bundle
         bundles[i] |= ((s->x[0] >> (63-i)) & 0x1) << 4;
         bundles[i] |= ((s->x[1] >> (63-i)) & 0x1) << 3;
@@ -83,8 +83,8 @@ void inverse_permutation(state_t *s){
 
     uint8_t bundles[64] = {0};
     // Creating 64 5-bit bundles from 5 64-bit blocks
-    for(int i = 0; i < 64; i++) {
-        for(int j = 0; j < BLOCK_NUMBER; j++) {
+    for(size_t i = 0; i < 64; i++) {
+        for(size_t j = 0; j < BLOCK_NUMBER; j++) {
             bundles[i] |= ((s->x[j] >> (63-i)) & 0x1) << (BLOCK_NUMBER - 1 - j);
         }
     }
@@ -92,7 +92,7 @@ void inverse_permutation(state_t *s){
 //    print_bundles(bundles, 64);
 
     // Apply Inverse S-Box
-    for(int i = 0; i < 64; i++) {
+    for(size_t i = 0; i < 64; i++) {
           bundles[i] = inverse_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
     }
 

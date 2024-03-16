@@ -4,7 +4,7 @@
 #include "round.h"
 #include "aead.h"
 
-void print_vector(uint8_t *vector, int vector_size);
+void print_vector(uint8_t *vector, size_t vector_size);
 void print_state(state_t *state);
 void print_bitstring(uint8_t vector, uint8_t bit_number);
 void text_to_64bit_blocks_data_struct(const char* text, state_t* s);
