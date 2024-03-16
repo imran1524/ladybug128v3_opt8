@@ -38,8 +38,8 @@ int main() {
     crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
     printf("\n");
     //DECRYPTION AEAD
-//    printf("==================AEAD Decryption==================\n");
-//    crypto_aead_decrypt(m, &mlen, c, clen, ad, adlen, NULL, npub, k);
+    printf("==================AEAD Decryption==================\n");
+    crypto_aead_decrypt(m, &mlen, c, clen, ad, adlen, NULL, npub, k);
 
     return 0;
 }
