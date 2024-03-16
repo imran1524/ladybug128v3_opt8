@@ -18,7 +18,6 @@ int main() {
     unsigned char m[N];  // buffer for decrypted message
     unsigned char nsec;                  // not used, can be NULL or any value
     unsigned long long adlen = 16; // length of the associated data
-//    print_vector(text, sizeof(text)/sizeof(text[0]));
     printf("=======================INITIALIZATION=======================\n");
     //GENERATING NONCE
     uint8_t npub[16];

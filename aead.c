@@ -14,6 +14,18 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     //SET THE POINTER OF CIPHERTEXT BY ADDING MESSAGE LENGTH AND ASSOCIATED DATA LENGTH
     *clen = mlen + AD_BYTES;
 
+    printf("NONCE USED IN AEAD ENCRYPTION\n");
+    print_vector(npub, 16);
+    printf("\n");
+
+    printf("ASSOCIATED DATA USED IN AEAD ENCRYPTION\n");
+    print_vector(ad, 16);
+    printf("\n");
+
+    printf("KEY USED IN AEAD ENCRYPTION\n");
+    print_vector(k, 16);
+    printf("\n");
+
     //LOAD KEY AND NONCE
     //key, k is 128-bits that is divided into two 64-bit keys, public nonce, npub is 128-bits
     const uint64_t K0 = LOAD_BYTES(k, 8);
@@ -181,6 +193,19 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
                            const unsigned char* k){
 
     (void)nsec;
+
+    printf("NONCE USED IN AEAD DECRYPTION\n");
+    print_vector(npub, 16);
+    printf("\n");
+
+    printf("ASSOCIATED DATA USED IN AEAD DECRYPTION\n");
+    print_vector(ad, 16);
+    printf("\n");
+
+    printf("KEY USED IN AEAD DECRYPTION\n");
+    print_vector(k, 16);
+    printf("\n");
+
     if(clen < AD_BYTES){
         return -1;
     }
@@ -255,6 +280,7 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
         printf("Ciphetext block = %d\n", block + 1);
         print_vector(c, 8);
         printf("\n");
+
         STORE_BYTES(m, s.x[0] ^ c0, 8);
         printf("clen = %d\n", clen);
         printf("Message block = %d\n", block + 1);
@@ -284,11 +310,10 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //    printf("\n");
 //    s.x[0] = CLEAR_BYTES(s.x[0], clen);
 //
-////    print_vector(s.x[0], 8);
+//    print_vector(s.x[0], 8);
 //    s.x[0] |= c0;
 //    s.x[0] ^= PAD(clen);
 //    c += clen;
-
 
     //-----
     // FINAL CIPHERTEXT BLOCK
@@ -296,17 +321,17 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     printf("Final ciphertext_block\n");
     print_vector(c, 8);
     printf("\n");
+
     STORE_BYTES(m, s.x[0] ^ c0, clen);
     printf("Final message_block\n");
     print_vector(m, 8);
     printf("\n");
+
+    printf("clen = %zu\n", clen);
+    s.x[0] = CLEAR_BYTES(s.x[0], clen);
+    s.x[0] |= c0;
     s.x[0] ^= PAD(clen);
     c += clen;
-
-    //-----
-//    printf("Print the padded ciphertext\n");
-//    print_state(&s);
-//    printf("\n");
 
     //FINALIZE
     s.x[1] ^= K0;
