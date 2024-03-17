@@ -19,7 +19,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
                            const unsigned char* c, size_t clen,
                            const unsigned char* ad, size_t adlen,
-                           unsigned char* nsec,
+                           const unsigned char* nsec,
                            const unsigned char* npub,
                            const unsigned char* k);
 
