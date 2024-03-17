@@ -66,7 +66,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     if (adlen){
         //FULL ASSOCIATED DATA BLOCKS
         while(adlen >= RATE){
-            printf("adlen in encryption = %zu\n", adlen);
+//            printf("adlen in encryption = %zu\n", adlen);
             s.x[0] ^= LOAD_BYTES(ad, 8);
 //            printf("4. AEAD ENCRYPTION AD: STATE PROCESSING FULL AD BEFORE APPLYING FORWARD PERMUTATION\n");
 //            print_state(&s);
@@ -117,9 +117,9 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     size_t block = 0;
     while (mlen >= RATE){
         //LOADING 8 BYTES FROM THE MESSAGE AND XOR WITH THE FIRST BLOCK OF THE STATE
-        printf("Message block: %d\n", block + 1);
-        printf("mlen = %d\n", mlen);
-        printf("\n");
+//        printf("Message block: %d\n", block + 1);
+//        printf("mlen = %d\n", mlen);
+//        printf("\n");
 
         printf("Message Block = %d\n", block + 1);
         print_vector(m, 8);
@@ -129,8 +129,8 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
         STORE_BYTES(c, s.x[0], 8);
         printf("Ciphertext block: %d\n", block + 1);
         print_vector(c, 8);
-        printf("Address of c variable = %p\n", (void*)&c);
-        printf("Current address pointed by c = %p\n", (void*)c);
+//        printf("Address of c variable = %p\n", (void*)&c);
+//        printf("Current address pointed by c = %p\n", (void*)c);
         printf("\n");
 
 //        printf("STATE AFTER ABSORBING PLAINTEXT BEFORE APPLYING PERMUTATION\n");
@@ -155,9 +155,12 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     printf("Final message block\n");
     print_vector(m, 8);
     printf("\n");
+
     STORE_BYTES(c, s.x[0], mlen);
     printf("Final ciphetext:\n");
     print_vector(c, 8);
+    printf("\n");
+
     s.x[0] ^= PAD(mlen);
     c += mlen;
 //    printf("\n");
@@ -241,11 +244,11 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //    print_state(&s);
 //    printf("\n");
 
-    //APPLY INVERSE PERMUTATION
+    //APPLY FORWARD PERMUTATION
     FP1(&s);
 //    printf("2. AEAD DECRYPTION INITIALIZATION: STATE AFTER FORWARD TRANSFORM\n");
 //    print_state(&s);
-    printf("\n");
+//    printf("\n");
 
     s.x[3] ^= K0;
     s.x[4] ^= K1;
@@ -255,20 +258,15 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //    printf("\n");
 
     //END OF INILIALIZATION DOMAIN
-
-
-
 //START OF ASSOCIATED DATA DOMAIN
     if(adlen){
         //FULL ASSOCIATED DATA BLOCKS
         while(adlen >= RATE){
-            printf("adlen in decryption = %d\n", adlen);
+//            printf("adlen in decryption = %d\n", adlen);
             s.x[0] ^= LOAD_BYTES(ad, 8);
 //            printf("4. AEAD DECRYPTION AD: STATE BEFORE PROCESSING FULL ASSOCIATED DATA\n");
 //            print_state(&s);
 //            printf("\n");
-            //APPLY INVERSE PERMUTATION
-//            IP1(&s);
 
             //APPLY FORWARD PERMUTATION
             FP1(&s);
@@ -293,8 +291,6 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //        print_state(&s);
 //        printf("\n");
 
-//        //APPLY INVERSE PERMUTATION
-//        IP1(&s);
         //APPLY FORWARD PERMUTATION
         FP1(&s);
 //        printf("8. AEAD DECRYPTION AD: STATE AFTER PROCESSING PADDED AD AFTER FORWARD PERMUTATION\n");
@@ -320,7 +316,7 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
         printf("\n");
 
         STORE_BYTES(m, s.x[0] ^ c0, 8);
-        printf("clen = %d\n", clen);
+//        printf("clen = %d\n", clen);
         printf("Message block = %d\n", block + 1);
         print_vector(m, 8);
         printf("\n");
@@ -338,6 +334,7 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     }
 
     //FINAL CIPHERTEXT BLOCK
+    printf("clen = %zu\n", clen);
     uint64_t c0 = LOAD_BYTES(c, clen);
     printf("Final ciphertext_block\n");
     print_vector(c, 8);
@@ -383,17 +380,6 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     //VERIFY TAG (THIS OPERATION MUST BE CONSTANT TIME)
     result = (((result - 1) >> 8) & 1) - 1;
 
-// Initialize 'result' to 0, assuming tags match
-//    size_t result = 0;
-
-// Check each byte of the computed tag and the expected tag
-//    for(size_t i = 0; i < AD_BYTES; i++) {
-//        if(c[i] != t[i]) {
-//            // If any byte doesn't match, set 'result' to 1 (indicating failure) and break
-//            result = 1;
-//            break;
-//        }
-//    }
     return result;
 }
 

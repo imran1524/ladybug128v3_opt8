@@ -7,7 +7,7 @@
 /*Define word related operations*/
 
 //GET BYTE FROM 64-BIT WORD
-#define GET_BYTE(x, i) ((uint8_t)((uint64_t)(x) >>(56 - 8 * (i))))
+#define GET_BYTE(x, i) ((uint8_t)((uint64_t)(x) >> (56 - 8 * (i))))
 
 //SET BYTE IN 64-BIT WORD
 #define SET_BYTE(b, i) ((uint64_t)(b) << (56 - 8 * (i)))

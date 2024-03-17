@@ -7,9 +7,10 @@
  void FP1(state_t *s){
 //    printf("Round # 1\n");
     forward_permutation(s);
-//    printf("Round # 2\n");
 //    forward_permutation(s);
-//    printf("Round # 3\n");
+//    forward_permutation(s);
+//    forward_permutation(s);
+//    forward_permutation(s);
 //    forward_permutation(s);
 };
 

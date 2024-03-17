@@ -12,7 +12,7 @@ int main() {
 //    }
 //    printf("\n");
 //    print_vector(text, mlen);
-    printf("mlen = %zu\n", mlen);
+//    printf("mlen = %zu\n", mlen);
     unsigned char c[1024]; // Assuming 1024 is sufficient; adjust based on your needs
     unsigned long long clen;
     unsigned char m[N];  // buffer for decrypted message
@@ -26,8 +26,8 @@ int main() {
 //    printf("128-bit NONCE (N):\n");
 //    print_vector(npub, 16);
 //    printf("\n");
-//
-    unsigned char ad[16] = "Associated Data";
+    unsigned char ad[16] = "Associated Data can be of any size";
+    unsigned char modified_ad[16] = "Associated Data can be of any sizf";
     unsigned long long ad_len = strlen((char *)ad);
 
     unsigned char k[16] = {0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0x00};
@@ -43,7 +43,8 @@ int main() {
     printf("==================AEAD Decryption==================\n");
     size_t result;
     result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
-    printf("result = %zu\n", result);
+//    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
 
+    printf("result = %zu\n", result);
     return 0;
 }
