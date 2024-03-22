@@ -105,34 +105,32 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     }
 
     //DOMAIN SEPARATION BETWEEN ASSOCIATED DATA AND PLAINTEXT
-    s.x[4] ^= 1;
-//    printf("9. AEAD ENCRYPTION AD: STATE AFTER DOMAIN SEPARATION BETWEEN ASSOCIATED DATA PLAINTEXT\n");
-//    print_state(&s);
-//    printf("\n");
-    //END OF ASSOCIATED DOMAIN
+        s.x[4] ^= 1;
+    //printf("9. AEAD ENCRYPTION AD: STATE AFTER DOMAIN SEPARATION BETWEEN ASSOCIATED DATA PLAINTEXT\n");
+    //print_state(&s);
+    //printf("\n");
 
-//PROCESSING CIPHERTEXT
-    //FULL PLAINTEXT BLOCKS
-//    printf("=======================PLAINTEXT BLOCK=======================\n");
+    //END OF ASSOCIATED DOMAIN
+    //======================== FINAL PLAINTEXT BLOCK PROCESSING =======================================
     size_t block = 0;
+    uint64_t test  = 0;
     while (mlen >= RATE){
         //LOADING 8 BYTES FROM THE MESSAGE AND XOR WITH THE FIRST BLOCK OF THE STATE
 //        printf("Message block: %d\n", block + 1);
 //        printf("mlen = %d\n", mlen);
 //        printf("\n");
 
-        printf("Message Block = %d\n", block + 1);
-        print_vector(m, 8);
-        printf("\n");
+//        printf("Message Block = %d\n", block + 1);
+//        print_vector(m, 8);
+//        printf("\n");
 
         s.x[0] ^= LOAD_BYTES(m, 8);
         STORE_BYTES(c, s.x[0], 8);
-        printf("Ciphertext block: %d\n", block + 1);
-        print_vector(c, 8);
+//        printf("Ciphertext block: %d\n", block + 1);
+//        print_vector(c, 8);
 //        printf("Address of c variable = %p\n", (void*)&c);
 //        printf("Current address pointed by c = %p\n", (void*)c);
-        printf("\n");
-
+//        printf("\n");
 //        printf("STATE AFTER ABSORBING PLAINTEXT BEFORE APPLYING PERMUTATION\n");
 //        print_state(&s);
 //        printf("\n");
@@ -148,25 +146,85 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
         mlen -= RATE;
         block++;
     }
+    //======================== FINAL PLAINTEXT BLOCK PROCESSING =======================================
+//    printf("Final message size = %zu\n", mlen);
+//    printf("FINAL MESSAGE BLOCK:\n");
+//    print_vector(m, 8);
+//    printf("\n");
 
-    //FINAL PLAINTEXT BLOCK
-    printf("Final message size = %d\n", mlen);
-    s.x[0] ^= LOAD_BYTES(m, mlen);
-    printf("Final message block\n");
-    print_vector(m, 8);
+//    printf("STATE BEFORE XORING WITH THE LOADED PLAINTEXT\n");
+//    print_state(&s);
+//    printf("\n");
+//
+//    printf("STATE BEFORE XORING WITH THE LOADED PLAINTEXT IN BLOCK\n");
+//    print_data_byte(&s);
+//    printf("\n");
+
+    //LOADING FINAL MESSAGE BLOCK AND XOR WITH THE STATE
+    s.x[0] ^= LOAD_BYTES(m, mlen); //mlen = 3
+//        test = LOAD_BYTES(m, mlen);
+//        printf("test = %llu\n", test);
+
+//    temp = s.x[0] ^ LOAD_BYTES(m, mlen);
+//    s.x[0] = temp;
+        //00000000000000000000000000000000000000 00101110 01110011 01101011
+
+       //00000000000000000000000000000000000000
+       // 00101110 = 46
+       // 01110011 = 115
+       // 01101011 = 107
+        //111010011011 0 0 1 1 1 1 1 0 1 0 1 1 1 0 0 0 1 1 1 0 1 0 0 0 0 1 1 0 1 0 0 1 0 1 1 0 1 1 0 0 1 0 1 0 1 0 0 1 0 1 0 1
+
+
+    //Operation #1
+    //LOAD_BYTES(m, mlen) is function which returns a 64-bit number by
+    //loading mlen bytes from m
+//    s.x[0] = s.x[0] ^ LOAD_BYTES(m, mlen);
+
+//    printf("STATE AFTER PROCESSING LOADING MESSAGE FINAL BLOCK TO STATE WITHOUT PADDING\n");
+//    print_data_byte(&s);
+
+    printf("STATE AFTER XORING WITH LOADED PLAINTEXT\n");
+    print_state(&s);
     printf("\n");
 
+//    printf("STATE AFTER XORING WITH THE LOADED PLAINTEXT IN BLOCK\n");
+//    print_data_byte(&s);
+//    printf("\n");
+
+    //PRODUCING FINAL CIPHERTEXT BLOCK FROM FINAL PLAINTEXT BLOCK
     STORE_BYTES(c, s.x[0], mlen);
-    printf("Final ciphetext:\n");
+    printf("FINAL CIPHERTEXT BLOCK WITHOUT PADDING:\n");
     print_vector(c, 8);
     printf("\n");
 
+    printf("------------------STATE BEFORE ADDING PADDING----------------------\n");
+//    print_data_byte(&s);
+//    printf("\n");
+
+    printf("ENCRYPTION: STATE BEFORE PADDING \n");
+    print_state(&s);
+    printf("\n");
+
+    printf("ENCRYPTION: STATE BEFORE PADDING IN BLOCK\n");
+    print_data_byte(&s);
+    printf("\n");
+
+    //APPLYING PADDING TO THE STATE AFTER PROCESSING FINAL CIPHERTEXT BLOCK
     s.x[0] ^= PAD(mlen);
+    printf("ENCRYPTION: STATE AFTER PADDING \n");
+    print_state(&s);
+    printf("\n");
+
+    printf("ENCRYPTION: STATE AFTER PADDING IN BLOCK\n");
+    print_data_byte(&s);
+    printf("\n");
+
+//    printf("------------------STATE AFTER ADDING PADDING-----------------------\n");
+//    print_data_byte(&s);
+
     c += mlen;
-//    printf("\n");
-//    printf("Padded plaintext\n");
-//    print_state(&s);
-//    printf("\n");
+
 //    END OF PLAINtext
 
     //FINALIZATION DOMAIN
@@ -274,6 +332,7 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //            print_state(&s);
 //            printf("\n");
 
+
             ad += RATE;
             adlen -= RATE;
         }
@@ -285,8 +344,12 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //        print_state(&s);
 //        printf("\n");
 
-        s.x[0] ^= PAD(adlen);
 
+        printf("DECRYPTION: STATE BEFORE PADDING IN BLOCKS\n");
+        print_data_byte(&s);
+        printf("\n");
+
+        s.x[0] ^= PAD(adlen);
 //        printf("7. AEAD DECRYPTION AD: STATE AFTER PROCESSING PADDED AD BEFORE FORWARD PERMUTATION\n");
 //        print_state(&s);
 //        printf("\n");
@@ -339,14 +402,41 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     printf("Final ciphertext_block\n");
     print_vector(c, 8);
     printf("\n");
+
     STORE_BYTES(m, s.x[0] ^c0, clen);
     printf("Final message_block\n");
     print_vector(m, 8);
     printf("\n");
+
+    printf("DECRYPTION: BEFORE CLEAR STATE\n");
+    print_state(&s);
+    printf("\n");
+
     s.x[0] = CLEAR_BYTES(s.x[0], clen);
 
+    printf("DECRYPTION: AFTER CLEAR STATE\n");
+    print_state(&s);
+    printf("\n");
     s.x[0] |= c0;
+
+    printf("DECRYPTION: STATE \n");
+    print_state(&s);
+    printf("\n");
+//
+    printf("DECRYPTION: STATE BEFORE PADDING IN BLOCKS\n");
+    print_data_byte(&s);
+    printf("\n");
+
     s.x[0] ^= PAD(clen);
+
+    printf("DECRYPTION: STATE AFTER PADDING\n");
+    print_state(&s);
+    printf("\n");
+
+    printf("DECRYPTION: STATE AFTER PADDING IN BLOCKS\n");
+    print_data_byte(&s);
+    printf("\n");
+
     c += clen;
 
     //FINALIZE
