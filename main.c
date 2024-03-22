@@ -26,23 +26,30 @@ int main() {
 //    printf("128-bit NONCE (N):\n");
 //    print_vector(npub, 16);
 //    printf("\n");
-    unsigned char ad[16] = "Associated Data can be of any size";
-    unsigned char modified_ad[16] = "Associated Data can be of any sizf";
-    unsigned long long ad_len = strlen((char *)ad);
 
+//EMPTY ASSOCIATED DATA
+//    unsigned char ad[34] = {};
+    unsigned char ad[34] = "Associated Data can be of any size";
+    unsigned char modified_ad[34] = "Associated Data can be of any sizf";
+    unsigned long long ad_len = strlen((char *)ad);
     unsigned char k[16] = {0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0x00};
 //    printf("128-bit KEY (K):\n");
 //    print_vector(k, 16);
 //    printf("\n");
 
-    //ENCRYPT AEAD
+    //ENCRYPT AEAD WITH MODIFIED ASSOCIATED DATA
     printf("==================AEAD Encryption==================\n");
     crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
     printf("\n");
+
     //DECRYPTION AEAD
     printf("==================AEAD Decryption==================\n");
     size_t result;
+
+    //DECRYPTION WITH SAME ASSOCIATED DATA
     result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
+
+    //DECRYPTION WITH MODIFIED ASSOCIATED DATA
 //    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
 
     printf("result = %zu\n", result);

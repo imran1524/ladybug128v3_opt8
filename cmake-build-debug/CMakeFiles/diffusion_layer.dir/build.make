@@ -44,19 +44,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake
+CMAKE_COMMAND = /Applications/CLion.app/Contents/bin/cmake/mac/x64/bin/cmake
 
 # The command to remove a file.
-RM = /Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -E rm -f
+RM = /Applications/CLion.app/Contents/bin/cmake/mac/x64/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer"
+CMAKE_SOURCE_DIR = /Users/ikhan/CLionProjects/AEAD
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug"
+CMAKE_BINARY_DIR = /Users/ikhan/CLionProjects/AEAD/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/diffusion_layer.dir/depend.make
@@ -70,74 +70,74 @@ include CMakeFiles/diffusion_layer.dir/progress.make
 include CMakeFiles/diffusion_layer.dir/flags.make
 
 CMakeFiles/diffusion_layer.dir/main.c.o: CMakeFiles/diffusion_layer.dir/flags.make
-CMakeFiles/diffusion_layer.dir/main.c.o: /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/main.c
+CMakeFiles/diffusion_layer.dir/main.c.o: /Users/ikhan/CLionProjects/AEAD/main.c
 CMakeFiles/diffusion_layer.dir/main.c.o: CMakeFiles/diffusion_layer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/diffusion_layer.dir/main.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/main.c.o -MF CMakeFiles/diffusion_layer.dir/main.c.o.d -o CMakeFiles/diffusion_layer.dir/main.c.o -c "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/main.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/diffusion_layer.dir/main.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/main.c.o -MF CMakeFiles/diffusion_layer.dir/main.c.o.d -o CMakeFiles/diffusion_layer.dir/main.c.o -c /Users/ikhan/CLionProjects/AEAD/main.c
 
 CMakeFiles/diffusion_layer.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/diffusion_layer.dir/main.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/main.c" > CMakeFiles/diffusion_layer.dir/main.c.i
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/ikhan/CLionProjects/AEAD/main.c > CMakeFiles/diffusion_layer.dir/main.c.i
 
 CMakeFiles/diffusion_layer.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/diffusion_layer.dir/main.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/main.c" -o CMakeFiles/diffusion_layer.dir/main.c.s
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/ikhan/CLionProjects/AEAD/main.c -o CMakeFiles/diffusion_layer.dir/main.c.s
 
 CMakeFiles/diffusion_layer.dir/utils.c.o: CMakeFiles/diffusion_layer.dir/flags.make
-CMakeFiles/diffusion_layer.dir/utils.c.o: /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/utils.c
+CMakeFiles/diffusion_layer.dir/utils.c.o: /Users/ikhan/CLionProjects/AEAD/utils.c
 CMakeFiles/diffusion_layer.dir/utils.c.o: CMakeFiles/diffusion_layer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/diffusion_layer.dir/utils.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/utils.c.o -MF CMakeFiles/diffusion_layer.dir/utils.c.o.d -o CMakeFiles/diffusion_layer.dir/utils.c.o -c "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/utils.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/diffusion_layer.dir/utils.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/utils.c.o -MF CMakeFiles/diffusion_layer.dir/utils.c.o.d -o CMakeFiles/diffusion_layer.dir/utils.c.o -c /Users/ikhan/CLionProjects/AEAD/utils.c
 
 CMakeFiles/diffusion_layer.dir/utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/diffusion_layer.dir/utils.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/utils.c" > CMakeFiles/diffusion_layer.dir/utils.c.i
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/ikhan/CLionProjects/AEAD/utils.c > CMakeFiles/diffusion_layer.dir/utils.c.i
 
 CMakeFiles/diffusion_layer.dir/utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/diffusion_layer.dir/utils.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/utils.c" -o CMakeFiles/diffusion_layer.dir/utils.c.s
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/ikhan/CLionProjects/AEAD/utils.c -o CMakeFiles/diffusion_layer.dir/utils.c.s
 
 CMakeFiles/diffusion_layer.dir/permutations.c.o: CMakeFiles/diffusion_layer.dir/flags.make
-CMakeFiles/diffusion_layer.dir/permutations.c.o: /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/permutations.c
+CMakeFiles/diffusion_layer.dir/permutations.c.o: /Users/ikhan/CLionProjects/AEAD/permutations.c
 CMakeFiles/diffusion_layer.dir/permutations.c.o: CMakeFiles/diffusion_layer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/diffusion_layer.dir/permutations.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/permutations.c.o -MF CMakeFiles/diffusion_layer.dir/permutations.c.o.d -o CMakeFiles/diffusion_layer.dir/permutations.c.o -c "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/permutations.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/diffusion_layer.dir/permutations.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/permutations.c.o -MF CMakeFiles/diffusion_layer.dir/permutations.c.o.d -o CMakeFiles/diffusion_layer.dir/permutations.c.o -c /Users/ikhan/CLionProjects/AEAD/permutations.c
 
 CMakeFiles/diffusion_layer.dir/permutations.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/diffusion_layer.dir/permutations.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/permutations.c" > CMakeFiles/diffusion_layer.dir/permutations.c.i
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/ikhan/CLionProjects/AEAD/permutations.c > CMakeFiles/diffusion_layer.dir/permutations.c.i
 
 CMakeFiles/diffusion_layer.dir/permutations.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/diffusion_layer.dir/permutations.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/permutations.c" -o CMakeFiles/diffusion_layer.dir/permutations.c.s
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/ikhan/CLionProjects/AEAD/permutations.c -o CMakeFiles/diffusion_layer.dir/permutations.c.s
 
 CMakeFiles/diffusion_layer.dir/round.c.o: CMakeFiles/diffusion_layer.dir/flags.make
-CMakeFiles/diffusion_layer.dir/round.c.o: /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/round.c
+CMakeFiles/diffusion_layer.dir/round.c.o: /Users/ikhan/CLionProjects/AEAD/round.c
 CMakeFiles/diffusion_layer.dir/round.c.o: CMakeFiles/diffusion_layer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/diffusion_layer.dir/round.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/round.c.o -MF CMakeFiles/diffusion_layer.dir/round.c.o.d -o CMakeFiles/diffusion_layer.dir/round.c.o -c "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/round.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/diffusion_layer.dir/round.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/round.c.o -MF CMakeFiles/diffusion_layer.dir/round.c.o.d -o CMakeFiles/diffusion_layer.dir/round.c.o -c /Users/ikhan/CLionProjects/AEAD/round.c
 
 CMakeFiles/diffusion_layer.dir/round.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/diffusion_layer.dir/round.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/round.c" > CMakeFiles/diffusion_layer.dir/round.c.i
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/ikhan/CLionProjects/AEAD/round.c > CMakeFiles/diffusion_layer.dir/round.c.i
 
 CMakeFiles/diffusion_layer.dir/round.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/diffusion_layer.dir/round.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/round.c" -o CMakeFiles/diffusion_layer.dir/round.c.s
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/ikhan/CLionProjects/AEAD/round.c -o CMakeFiles/diffusion_layer.dir/round.c.s
 
 CMakeFiles/diffusion_layer.dir/aead.c.o: CMakeFiles/diffusion_layer.dir/flags.make
-CMakeFiles/diffusion_layer.dir/aead.c.o: /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/aead.c
+CMakeFiles/diffusion_layer.dir/aead.c.o: /Users/ikhan/CLionProjects/AEAD/aead.c
 CMakeFiles/diffusion_layer.dir/aead.c.o: CMakeFiles/diffusion_layer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/diffusion_layer.dir/aead.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/aead.c.o -MF CMakeFiles/diffusion_layer.dir/aead.c.o.d -o CMakeFiles/diffusion_layer.dir/aead.c.o -c "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/aead.c"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/diffusion_layer.dir/aead.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/aead.c.o -MF CMakeFiles/diffusion_layer.dir/aead.c.o.d -o CMakeFiles/diffusion_layer.dir/aead.c.o -c /Users/ikhan/CLionProjects/AEAD/aead.c
 
 CMakeFiles/diffusion_layer.dir/aead.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/diffusion_layer.dir/aead.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/aead.c" > CMakeFiles/diffusion_layer.dir/aead.c.i
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/ikhan/CLionProjects/AEAD/aead.c > CMakeFiles/diffusion_layer.dir/aead.c.i
 
 CMakeFiles/diffusion_layer.dir/aead.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/diffusion_layer.dir/aead.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/aead.c" -o CMakeFiles/diffusion_layer.dir/aead.c.s
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/ikhan/CLionProjects/AEAD/aead.c -o CMakeFiles/diffusion_layer.dir/aead.c.s
 
 # Object files for target diffusion_layer
 diffusion_layer_OBJECTS = \
@@ -157,7 +157,7 @@ diffusion_layer: CMakeFiles/diffusion_layer.dir/round.c.o
 diffusion_layer: CMakeFiles/diffusion_layer.dir/aead.c.o
 diffusion_layer: CMakeFiles/diffusion_layer.dir/build.make
 diffusion_layer: CMakeFiles/diffusion_layer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable diffusion_layer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable diffusion_layer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/diffusion_layer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -169,6 +169,6 @@ CMakeFiles/diffusion_layer.dir/clean:
 .PHONY : CMakeFiles/diffusion_layer.dir/clean
 
 CMakeFiles/diffusion_layer.dir/depend:
-	cd "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer" "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer" "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug" "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug" "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/Sourcecode/diffusion_layer/cmake-build-debug/CMakeFiles/diffusion_layer.dir/DependInfo.cmake" "--color=$(COLOR)"
+	cd /Users/ikhan/CLionProjects/AEAD/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/ikhan/CLionProjects/AEAD /Users/ikhan/CLionProjects/AEAD /Users/ikhan/CLionProjects/AEAD/cmake-build-debug /Users/ikhan/CLionProjects/AEAD/cmake-build-debug /Users/ikhan/CLionProjects/AEAD/cmake-build-debug/CMakeFiles/diffusion_layer.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/diffusion_layer.dir/depend
 

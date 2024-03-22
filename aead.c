@@ -137,9 +137,9 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
         //APPLY FORWARD PERMUTATION
         FP1(&s);
-//        printf("STATE AFTER ABSORBING PLAINTEXT AFTER APPLYING PERMUTATION\n");
-//        print_state(&s);
-//        printf("\n");
+        printf("STATE AFTER ABSORBING PLAINTEXT AFTER APPLYING PERMUTATION\n");
+        print_state(&s);
+        printf("\n");
 
         m += RATE;
         c += RATE;
@@ -222,7 +222,6 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
 //    printf("------------------STATE AFTER ADDING PADDING-----------------------\n");
 //    print_data_byte(&s);
-
     c += mlen;
 
 //    END OF PLAINtext
@@ -232,25 +231,29 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //    printf("=======================FINALIZATION=======================\n");
     s.x[1] ^= K0;
     s.x[2] ^= K1;
-//    printf("STATE AFTER FIRST KEY XOR\n");
+//    printf("STATE BEFORE FIRST KEY XOR\n");
 //    print_state(&s);
 //    printf("\n");
     //APPLY FORWARD PERMUTATION
     FP1(&s);
 
+    printf("STATE AFTER FIRST KEY XOR\n");
+    print_state(&s);
+    printf("\n");
+
     //XORING K||0*
     s.x[3] ^= K0;
     s.x[4] ^= K1;
-//    printf("STATE AFTER second KEY XOR\n");
-//    print_state(&s);
-//    printf("\n");
+    printf("STATE AFTER APPLYING KEY\n");
+    print_state(&s);
+    printf("\n");
 
     //SET TAG
-    //128-bit tag is the last two block of the most updated state and stored at the end of ciohertext
-//    printf("Tag\n");
-//    printf("Current address pointed by c = %p\n", (void*)c);
-    STORE_BYTES(c, s.x[3], 8);
-    STORE_BYTES(c + 8, s.x[4], 8);
+    //128-bit tag is the last two block of the most updated state and stored at the end of ciphertext
+    printf("Tag\n");
+    printf("Current address pointed by c = %p\n", (void*)c);
+    STORE_BYTES(c, s.x[3], 8); //LOADING FIRST PART OF 64-BIT TAG INTO THE FOURTH BLOCK OF THE STATE
+    STORE_BYTES(c + 8, s.x[4], 8); //LOADING SECOND PART OF THE 64-BIT TAGE INTO THE FIFTH BLOCK OF THE STATE
 
     return 0;
 }
@@ -332,7 +335,6 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //            print_state(&s);
 //            printf("\n");
 
-
             ad += RATE;
             adlen -= RATE;
         }
@@ -343,7 +345,6 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //        printf("6. AEAD DECRYPTION AD: STATE AFTER PADDING\n");
 //        print_state(&s);
 //        printf("\n");
-
 
         printf("DECRYPTION: STATE BEFORE PADDING IN BLOCKS\n");
         print_data_byte(&s);
@@ -422,7 +423,7 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     printf("DECRYPTION: STATE \n");
     print_state(&s);
     printf("\n");
-//
+
     printf("DECRYPTION: STATE BEFORE PADDING IN BLOCKS\n");
     print_data_byte(&s);
     printf("\n");
@@ -456,10 +457,10 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 
     //SET TAG
     uint8_t t[16];
-    STORE_BYTES(t, s.x[3], 8);
-    STORE_BYTES(t + 8, s.x[4], 8);
+    STORE_BYTES(t, s.x[3], 8); //LOAD FIRST PART OF 64-BIT TAG ON FORTH PART OF THE KEY
+    STORE_BYTES(t + 8, s.x[4], 8); //LOAD SECOND PART OF 64-BIT TAG ON FIFTH PART OF THE KEY
 
-    //VERIFY TAG
+    //VERIFY TAG BY COMPARING THE GENERATED TAG WITH THE ORIGINAL TAG
     size_t i;
     size_t result = 0;
     for(i = 0; i < AD_BYTES; i++){
