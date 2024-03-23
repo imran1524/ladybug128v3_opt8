@@ -45,18 +45,20 @@ int main() {
     crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
     printf("\n");
 
-    printf("CIPHERTEXT:\n");
-    print_vector(c, clen);
+//    printf("CIPHERTEXT:\n");
+//    print_vector(c, clen);
     //DECRYPTION AEAD
     printf("==================AEAD Decryption==================\n");
     size_t result;
 
     //DECRYPTION WITH SAME ASSOCIATED DATA
-    result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
-    printf("result = %d\n", result);
+//    result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
+//    printf("result = %d\n", result);
     //DECRYPTION WITH MODIFIED ASSOCIATED DATA
-//    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
-    printf("RECOVERED PLAINTEXT:\n");
+    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
+    result != 0 ? printf("Tag verification is failed.\n") : print_character(m, mlen);
+//    printf("result = %zu\n", result);
+//    printf("RECOVERED PLAINTEXT:\n");
 //    print_vector(m, mlen);
 //    print_character(m, mlen);
     return 0;
