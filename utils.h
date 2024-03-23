@@ -12,4 +12,5 @@ void blocks_to_text(state_t* s, char* outText, size_t maxTextLength);
 void print_bundles(uint8_t *bundle, uint8_t size);
 void create_blocks_from_bundles(uint8_t bundles[64], state_t *s);
 void generate_nonce(uint8_t *nonce, size_t nonce_len);
+void print_character(uint8_t *vector, size_t vector_size);
 #endif //DIFFUSION_LAYER_UTILS_H

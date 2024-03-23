@@ -6,6 +6,7 @@
 
 int main() {
     unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks.";
+//    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blo.";
     size_t mlen = strlen((char *)text);
 //    for(size_t i = 0; i < mlen; i++){
 //        printf("%c", text[i]);
@@ -39,19 +40,24 @@ int main() {
 
     //ENCRYPT AEAD WITH MODIFIED ASSOCIATED DATA
     printf("==================AEAD Encryption==================\n");
+    unsigned char* ciphertext;
+
     crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
     printf("\n");
 
+    printf("CIPHERTEXT:\n");
+    print_vector(c, clen);
     //DECRYPTION AEAD
     printf("==================AEAD Decryption==================\n");
     size_t result;
 
     //DECRYPTION WITH SAME ASSOCIATED DATA
     result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
-
+    printf("result = %d\n", result);
     //DECRYPTION WITH MODIFIED ASSOCIATED DATA
 //    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
-
-    printf("result = %zu\n", result);
+    printf("RECOVERED PLAINTEXT:\n");
+//    print_vector(m, mlen);
+//    print_character(m, mlen);
     return 0;
 }

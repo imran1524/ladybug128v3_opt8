@@ -1,4 +1,4 @@
-# Install script for directory: /Users/ikhan/CLionProjects/AEAD
+# Install script for directory: /Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

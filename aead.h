@@ -8,8 +8,7 @@
 typedef struct {
     uint64_t x[BLOCK_NUMBER];
 }state_t;
-
-size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
+ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
                            const unsigned char* m, size_t mlen,
                            const unsigned char* ad, size_t adlen,
                            const unsigned char* nsec,

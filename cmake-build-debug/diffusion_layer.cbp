@@ -8,113 +8,111 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/ikhan/CLionProjects/AEAD/cmake-build-debug"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="diffusion_layer">
-				<Option output="/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/diffusion_layer" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/ikhan/CLionProjects/AEAD/cmake-build-debug"/>
+				<Option output="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/diffusion_layer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 diffusion_layer"/>
-					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 diffusion_layer"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="diffusion_layer/fast">
-				<Option output="/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/diffusion_layer" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/ikhan/CLionProjects/AEAD/cmake-build-debug"/>
+				<Option output="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/diffusion_layer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/local/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 diffusion_layer/fast"/>
-					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 diffusion_layer/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/ikhan/CLionProjects/AEAD/cmake-build-debug"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/ikhan/CLionProjects/AEAD/cmake-build-debug"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j6 -f &quot;/Users/ikhan/CLionProjects/AEAD/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/aead.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/aead.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/api.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/api.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/constants.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/constants.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/main.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/main.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/permutations.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/permutations.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/permutations.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/permutations.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/round.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/round.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/round.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/round.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/utils.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/utils.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/utils.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/utils.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/word.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/word.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ikhan/CLionProjects/AEAD/CMakeLists.txt">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
