@@ -90,4 +90,7 @@ CMakeFiles/diffusion_layer.dir/permutations.c.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/malloc/_ptrcheck.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_dev_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_mode_t.h \
-  /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/api.h
+  /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/api.h \
+  /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/stddef.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include/__stddef_max_align_t.h

@@ -142,7 +142,6 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
         c += RATE;
         mlen -= RATE;
         block++;
-
     }
 
     //======================== FINAL PLAINTEXT BLOCK PROCESSING =======================================
@@ -154,7 +153,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //    printf("STATE BEFORE XORING WITH THE LOADED PLAINTEXT\n");
 //    print_state(&s);
 //    printf("\n");
-//
+
 //    printf("STATE BEFORE XORING WITH THE LOADED PLAINTEXT IN BLOCK\n");
 //    print_data_byte(&s);
 //    printf("\n");
@@ -162,17 +161,6 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     printf("mlen in the final round = %zu\n", mlen);
     //LOADING FINAL MESSAGE BLOCK AND XOR WITH THE STATE
     s.x[0] ^= LOAD_BYTES(m, mlen); //mlen = 3
-//        test = LOAD_BYTES(m, mlen);
-//        printf("test = %llu\n", test);
-
-//    temp = s.x[0] ^ LOAD_BYTES(m, mlen);
-//    s.x[0] = temp;
-        //00000000000000000000000000000000000000 00101110 01110011 01101011
-        //00000000000000000000000000000000000000
-        // 00101110 = 46
-        // 01110011 = 115
-        // 01101011 = 107
-        //111010011011 0 0 1 1 1 1 1 0 1 0 1 1 1 0 0 0 1 1 1 0 1 0 0 0 0 1 1 0 1 0 0 1 0 1 1 0 1 1 0 0 1 0 1 0 1 0 0 1 0 1 0 1
 
     //Operation #1
     //LOAD_BYTES(m, mlen) is function which returns a 64-bit number by
@@ -222,16 +210,16 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //    print_data_byte(&s);
     c += mlen;
 
-//    END OF PLAINtext
-
     //FINALIZATION DOMAIN
     //START OF FINALIZATION
 //    printf("=======================FINALIZATION=======================\n");
     s.x[1] ^= K0;
     s.x[2] ^= K1;
+
 //    printf("STATE BEFORE FIRST KEY XOR\n");
 //    print_state(&s);
 //    printf("\n");
+
     //APPLY FORWARD PERMUTATION
     FP1(&s);
 
@@ -242,6 +230,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     //XORING K||0*
     s.x[3] ^= K0;
     s.x[4] ^= K1;
+
 //    printf("STATE AFTER APPLYING KEY\n");
 //    print_state(&s);
 //    printf("\n");
@@ -252,7 +241,6 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     printf("Current address pointed by c = %p\n", (void*)c);
     STORE_BYTES(c, s.x[3], 8); //LOADING FIRST PART OF 64-BIT TAG INTO THE FOURTH BLOCK OF THE STATE
     STORE_BYTES(c + 8, s.x[4], 8); //LOADING SECOND PART OF THE 64-BIT TAGE INTO THE FIFTH BLOCK OF THE STATE
-
     return 0;
 }
 
@@ -268,11 +256,11 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //    printf("NONCE USED IN AEAD DECRYPTION\n");
 //    print_vector(npub, 16);b
 //    printf("\n");
-//
+
 //    printf("ASSOCIATED DATA USED IN AEAD DECRYPTION\n");
 //    print_vector(ad, adlen);
 //    printf("\n");
-//
+
 //    printf("KEY USED IN AEAD DECRYPTION\n");
 //    print_vector(k, 16);
 //    printf("\n");
@@ -309,14 +297,14 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 
     s.x[3] ^= K0;
     s.x[4] ^= K1;
-
 //    printf("3. AEAD DECRYPTION INITIALIZATION: STATE AFTER APPLYING KEY\n");
 //    print_state(&s);
 //    printf("\n");
 
-    //END OF INILIALIZATION DOMAIN
+//END OF INILIALIZATION DOMAIN
 //START OF ASSOCIATED DATA DOMAIN
     if(adlen){
+
         //FULL ASSOCIATED DATA BLOCKS
         while(adlen >= RATE){
 //            printf("adlen in decryption = %d\n", adlen);
@@ -334,6 +322,7 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
             ad += RATE;
             adlen -= RATE;
         }
+
         //FINAL ASSOCIATED DATA BLOCK
 //        printf("adlen = %d\n", adlen);
         s.x[0] ^= LOAD_BYTES(ad, adlen);
@@ -377,14 +366,15 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
         printf("\n");
 
         STORE_BYTES(m, s.x[0] ^ c0, 8);
-//        printf("clen = %d\n", clen);
         printf("Message block = %d\n", block + 1);
         print_vector(m, 8);
         printf("\n");
+
         s.x[0] = c0;
 //        printf("Insert ciphertext:\n");
 //        print_state(&s);
 //        printf("\n");
+
         //INVERSE PERMUTATION
         FP1(&s);
         m += RATE;
@@ -410,7 +400,6 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //    printf("\n");
 
     s.x[0] = CLEAR_BYTES(s.x[0], clen);
-
 //    printf("DECRYPTION: AFTER CLEAR STATE\n");
 //    print_state(&s);
 //    printf("\n");
@@ -432,8 +421,8 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //    printf("DECRYPTION: STATE AFTER PADDING IN BLOCKS\n");
 //    print_data_byte(&s);
 //    printf("\n");
-
     c += clen;
+
     //FINALIZE
     s.x[1] ^= K0;
     s.x[2] ^= K1;

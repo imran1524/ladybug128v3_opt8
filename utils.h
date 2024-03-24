@@ -3,6 +3,7 @@
 
 #include "round.h"
 #include "aead.h"
+#include "cJSON.h"
 
 void print_vector(uint8_t *vector, size_t vector_size);
 void print_state(state_t *state);
@@ -13,4 +14,6 @@ void print_bundles(uint8_t *bundle, uint8_t size);
 void create_blocks_from_bundles(uint8_t bundles[64], state_t *s);
 void generate_nonce(uint8_t *nonce, size_t nonce_len);
 void print_character(uint8_t *vector, size_t vector_size);
+char* parseJsonFile(char *filename, long *outFileSize);
+void printTestCase(cJSON *test);
 #endif //DIFFUSION_LAYER_UTILS_H

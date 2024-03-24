@@ -5,8 +5,29 @@
 #include <string.h> // For strlen
 
 int main() {
+
+    long file_size;
+    char * file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/test_vector.json";
+    char* json_string = parseJsonFile(file_location, &file_size);
+
+    if(json_string == NULL){
+        return -1;
+    }
+
+    printf("file_size = %ld\n", file_size);
+
     unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks.";
 //    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blo.";
+
+    //CHECK ERROR FOR FILE OPENING
+//    if(file == NULL){
+//        perror("Failed to open the file\n");
+//        return EXIT_FAILURE;
+//    }
+
+    char line_buffer[RATE];
+    unsigned char k[KEY_BYTES];
+
     size_t mlen = strlen((char *)text);
 //    for(size_t i = 0; i < mlen; i++){
 //        printf("%c", text[i]);
@@ -33,7 +54,7 @@ int main() {
     unsigned char ad[34] = "Associated Data can be of any size";
     unsigned char modified_ad[34] = "Associated Data can be of any sizf";
     unsigned long long ad_len = strlen((char *)ad);
-    unsigned char k[16] = {0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0x00};
+//    unsigned char k[16] = {0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0x00};
 //    printf("128-bit KEY (K):\n");
 //    print_vector(k, 16);
 //    printf("\n");
@@ -52,14 +73,15 @@ int main() {
     size_t result;
 
     //DECRYPTION WITH SAME ASSOCIATED DATA
-//    result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
+    result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
 //    printf("result = %d\n", result);
     //DECRYPTION WITH MODIFIED ASSOCIATED DATA
-    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
+//    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
     result != 0 ? printf("Tag verification is failed.\n") : print_character(m, mlen);
 //    printf("result = %zu\n", result);
 //    printf("RECOVERED PLAINTEXT:\n");
 //    print_vector(m, mlen);
 //    print_character(m, mlen);
+
     return 0;
 }

@@ -103,3 +103,30 @@ void create_blocks_from_bundles(uint8_t bundles[64], state_t* s) {
         }
     }
 }
+
+
+char* parseJsonFile(char *filename, long *outFileSize) {
+    FILE *jsonFile = fopen(filename, "r");
+    if (jsonFile == NULL) {
+        perror("Error opening file");
+        return NULL;
+    }
+
+    fseek(jsonFile, 0, SEEK_END);
+    long fileSize = ftell(jsonFile);
+    rewind(jsonFile);
+
+    char *jsonString = (char *)malloc((fileSize + 1) * sizeof(char));
+    if(jsonString == NULL) {
+        printf("Failed to allocate memory\n");
+        fclose(jsonFile);
+        return NULL;
+    }
+
+    fread(jsonString, 1, fileSize, jsonFile);
+    jsonString[fileSize] = '\0';
+    fclose(jsonFile);
+
+    *outFileSize = fileSize;
+    return jsonString;
+}

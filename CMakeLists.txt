@@ -15,4 +15,6 @@ add_executable(diffusion_layer main.c
         aead.c
         api.h
         aead.h
-        word.h)
+        word.h
+        jsmn.h
+        cJSON.h)

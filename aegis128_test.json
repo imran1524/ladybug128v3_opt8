@@ -1,0 +1,131 @@
+{
+  "algorithm" : "AEGIS128",
+  "generatorVersion" : "0.8r12",
+  "numberOfTests" : 469,
+  "header" : [
+    "Test vectors of type AeadTest test authenticated encryption with",
+    "additional data. The test vectors are intended for testing both",
+    "encryption and decryption."
+  ],
+  "notes" : {
+  },
+  "schema" : "aead_test_schema.json",
+  "testGroups" : [
+    {
+      "ivSize" : 128,
+      "keySize" : 128,
+      "tagSize" : 128,
+      "type" : "AeadTest",
+      "tests" : [
+        {
+          "tcId" : 1,
+          "comment" : "",
+          "key" : "00000000000000000000000000000000",
+          "iv" : "00000000000000000000000000000000",
+          "aad" : "",
+          "msg" : "00000000000000000000000000000000",
+          "ct" : "951b050fa72b1a2fc16d2e1f01b07d7e",
+          "tag" : "a7d2a99773249542f422217ee888d5f1",
+          "result" : "valid",
+          "flags" : []
+        },
+        {
+          "tcId" : 2,
+          "comment" : "",
+          "key" : "00000000000000000000000000000000",
+          "iv" : "00000000000000000000000000000000",
+          "aad" : "00000000000000000000000000000000",
+          "msg" : "00000000000000000000000000000000",
+          "ct" : "10b0dee65a97d751205c128a992473a1",
+          "tag" : "46dcb9ee93c46cf13731d41b9646c131",
+          "result" : "valid",
+          "flags" : []
+        },
+        {
+          "tcId" : 3,
+          "comment" : "",
+          "key" : "00010000000000000000000000000000",
+          "iv" : "00000200000000000000000000000000",
+          "aad" : "00010203",
+          "msg" : "00000000000000000000000000000000",
+          "ct" : "2b78f5c1618da39afbb2920f5dae02b0",
+          "tag" : "74759cd0e19314650d6c635b563d80fd",
+          "result" : "valid",
+          "flags" : []
+        },
+        {
+          "tcId" : 4,
+          "comment" : "",
+          "key" : "10010000000000000000000000000000",
+          "iv" : "10000200000000000000000000000000",
+          "aad" : "0001020304050607",
+          "msg" : "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+          "ct" : "e08ec10685d63c7364eca78ff6e1a1ddfdfc15d5311a7f2988a0471a13973fd7",
+          "tag" : "27e84b6c4cc46cb6ece8f1f3e4aa0e78",
+          "result" : "valid",
+          "flags" : []
+        },
+        {
+          "tcId" : 5,
+          "comment" : "",
+          "key" : "00000000000000000000000000000000",
+          "iv" : "00000000000000000000000000000000",
+          "aad" : "",
+          "msg" : "",
+          "ct" : "",
+          "tag" : "242d8006b64d87c36cb35714af7121f9",
+          "result" : "valid",
+          "flags" : []
+        },
+        {
+          "tcId" : 6,
+          "comment" : "",
+          "key" : "00000000000000000000000000000000",
+          "iv" : "00000000000000000000000000000000",
+          "aad" : "",
+          "msg" : "01",
+          "ct" : "94",
+          "tag" : "7cb6018c1bb027166d17b40c3b2a9628",
+          "result" : "valid",
+          "flags" : []
+        },
+        {
+          "tcId" : 7,
+          "comment" : "",
+          "key" : "00000000000000000000000000000000",
+          "iv" : "00000000000000000000000000000000",
+          "aad" : "01",
+          "msg" : "",
+          "ct" : "",
+          "tag" : "fb43fc8f4fe485e1824384dc1cc6930d",
+          "result" : "valid",
+          "flags" : []
+        },
+        {
+          "tcId" : 8,
+          "comment" : "",
+          "key" : "01000000000000000000000000000000",
+          "iv" : "00000000000000000000000000000000",
+          "aad" : "00",
+          "msg" : "00",
+          "ct" : "f3",
+          "tag" : "82ad581c234f6d1b59876602b4044c3d",
+          "result" : "valid",
+          "flags" : []
+        },
+        {
+          "tcId" : 9,
+          "comment" : "",
+          "key" : "00000000000000000000000000000000",
+          "iv" : "01000000000000000000000000000000",
+          "aad" : "00",
+          "msg" : "00",
+          "ct" : "bd",
+          "tag" : "8cb23a983ba37f48fa165f1a4c1ac465",
+          "result" : "valid",
+          "flags" : []
+        }
+      ]
+    }
+  ]
+}
