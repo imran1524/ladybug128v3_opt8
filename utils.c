@@ -7,6 +7,9 @@
 #include "aead.h"
 #include "api.h"
 
+#include <ctype.h>
+
+
 void generate_nonce(uint8_t *nonce, size_t nonce_len) {
     arc4random_buf(nonce, nonce_len);
 }
@@ -128,4 +131,20 @@ char* parseJsonFile(char *filename, long *outFileSize) {
 
     *outFileSize = fileSize;
     return jsonString;
+}
+
+
+void hex_string_to_binary(const char* hex_str, unsigned char* binary, size_t binary_len) {
+    size_t hex_len = strlen(hex_str);
+    size_t i, j;
+
+    if (hex_len % 2 != 0 || hex_len / 2 > binary_len) {
+        // Invalid hex string or insufficient binary buffer length
+        return;
+    }
+
+    for (i = 0, j = 0; i < hex_len; i += 2, j++) {
+        char byte[3] = {hex_str[i], hex_str[i + 1], '\0'};
+        binary[j] = (unsigned char)strtoul(byte, NULL, 16);
+    }
 }

@@ -4,7 +4,7 @@
 # compile C with /Library/Developer/CommandLineTools/usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = 
+C_INCLUDES = -I/Users/ik/Library/Mobile -I"/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON"
 
 C_FLAGSarm64 = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
 

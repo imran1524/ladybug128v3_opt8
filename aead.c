@@ -457,3 +457,13 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     return  result;
 }
 
+void print_binary(unsigned char* binary, size_t binary_len) {
+    for(size_t i = 0; i < binary_len; i++) {
+        // Print each byte in binary
+        for(int bit = 7; bit >= 0; bit--) {
+            putchar((binary[i] >> bit) & 1 ? '1' : '0');
+        }
+        putchar(' ');
+    }
+    putchar('\n');
+}

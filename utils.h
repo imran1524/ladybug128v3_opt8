@@ -16,4 +16,6 @@ void generate_nonce(uint8_t *nonce, size_t nonce_len);
 void print_character(uint8_t *vector, size_t vector_size);
 char* parseJsonFile(char *filename, long *outFileSize);
 void printTestCase(cJSON *test);
+void hex_string_to_binary(const char* hex_str, unsigned char* binary, size_t binary_len);
+void print_binary(unsigned char* binary, size_t binary_len);
 #endif //DIFFUSION_LAYER_UTILS_H
