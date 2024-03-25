@@ -3,6 +3,10 @@ project(diffusion_layer C)
 
 set(CMAKE_C_STANDARD 17)
 
+# Add the directory where the cJSON.h header is located
+#include_directories(/Users/ik/CLionProjects/TestVectorParsing/cJSON)
+include_directories(/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON)
+
 add_executable(diffusion_layer main.c
         constants.h
         utils.c
@@ -16,5 +20,9 @@ add_executable(diffusion_layer main.c
         api.h
         aead.h
         word.h
-        jsmn.h
-        cJSON.h)
+        cJSON/cJSON.c
+)
+
+
+
+

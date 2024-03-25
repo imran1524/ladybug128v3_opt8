@@ -3,9 +3,10 @@
 #include "round.h"
 #include "aead.h"
 #include <string.h> // For strlen
+#include "cJSON/cJSON.h"
+
 
 int main() {
-
     long file_size;
     char * file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/test_vector.json";
     char* json_string = parseJsonFile(file_location, &file_size);
@@ -14,7 +15,9 @@ int main() {
         return -1;
     }
 
+
     printf("file_size = %ld\n", file_size);
+    cJSON *root = cJSON_Parse(json_string);
 
     unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks.";
 //    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blo.";
@@ -64,7 +67,7 @@ int main() {
     unsigned char* ciphertext;
 
     crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
-    printf("\n");
+//    printf("\n");
 
 //    printf("CIPHERTEXT:\n");
 //    print_vector(c, clen);
@@ -77,7 +80,7 @@ int main() {
 //    printf("result = %d\n", result);
     //DECRYPTION WITH MODIFIED ASSOCIATED DATA
 //    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
-    result != 0 ? printf("Tag verification is failed.\n") : print_character(m, mlen);
+//    result != 0 ? printf("Tag verification is failed.\n") : print_character(m, mlen);
 //    printf("result = %zu\n", result);
 //    printf("RECOVERED PLAINTEXT:\n");
 //    print_vector(m, mlen);

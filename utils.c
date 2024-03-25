@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <string.h>
 
-
 #include "utils.h"
 #include "constants.h"
 #include "aead.h"

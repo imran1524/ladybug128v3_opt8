@@ -24,6 +24,8 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Users/ik/Library/Mobile"/>
+					<Add directory="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
@@ -43,6 +45,8 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
+					<Add directory="/Users/ik/Library/Mobile"/>
+					<Add directory="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
 					<Add directory="/System/Library/Frameworks"/>
@@ -85,13 +89,13 @@
 		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/api.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON.c">
+			<Option target="diffusion_layer"/>
+		</Unit>
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
 		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/constants.h">
-			<Option target="diffusion_layer"/>
-		</Unit>
-		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/jsmn.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
 		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/main.c">

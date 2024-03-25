@@ -118,14 +118,14 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //        printf("mlen = %d\n", mlen);
 //        printf("\n");
 
-        printf("Message Block = %d\n", block + 1);
-        print_vector(m, 8);
-        printf("\n");
+//        printf("Message Block = %d\n", block + 1);
+//        print_vector(m, 8);
+//        printf("\n");
 
         s.x[0] ^= LOAD_BYTES(m, 8);
         STORE_BYTES(c, s.x[0], 8);
-        printf("Ciphertext block: %d\n", block + 1);
-        print_vector(c, 8);
+//        printf("Ciphertext block: %d\n", block + 1);
+//        print_vector(c, 8);
 //        printf("Address of c variable = %p\n", (void*)&c);
 //        printf("Current address pointed by c = %p\n", (void*)c);
 //        printf("\n");
@@ -145,10 +145,10 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     }
 
     //======================== FINAL PLAINTEXT BLOCK PROCESSING =======================================
-    printf("Final message size = %zu\n", mlen);
-    printf("FINAL MESSAGE BLOCK:\n");
-    print_vector(m, 8);
-    printf("\n");
+//    printf("Final message size = %zu\n", mlen);
+//    printf("FINAL MESSAGE BLOCK:\n");
+//    print_vector(m, 8);
+//    printf("\n");
 
 //    printf("STATE BEFORE XORING WITH THE LOADED PLAINTEXT\n");
 //    print_state(&s);
@@ -158,7 +158,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //    print_data_byte(&s);
 //    printf("\n");
 
-    printf("mlen in the final round = %zu\n", mlen);
+//    printf("mlen in the final round = %zu\n", mlen);
     //LOADING FINAL MESSAGE BLOCK AND XOR WITH THE STATE
     s.x[0] ^= LOAD_BYTES(m, mlen); //mlen = 3
 
@@ -180,9 +180,9 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
     //PRODUCING FINAL CIPHERTEXT BLOCK FROM FINAL PLAINTEXT BLOCK
     STORE_BYTES(c, s.x[0], mlen);
-    printf("FINAL CIPHERTEXT BLOCK WITHOUT PADDING:\n");
-    print_vector(c, 8);
-    printf("\n");
+//    printf("FINAL CIPHERTEXT BLOCK WITHOUT PADDING:\n");
+//    print_vector(c, 8);
+//    printf("\n");
 
 //    printf("------------------STATE BEFORE ADDING PADDING----------------------\n");
 //    print_data_byte(&s);
@@ -237,8 +237,8 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
     //SET TAG
     //128-bit tag is the last two block of the most updated state and stored at the end of ciphertext
-    printf("Tag\n");
-    printf("Current address pointed by c = %p\n", (void*)c);
+//    printf("Tag\n");
+//    printf("Current address pointed by c = %p\n", (void*)c);
     STORE_BYTES(c, s.x[3], 8); //LOADING FIRST PART OF 64-BIT TAG INTO THE FOURTH BLOCK OF THE STATE
     STORE_BYTES(c + 8, s.x[4], 8); //LOADING SECOND PART OF THE 64-BIT TAGE INTO THE FIFTH BLOCK OF THE STATE
     return 0;
@@ -361,14 +361,14 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     size_t block = 0;
     while(clen >= RATE){
         uint64_t c0 = LOAD_BYTES(c, 8);
-        printf("Ciphetext block = %d\n", block + 1);
-        print_vector(c, 8);
-        printf("\n");
+//        printf("Ciphetext block = %d\n", block + 1);
+//        print_vector(c, 8);
+//        printf("\n");
 
         STORE_BYTES(m, s.x[0] ^ c0, 8);
-        printf("Message block = %d\n", block + 1);
-        print_vector(m, 8);
-        printf("\n");
+//        printf("Message block = %d\n", block + 1);
+//        print_vector(m, 8);
+//        printf("\n");
 
         s.x[0] = c0;
 //        printf("Insert ciphertext:\n");
@@ -384,16 +384,16 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
     }
 
     //FINAL CIPHERTEXT BLOCK
-    printf("clen = %zu\n", clen);
+//    printf("clen = %zu\n", clen);
     uint64_t c0 = LOAD_BYTES(c, clen);
-    printf("Final ciphertext_block\n");
-    print_vector(c, 8);
-    printf("\n");
+//    printf("Final ciphertext_block\n");
+//    print_vector(c, 8);
+//    printf("\n");
 
     STORE_BYTES(m, s.x[0] ^c0, clen);
-    printf("Final message_block\n");
-    print_vector(m, 8);
-    printf("\n");
+//    printf("Final message_block\n");
+//    print_vector(m, 8);
+//    printf("\n");
 
 //    printf("DECRYPTION: BEFORE CLEAR STATE\n");
 //    print_state(&s);

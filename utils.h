@@ -3,7 +3,7 @@
 
 #include "round.h"
 #include "aead.h"
-#include "cJSON.h"
+#include "cJSON/cJSON.h"
 
 void print_vector(uint8_t *vector, size_t vector_size);
 void print_state(state_t *state);
