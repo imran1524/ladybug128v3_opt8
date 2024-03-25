@@ -22,7 +22,7 @@ void print_vector(uint8_t *vector, size_t vector_size){
 
 void print_character(uint8_t *vector, size_t vector_size){
     for(uint8_t i = 0; i < vector_size; i++){
-        printf("%c", vector[i]);
+        printf("%0x", vector[i]);
     }
 }
 

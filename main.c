@@ -7,7 +7,7 @@
 
 int main() {
     long file_size;
-    char * file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aegis128_test.json";
+    char * file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/test_vector.json";
     char* json_string = parseJsonFile(file_location, &file_size);
 
     if(json_string == NULL) {
@@ -35,7 +35,6 @@ int main() {
         }
     }
 
-
     cJSON *testGroups = cJSON_GetObjectItem(root, "testGroups");
 
     if (!testGroups) {
@@ -43,6 +42,7 @@ int main() {
     } else {
         cJSON *testGroup = NULL;
         cJSON_ArrayForEach(testGroup, testGroups) {
+
             cJSON *tests = cJSON_GetObjectItem(testGroup, "tests");
             cJSON *ivSizeItem = cJSON_GetObjectItem(testGroup, "ivSize");
             cJSON *keySizeItem = cJSON_GetObjectItem(testGroup, "keySize");
@@ -86,7 +86,7 @@ int main() {
                     }
                     if(aadItem && cJSON_IsString(aadItem)){
                         const char *aad = aadItem->valuestring;
-                        printf("AD= %s\n", aad);
+                        printf("AD = %s\n", aad);
                     }
                     if(msgItem && cJSON_IsString(msgItem)){
                         const char *msg = msgItem -> valuestring;
@@ -101,14 +101,13 @@ int main() {
                         printf("tag = %s\n", tag);
                     }
 
-
                     //Extract the values from the test case
                     const char* key_str = keyItem -> valuestring;
                     const char* iv_str = ivItem -> valuestring;
                     const char* aad_str = aadItem -> valuestring;
                     const char* msg_str = msgItem -> valuestring;
-                    const char *ct_str = ctItem->valuestring;
-                    const char *tag_str = tagItem->valuestring;
+                    const char* ct_str = ctItem->valuestring;
+                    const char* tag_str = tagItem->valuestring;
 
                     size_t  key_len = strlen(key_str)/2;
                     printf("key_len = %zu\n", key_len);
@@ -119,20 +118,45 @@ int main() {
                     size_t aad_len = strlen(aad_str)/2;
                     printf("aad_len = %zu\n", aad_len);
 
-//                    printf("key_length = %d\n", keySize);
-//                    printf("iv_length = %d\n", ivSize);
-//                    unsigned char key[key_len];
-//                    unsigned char iv[iv_len];
+                    size_t msg_len = strlen(msg_str)/2;
+                    printf("message_len = %zu\n", msg_len);
 
-//                    const char* hex_str = "0123456789ABCDEF0123456789ABCDEF";
+                    size_t ct_len = strlen(ct_str)/2;
+                    printf("ct_len = %zu\n", ct_len);
 
-                    size_t mgr_len = strlen(msg_str)/2;
-                    printf("message_len = %zu\n", mgr_len);
+                    size_t tag_len = strlen(tag_str)/2;
+                    printf("tag_len = %zu\n", tag_len);
 
-//                    unsigned char binary[binary_len];
-//                    hex_string_to_binary(hex_str, binary, binary_len);
-//                    printf("Binary string:\n");
-//                    print_binary(binary, binary_len);
+                    unsigned char key[key_len];
+                    unsigned char iv[iv_len];
+                    unsigned char aad[aad_len];
+                    unsigned char msg[msg_len];
+
+                    // Convert the key, IV, AAD, and message strings to binary
+                    hex_string_to_binary(key_str, key, key_len);
+                    hex_string_to_binary(iv_str, iv, iv_len);
+                    hex_string_to_binary(aad_str, aad, aad_len);
+                    hex_string_to_binary(msg_str, msg, msg_len);
+
+                    // Perform AEAD encryption
+                    unsigned char ciphertext[msg_len + aad_len]; // Ciphertext buffer (adjust size as needed)
+                    unsigned long long ciphertext_len;
+                    crypto_aead_encrypt(ciphertext, &ciphertext_len, msg, msg_len, aad, aad_len, NULL, iv, key);
+                    printf("PLAINTEXT:\n");
+
+                    print_vector(msg, msg_len);
+                    printf("\n");
+
+                    printf("CIPHERTEXT:\n");
+                    print_vector(ciphertext, ciphertext_len);
+                    printf("\n");
+                    size_t result = crypto_aead_decrypt(msg, &msg_len, ciphertext, ciphertext_len, aad, aad_len, NULL, iv, key);
+//                    result != 0 ? printf("Tag verification is failed.\n") : print_character(msg, msg_len);
+                    printf("result = %zu\n", result);
+                    printf("\n");
+                    printf("RECOVERED PLAINTEXT:\n");
+                    print_vector(msg, msg_len);
+
                     printf("\n");
 #endif
                 }
@@ -142,34 +166,22 @@ int main() {
     cJSON_Delete(root);
     free(json_string);
 
-    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks.";
-//    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blo.";
-
-    //CHECK ERROR FOR FILE OPENING
-//    if(file == NULL){
-//        perror("Failed to open the file\n");
-//        return EXIT_FAILURE;
-//    }
-
-    char line_buffer[RATE];
-    unsigned char k[KEY_BYTES];
-
-    size_t mlen = strlen((char *)text);
+//    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks.";
+//    size_t mlen = strlen((char *)text);
 //    for(size_t i = 0; i < mlen; i++){
 //        printf("%c", text[i]);
 //    }
 //    printf("\n");
 //    print_vector(text, mlen);
 //    printf("mlen = %zu\n", mlen);
-    unsigned char c[1024]; // Assuming 1024 is sufficient; adjust based on your needs
-    unsigned long long clen;
-    unsigned char m[N];  // buffer for decrypted message
-    unsigned char nsec;                  // not used, can be NULL or any value
-    unsigned long long adlen = 16; // length of the associated data
+//    unsigned char c[1024]; // Assuming 1024 is sufficient; adjust based on your needs
+//    unsigned long long clen;
+//    unsigned char m[N];  // buffer for decrypted message
+//    unsigned char nsec;                  // not used, can be NULL or any value
+//    unsigned long long adlen = 16; // length of the associated data
 //    printf("=======================INITIALIZATION=======================\n");
     //GENERATING NONCE
     uint8_t npub[16];
-
     generate_nonce(npub, 16);
 //    printf("128-bit NONCE (N):\n");
 //    print_vector(npub, 16);
@@ -177,29 +189,29 @@ int main() {
 
 //EMPTY ASSOCIATED DATA
 //    unsigned char ad[34] = {};
-    unsigned char ad[34] = "Associated Data can be of any size";
-    unsigned char modified_ad[34] = "Associated Data can be of any sizf";
-    unsigned long long ad_len = strlen((char *)ad);
+//    unsigned char ad[34] = "Associated Data can be of any size";
+//    unsigned char modified_ad[34] = "Associated Data can be of any sizf";
+//    unsigned long long ad_len = strlen((char *)ad);
 //    unsigned char k[16] = {0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0x00};
 //    printf("128-bit KEY (K):\n");
 //    print_vector(k, 16);
 //    printf("\n");
 
     //ENCRYPT AEAD WITH MODIFIED ASSOCIATED DATA
-    printf("==================AEAD Encryption==================\n");
-    unsigned char* ciphertext;
+//    printf("==================AEAD Encryption==================\n");
+//    unsigned char* ciphertext;
 
-    crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
+//    crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
 //    printf("\n");
 
 //    printf("CIPHERTEXT:\n");
 //    print_vector(c, clen);
     //DECRYPTION AEAD
-    printf("==================AEAD Decryption==================\n");
-    size_t result;
+//    printf("==================AEAD Decryption==================\n");
+//    size_t result;
 
     //DECRYPTION WITH SAME ASSOCIATED DATA
-    result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
+//    result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
 //    printf("result = %d\n", result);
     //DECRYPTION WITH MODIFIED ASSOCIATED DATA
 //    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
