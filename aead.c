@@ -107,7 +107,6 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
         //FINAL ASSOCIATED DATA BLOCK
         s.x[0] ^= LOAD_BYTES(ad, adlen);
 //        print_bitstring(PAD(adlen), 8);
-
 //        printf("6. AEAD ENCRYPTION AD: FINAL STATE BEFORE PADDING\n");
 //        print_state(&s);
 //        printf("\n");
@@ -133,7 +132,6 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     //END OF ASSOCIATED DOMAIN
     //======================== FINAL PLAINTEXT BLOCK PROCESSING =======================================
     size_t block = 0;
-    uint64_t test  = 0;
     while (mlen >= RATE){
         //LOADING 8 BYTES FROM THE MESSAGE AND XOR WITH THE FIRST BLOCK OF THE STATE
 //        printf("Message block: %d\n", block + 1);
@@ -268,7 +266,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
 //======================================================================================================================
 //DECRYPTION AEAD
-size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
+size_t crypto_aead_decrypt(unsigned char* m, unsigned long long* mlen,
                            const unsigned char* c, size_t clen,
                            const unsigned char* ad, size_t adlen,
                            const unsigned char* nsec,
@@ -326,7 +324,6 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long *mlen,
 //END OF INILIALIZATION DOMAIN
 //START OF ASSOCIATED DATA DOMAIN
     if(adlen){
-
         //FULL ASSOCIATED DATA BLOCKS
         while(adlen >= RATE){
 //            printf("adlen in decryption = %d\n", adlen);

@@ -1,62 +1,61 @@
 {
-  "algorithm" : "AEGIS128",
-  "generatorVersion" : "0.8r12",
-  "numberOfTests" : 469,
-  "header" : [
-    "Test vectors of type AeadTest test authenticated encryption with",
-    "additional data. The test vectors are intended for testing both",
-    "encryption and decryption."
+  "algorithm": "ASCON128",
+  "generatorVersion": "0.1",
+  "numberOfTests": 3,
+  "header": [
+    "Test vectors of type AeadKatTest test authenticated encryption with",
+    "additional data and known answers. The test vectors are intended for",
+    "testing both encryption and decryption."
   ],
-  "notes" : {
-  },
-  "schema" : "aead_test_schema.json",
-  "testGroups" : [
+  "notes": {},
+  "schema": "aead_kat_test_schema.json",
+  "testGroups": [
     {
-      "ivSize" : 128,
-      "keySize" : 128,
-
-      "type" : "AeadTest","tagSize" : 128,
-      "tests" : [
-
-
+      "ivSize": 128,
+      "keySize": 128,
+      "type": "AeadKatTest",
+      "tagSize": 128,
+      "tests": [
         {
-          "tcId" : 348,
-          "comment" : "",
-          "key" : "c6847f42588a18ccd89ab3aac2ec7677",
-          "iv" : "6c37fafe6aa081a7a9dc9eaa2e9f0087",
-          "aad" : "a7939cf0e178181373467ef3a9cdbaa37f1af6a45790cbf095370c6a3986f334e22adff062d40d4b52c4b2f333125e8e9dbcfc965167e6df7f4197e48c5952451740cac493ab04d0374457cfd59a0fc0552de18d010c89bc868ece510b4f5e5e5380ea22fdfc66b97f6a254a98d86ccf3b12ed763e37414503f1fa1684f673f2977405dd3b890e18d88ead48ca7953fd263e3313bcf87ef979061573fce49c162ce94bb3a5e4de44178321838bb85978515fd5dd240ca987034d9a94bd52006ad470d1aafa744da082fdc47e858300501b8a5beea62a385ef022cb7daa2d184bdfcb3e126e93a304b86bd13c0472720b9990eca4023b26acc8d22202c0919297a0",
-          "msg" : "cd6819e3bb5d3023973c9be6159672424f62278b",
-          "ct" : "ce71d048896114957da44a66347f017ae888be9d",
-          "tag" : "a5b1c4da2b8ed84617d63988cbda55fa",
-          "result" : "valid",
-          "flags" : []
+          "tcId": 1,
+          "comment": "Test Case 1",
+          "key": "00000000000000000000000000000000",
+          "iv": "00000000000000000000000000000000",
+          "nonce": "00000000000000000000000000000000",
+          "aad": "",
+          "msg": "68656c6c6f",
+          "ct": "8eaf0415168753d73776840ea4f4e8a5",
+          "tag": "93a835f4ac4ac6d2a3e6103dfb07e9f8",
+          "result": "valid",
+          "flags": []
         },
         {
-          "tcId" : 349,
-          "comment" : "",
-          "key" : "b10c5db54046f0dade37205a95884045",
-          "iv" : "595acc59b511863451a5ac301fa601ce",
-          "aad" : "7f0f15b09932e5cff738d57938544b678450817c8dd433f22923e8188480b93394b8f1136fecf85ff604129699bb2326cfdca26cc65c3ef2b1e72d864d178b",
-          "msg" : "851eea75f819b3c4009bbb6831551c48b43b81c22832fdecd34346806dd3a638fd5b8c3981633dfe9e3165387ae6e3e70015c0fc8c8c654ed3e7f874490223",
-          "ct" : "7b6de9d479831cdfdc9d18997b4c658311bae7f35a2d9745daa312d79653c41715338df75516967809dbb444513a53db3407bc1b7cdbdd895f1005310702ce",
-          "tag" : "fa46605dc88c59f5cf3270881e3d6542",
-          "result" : "valid",
-          "flags" : []
+          "tcId": 2,
+          "comment": "Test Case 2",
+          "key": "40000000000000000000000000000000",
+          "iv": "00000000000000000000000000000000",
+          "nonce": "00000000000000000000000000000000",
+          "aad": "202122",
+          "msg": "776f726c64",
+          "ct": "c46ec1b18ce8a878725a37e780dfb735",
+          "tag": "aaaabbbbccccddddeeeeffff00011122",
+          "result": "valid",
+          "flags": []
         },
         {
-          "tcId" : 350,
-          "comment" : "",
-          "key" : "3f529b117ed1700b6d806433a6253f00",
-          "iv" : "012e78545995229901d298a635e6c9a5",
-          "aad" : "6b1036d2d95876c1c0cb8c6ab3a1d7337b5c87a6e053375aa36c320db87c5e4add53e6adc8eb6246eb25bb8fb84ab94d063499aa40c7d26d811da5be96227cf0",
-          "msg" : "058650e9450a641c614a9e1250743a8a015a5fb139abfcd6c5660f1faef876ff99ee1cf19ef026a30235473974df15a80ac245002f0ca2a5016f9e6db0596b",
-          "ct" : "6b1b17c576b20d6f3fb87d457eeef5495819ed7e94ae7c915e770eda91cfcf6ed6609d5e470bdfbc7d2a5d5ace862de20fe59c94de0dcf43d5de3b787b4a4f",
-          "tag" : "61160ade6edb7260a5ba1de9c09a0f10",
-          "result" : "valid",
-          "flags" : []
+          "tcId": 3,
+          "comment": "Test Case 3 - Updated",
+          "key": "80000000000000000000000000000000",
+          "iv": "00000000000000000000000000000000",
+          "nonce": "00000000000000000000000000000000",
+          "aad": "",
+          "msg": "80",
+          "ct": "2f",
+          "tag": "860103003f0f030f07010100454e010e",
+          "result": "valid",
+          "flags": []
         }
       ]
     }
   ]
 }
-

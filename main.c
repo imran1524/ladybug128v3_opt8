@@ -7,7 +7,7 @@
 
 int main() {
     long file_size;
-    char* file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/new_test_vector.json";
+    char* file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/custom_test_vector.json";
     char* json_string = parseJsonFile(file_location, &file_size);
 
     if (json_string == NULL) {
@@ -118,17 +118,7 @@ int main() {
                         printf("tag = %s\n", tag);
                     }
 
-//                    "tcId": 1,
-//                            "comment": "",
-//                            "key": "00000000000000000000000000000000",
-//                            "iv": "00000000000000000000000000000000",
-//                            "nonce": "00000000000000000000000000000000",
-//                            "aad": "",
-//                            "msg": "",
-//                            "ct": "",
-//                            "tag": "0f3a56aa8add61cae8aa70b51b0dbc6b",
-//                            "result": "valid",
-//                            "flags": []
+
 
                     // Extract the values from the test case
                     const char* key_str = key_item -> valuestring;
@@ -187,6 +177,13 @@ int main() {
                         return 1;
                     }
                     unsigned long long ciphertext_len;
+
+                    /*int crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
+                        const unsigned char* m, unsigned long long mlen,
+                        const unsigned char* ad, unsigned long long adlen,
+                        const unsigned char* nsec, const unsigned char* npub,
+                        const unsigned char* k)
+                     * */
 
                     int encryption_result = crypto_aead_encrypt(ciphertext, &ciphertext_len, msg, msg_len, aad, aad_len, NULL, nonce, key);
                     if (encryption_result != 0) {
