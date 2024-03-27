@@ -16,11 +16,11 @@ void generate_nonce(uint8_t *nonce, size_t nonce_len) {
 
 void print_vector(uint8_t *vector, size_t vector_size){
     for(uint8_t i = 0; i < vector_size; i++){
-        printf("block[%d] = %u\n", i, vector[i]);
+        printf("block[%d] = %d\n", i, vector[i]);
     }
 }
 
-void print_character(uint8_t *vector, size_t vector_size){
+void print_Hexvalue(uint8_t *vector, size_t vector_size){
     for(uint8_t i = 0; i < vector_size; i++){
         printf("%0x", vector[i]);
     }

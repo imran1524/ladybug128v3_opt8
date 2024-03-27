@@ -1,0 +1,61 @@
+{
+  "algorithm": "ASCON128",
+  "generatorVersion": "0.8r12",
+  "numberOfTests": 3,
+  "header": [
+    "Test vectors of type AeadKatTest test authenticated encryption with",
+    "additional data and known answers. The test vectors are intended for",
+    "testing both encryption and decryption."
+  ],
+  "notes": {},
+  "schema": "aead_kat_test_schema.json",
+  "testGroups": [
+    {
+      "ivSize": 128,
+      "keySize": 128,
+      "type": "AeadKatTest",
+      "tagSize": 128,
+      "tests": [
+        {
+          "tcId": 1,
+          "comment": "",
+          "key": "00000000000000000000000000000000",
+          "iv": "00000000000000000000000000000000",
+          "nonce": "00000000000000000000000000000000",
+          "aad": "",
+          "msg": "",
+          "ct": "",
+          "tag": "0f3a56aa8add61cae8aa70b51b0dbc6b",
+          "result": "valid",
+          "flags": []
+        },
+        {
+          "tcId": 2,
+          "comment": "",
+          "key": "40000000000000000000000000000000",
+          "iv": "00000000000000000000000000000000",
+          "nonce": "00000000000000000000000000000000",
+          "aad": "4000",
+          "msg": "",
+          "ct": "",
+          "tag": "7b46239771361dce25b6b3c628e6e923",
+          "result": "valid",
+          "flags": []
+        },
+        {
+          "tcId": 3,
+          "comment": "",
+          "key": "80000000000000000000000000000000",
+          "iv": "00000000000000000000000000000000",
+          "nonce": "00000000000000000000000000000000",
+          "aad": "",
+          "msg": "80",
+          "ct": "970ae7a7",
+          "tag": "da6aef77aa35e66524b0a351e298c41d",
+          "result": "valid",
+          "flags": []
+        }
+      ]
+    }
+  ]
+}

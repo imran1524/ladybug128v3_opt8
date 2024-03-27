@@ -9,4 +9,13 @@
 #define RATE 8 //AEAD rate is 8 byte or 64-bit
 
 
+/*#define CRYPTO_KEYBYTES 32
+#define CRYPTO_NSECBYTES 0
+#define CRYPTO_NPUBBYTES 12
+#define CRYPTO_ABYTES 16
+#define CRYPTO_NOOVERLAP 1
+ *
+ * */
+
+
 #endif //DIFFUSION_LAYER_API_H

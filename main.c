@@ -7,219 +7,223 @@
 
 int main() {
     long file_size;
-    char * file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/test_vector.json";
+    char* file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/new_test_vector.json";
     char* json_string = parseJsonFile(file_location, &file_size);
 
-    if(json_string == NULL) {
-        return 1;
+    if (json_string == NULL) {
+        fprintf(stderr, "Failed to parse JSON file.\n");
+        return -1;
     }
 
     printf("file_size = %ld\n", file_size);
-    cJSON *root = cJSON_Parse(json_string);
+    cJSON* root = cJSON_Parse(json_string);
     if (!root) {
-        printf("Failed to parse JSON\n");
+        fprintf(stderr, "Failed to parse JSON.\n");
         free(json_string);
         return 1;
-    }else{
-        cJSON *algorithmItem = cJSON_GetObjectItem(root, "algorithm");
-        cJSON *numberOfTestsItem = cJSON_GetObjectItem(root, "numberOfTests");
-
-        if(algorithmItem && cJSON_IsString(algorithmItem)){
-            const char *algorithm = algorithmItem -> valuestring;
-            printf("algorithm = %s\n", algorithm);
-        }
-
-        if(numberOfTestsItem && cJSON_IsNumber( numberOfTestsItem)){
-            const uint64_t numberOfTests = numberOfTestsItem -> valueint;
-            printf("numberOfTests = %llu\n", numberOfTests);
-        }
     }
 
-    cJSON *testGroups = cJSON_GetObjectItem(root, "testGroups");
+    cJSON* algorithmItem = cJSON_GetObjectItem(root, "algorithm");
+    cJSON* numberOfTestsItem = cJSON_GetObjectItem(root, "numberOfTests");
+
+    if (algorithmItem && cJSON_IsString(algorithmItem)) {
+        const char* algorithm = algorithmItem->valuestring;
+        printf("algorithm = %s\n", algorithm);
+    }
+
+    if (numberOfTestsItem && cJSON_IsNumber(numberOfTestsItem)) {
+        const uint64_t numberOfTests = numberOfTestsItem->valueint;
+        printf("numberOfTests = %llu\n", numberOfTests);
+    }
+
+    cJSON* testGroups = cJSON_GetObjectItem(root, "testGroups");
 
     if (!testGroups) {
-        printf("testGroups not found.\n");
+        fprintf(stderr, "testGroups not found.\n");
     } else {
-        cJSON *testGroup = NULL;
+        cJSON* testGroup = NULL;
         cJSON_ArrayForEach(testGroup, testGroups) {
+            cJSON* tests = cJSON_GetObjectItem(testGroup, "tests");
+            cJSON* ivSizeItem = cJSON_GetObjectItem(testGroup, "ivSize");
+            cJSON* keySizeItem = cJSON_GetObjectItem(testGroup, "keySize");
 
-            cJSON *tests = cJSON_GetObjectItem(testGroup, "tests");
-            cJSON *ivSizeItem = cJSON_GetObjectItem(testGroup, "ivSize");
-            cJSON *keySizeItem = cJSON_GetObjectItem(testGroup, "keySize");
-
-            if(!ivSizeItem){
-                printf("ivSize is not found\n");
-            }else{
-                const uint8_t ivSize = ivSizeItem -> valueint;
+            if (!ivSizeItem) {
+                fprintf(stderr, "ivSize is not found.\n");
+            } else {
+                const uint8_t ivSize = ivSizeItem->valueint;
                 printf("ivSize = %d\n", ivSize);
             }
 
-            if(!keySizeItem){
-                printf("keySizeItem is not found\n");
-
-            }else{
-                const int keySize = keySizeItem -> valueint;
+            if (!keySizeItem) {
+                fprintf(stderr, "keySizeItem is not found.\n");
+            } else {
+                const int keySize = keySizeItem->valueint;
                 printf("keySize = %d\n", keySize);
             }
 
             if (!tests) {
-                printf("tests not found.\n");
+                fprintf(stderr, "tests not found.\n");
             } else {
-                cJSON *test = NULL;
-                cJSON_ArrayForEach(test, tests) {
-//                    printTestCase(test);
-                    cJSON *keyItem = cJSON_GetObjectItem(test, "key");
-                    cJSON *ivItem = cJSON_GetObjectItem(test, "iv");
-                    cJSON *aadItem = cJSON_GetObjectItem(test, "aad");
-                    cJSON *msgItem = cJSON_GetObjectItem(test, "msg");
-                    cJSON *ctItem = cJSON_GetObjectItem(test, "ct");
-                    cJSON *tagItem = cJSON_GetObjectItem(test, "tag");
 
-#if 1
-                    if(keyItem  && cJSON_IsString(keyItem)){
-                        const char* key = keyItem -> valuestring;
+                //                    "tcId": 1,
+//                            "comment": "",
+//                            "key": "00000000000000000000000000000000",
+//                            "iv": "00000000000000000000000000000000",
+//                            "nonce": "00000000000000000000000000000000",
+//                            "aad": "",
+//                            "msg": "",
+//                            "ct": "",
+//                            "tag": "0f3a56aa8add61cae8aa70b51b0dbc6b",
+//                            "result": "valid",
+//                            "flags": []
+
+                cJSON* test = NULL;
+                cJSON_ArrayForEach(test, tests) {
+                    cJSON* key_item = cJSON_GetObjectItem(test, "key");
+                    cJSON* iv_item= cJSON_GetObjectItem(test, "iv");
+                    cJSON* nonce_item = cJSON_GetObjectItem(test, "nonce");
+                    cJSON* aad_item = cJSON_GetObjectItem(test, "aad");
+                    cJSON* msg_item = cJSON_GetObjectItem(test, "msg");
+                    cJSON* ct_item = cJSON_GetObjectItem(test, "ct");
+                    cJSON* tag_item = cJSON_GetObjectItem(test, "tag");
+
+                    printf("\n");
+
+                    if (key_item && cJSON_IsString(key_item)) {
+                        const char* key = key_item->valuestring;
                         printf("key = %s\n", key);
                     }
-                    if(ivItem && cJSON_IsString(ivItem)){
-                        const char *iv = ivItem->valuestring;
+                    if (iv_item && cJSON_IsString(iv_item)) {
+                        const char* iv = iv_item->valuestring;
                         printf("iv = %s\n", iv);
                     }
-                    if(aadItem && cJSON_IsString(aadItem)){
-                        const char *aad = aadItem->valuestring;
+
+                    if(nonce_item){
+
+                    }
+                    if (aad_item && cJSON_IsString(aad_item)) {
+                        const char* aad = aad_item->valuestring;
                         printf("AD = %s\n", aad);
                     }
-                    if(msgItem && cJSON_IsString(msgItem)){
-                        const char *msg = msgItem -> valuestring;
+                    if (msg_item && cJSON_IsString(msg_item)) {
+                        const char* msg = msg_item->valuestring;
                         printf("msg = %s\n", msg);
                     }
-                    if(ctItem && cJSON_IsString(ctItem)){
-                        const char *ct = ctItem -> valuestring;
+                    if (ct_item && cJSON_IsString(ct_item)) {
+                        const char* ct = ct_item->valuestring;
                         printf("ct = %s\n", ct);
                     }
-                    if(tagItem && cJSON_IsString(tagItem) ){
-                        const char *tag = tagItem -> valuestring;
+                    if (tag_item && cJSON_IsString(tag_item)) {
+                        const char* tag = tag_item->valuestring;
                         printf("tag = %s\n", tag);
                     }
 
-                    //Extract the values from the test case
-                    const char* key_str = keyItem -> valuestring;
-                    const char* iv_str = ivItem -> valuestring;
-                    const char* aad_str = aadItem -> valuestring;
-                    const char* msg_str = msgItem -> valuestring;
-                    const char* ct_str = ctItem->valuestring;
-                    const char* tag_str = tagItem->valuestring;
+//                    "tcId": 1,
+//                            "comment": "",
+//                            "key": "00000000000000000000000000000000",
+//                            "iv": "00000000000000000000000000000000",
+//                            "nonce": "00000000000000000000000000000000",
+//                            "aad": "",
+//                            "msg": "",
+//                            "ct": "",
+//                            "tag": "0f3a56aa8add61cae8aa70b51b0dbc6b",
+//                            "result": "valid",
+//                            "flags": []
 
-                    size_t  key_len = strlen(key_str)/2;
+                    // Extract the values from the test case
+                    const char* key_str = key_item -> valuestring;
+                    const char* iv_str = iv_item -> valuestring;
+                    const char* nonce_str = iv_item -> valuestring;
+                    const char* aad_str = aad_item -> valuestring;
+                    const char* msg_str = msg_item -> valuestring;
+                    const char* ct_str = ct_item -> valuestring;
+                    const char* tag_str = tag_item->valuestring;
+
+
+                    size_t key_len = strlen(key_str) / 2;
                     printf("key_len = %zu\n", key_len);
 
-                    size_t iv_len = strlen(iv_str)/2;
+                    size_t iv_len = strlen(iv_str) / 2;
                     printf("iv_len = %zu\n", iv_len);
 
-                    size_t aad_len = strlen(aad_str)/2;
+                    size_t nonce_len = strlen(nonce_str) / 2;
+                    printf("nonce_len = %zu\n", nonce_len);
+
+                    size_t aad_len = strlen(aad_str) / 2;
                     printf("aad_len = %zu\n", aad_len);
 
-                    size_t msg_len = strlen(msg_str)/2;
+                    size_t msg_len = strlen(msg_str) / 2;
                     printf("message_len = %zu\n", msg_len);
 
-                    size_t ct_len = strlen(ct_str)/2;
+                    size_t ct_len = strlen(ct_str) / 2;
                     printf("ct_len = %zu\n", ct_len);
 
-                    size_t tag_len = strlen(tag_str)/2;
+                    size_t tag_len = strlen(tag_str) / 2;
                     printf("tag_len = %zu\n", tag_len);
 
                     unsigned char key[key_len];
                     unsigned char iv[iv_len];
+                    unsigned char nonce[nonce_len];
                     unsigned char aad[aad_len];
                     unsigned char msg[msg_len];
+                    unsigned char tag[tag_len];
+                    unsigned char ct[msg_len + tag_len];
 
                     // Convert the key, IV, AAD, and message strings to binary
                     hex_string_to_binary(key_str, key, key_len);
                     hex_string_to_binary(iv_str, iv, iv_len);
+                    hex_string_to_binary(nonce_str, nonce, nonce_len);
+                    hex_string_to_binary(tag_str, tag, tag_len);
                     hex_string_to_binary(aad_str, aad, aad_len);
                     hex_string_to_binary(msg_str, msg, msg_len);
 
                     // Perform AEAD encryption
-                    unsigned char ciphertext[msg_len + aad_len]; // Ciphertext buffer (adjust size as needed)
+                    size_t max_ciphertext_len = msg_len + tag_len; // Maximum possible ciphertext length
+                    unsigned char* ciphertext = (unsigned char*)malloc(max_ciphertext_len);
+                    if (!ciphertext) {
+                        fprintf(stderr, "Memory allocation failed.\n");
+                        cJSON_Delete(root);
+                        free(json_string);
+                        return 1;
+                    }
                     unsigned long long ciphertext_len;
-                    crypto_aead_encrypt(ciphertext, &ciphertext_len, msg, msg_len, aad, aad_len, NULL, iv, key);
-                    printf("PLAINTEXT:\n");
 
+                    int encryption_result = crypto_aead_encrypt(ciphertext, &ciphertext_len, msg, msg_len, aad, aad_len, NULL, nonce, key);
+                    if (encryption_result != 0) {
+                        fprintf(stderr, "Encryption failed.\n");
+                        free(ciphertext);
+                        cJSON_Delete(root);
+                        free(json_string);
+                        return 1;
+                    }
+                    printf("\n");
+
+                    printf("PLAINTEXT:\n");
                     print_vector(msg, msg_len);
                     printf("\n");
 
                     printf("CIPHERTEXT:\n");
                     print_vector(ciphertext, ciphertext_len);
                     printf("\n");
-                    size_t result = crypto_aead_decrypt(msg, &msg_len, ciphertext, ciphertext_len, aad, aad_len, NULL, iv, key);
-//                    result != 0 ? printf("Tag verification is failed.\n") : print_character(msg, msg_len);
-                    printf("result = %zu\n", result);
-                    printf("\n");
-                    printf("RECOVERED PLAINTEXT:\n");
-                    print_vector(msg, msg_len);
 
-                    printf("\n");
-#endif
+                    size_t decrypted_len = msg_len;
+                    int decryption_result = crypto_aead_decrypt(msg, &decrypted_len, ciphertext, ciphertext_len, aad, aad_len, NULL, nonce, key);
+                    if (decryption_result != 0) {
+                        printf("Tag verification failed.\n");
+                    } else {
+                        printf("RECOVERED PLAINTEXT:\n");
+                        print_vector(msg, decrypted_len);
+                        printf("\n");
+                    }
+
+                    free(ciphertext);
                 }
             }
         }
     }
+
     cJSON_Delete(root);
     free(json_string);
-
-//    unsigned char text[] = "Hello, this is a test string to convert into 64-bit blocks.";
-//    size_t mlen = strlen((char *)text);
-//    for(size_t i = 0; i < mlen; i++){
-//        printf("%c", text[i]);
-//    }
-//    printf("\n");
-//    print_vector(text, mlen);
-//    printf("mlen = %zu\n", mlen);
-//    unsigned char c[1024]; // Assuming 1024 is sufficient; adjust based on your needs
-//    unsigned long long clen;
-//    unsigned char m[N];  // buffer for decrypted message
-//    unsigned char nsec;                  // not used, can be NULL or any value
-//    unsigned long long adlen = 16; // length of the associated data
-//    printf("=======================INITIALIZATION=======================\n");
-    //GENERATING NONCE
-    uint8_t npub[16];
-    generate_nonce(npub, 16);
-//    printf("128-bit NONCE (N):\n");
-//    print_vector(npub, 16);
-//    printf("\n");
-
-//EMPTY ASSOCIATED DATA
-//    unsigned char ad[34] = {};
-//    unsigned char ad[34] = "Associated Data can be of any size";
-//    unsigned char modified_ad[34] = "Associated Data can be of any sizf";
-//    unsigned long long ad_len = strlen((char *)ad);
-//    unsigned char k[16] = {0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0xAC, 0xFA, 0x89, 0x00};
-//    printf("128-bit KEY (K):\n");
-//    print_vector(k, 16);
-//    printf("\n");
-
-    //ENCRYPT AEAD WITH MODIFIED ASSOCIATED DATA
-//    printf("==================AEAD Encryption==================\n");
-//    unsigned char* ciphertext;
-
-//    crypto_aead_encrypt(c, &clen, text, mlen, ad, ad_len, NULL, npub, k);
-//    printf("\n");
-
-//    printf("CIPHERTEXT:\n");
-//    print_vector(c, clen);
-    //DECRYPTION AEAD
-//    printf("==================AEAD Decryption==================\n");
-//    size_t result;
-
-    //DECRYPTION WITH SAME ASSOCIATED DATA
-//    result = crypto_aead_decrypt(m, &mlen, c, clen, ad, ad_len, NULL, npub, k);
-//    printf("result = %d\n", result);
-    //DECRYPTION WITH MODIFIED ASSOCIATED DATA
-//    result = crypto_aead_decrypt(m, &mlen, c, clen, modified_ad, ad_len, NULL, npub, k);
-//    result != 0 ? printf("Tag verification is failed.\n") : print_character(m, mlen);
-//    printf("result = %zu\n", result);
-//    printf("RECOVERED PLAINTEXT:\n");
-//    print_vector(m, mlen);
-//    print_character(m, mlen);
 
     return 0;
 }

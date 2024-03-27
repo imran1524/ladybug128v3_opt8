@@ -3,6 +3,28 @@
 #include "permutations.h"
 #include "utils.h"
 
+/*int crypto_aead_encrypt(
+    unsigned char *c,unsigned long long *clen,
+    const unsigned char *m,unsigned long long mlen,
+    const unsigned char *ad,unsigned long long adlen,
+    const unsigned char *nsec,
+    const unsigned char *npub,
+    const unsigned char *k){
+
+    //Plaintext m[0],m[1],...,m[mlen-1]
+
+    //Generating a ciphertext c[0],c[1],...,c[*clen-1]
+
+    //Associated data ad[0],ad[1],...,ad[adlen-1]
+
+    //Nonce npub[0],npub[1],...
+
+    //Secret key k[0],k[1],...
+
+
+ }
+ * */
+
 //ENCRYPTION
 size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
                            const unsigned char* m, size_t mlen,
@@ -131,7 +153,7 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 //        printf("\n");
 //        printf("STATE AFTER ABSORBING PLAINTEXT BEFORE APPLYING PERMUTATION\n");
 //        print_state(&s);
-        printf("\n");
+//        printf("\n");
 
         //APPLY FORWARD PERMUTATION
         FP1(&s);

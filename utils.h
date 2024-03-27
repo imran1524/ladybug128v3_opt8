@@ -18,4 +18,5 @@ char* parseJsonFile(char *filename, long *outFileSize);
 void printTestCase(cJSON *test);
 void hex_string_to_binary(const char* hex_str, unsigned char* binary, size_t binary_len);
 void print_binary(unsigned char* binary, size_t binary_len);
+void print_Hexvalue(uint8_t *vector, size_t vector_size);
 #endif //DIFFUSION_LAYER_UTILS_H

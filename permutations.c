@@ -2,7 +2,6 @@
 #include <stdint.h>
 
 //TODO: Add round constant as input parameter
-
 //FORWARD PERMUTATION WITH 3 ROUNDS
  void FP1(state_t *s){
 //    printf("Round # 1\n");

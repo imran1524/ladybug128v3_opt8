@@ -14,7 +14,7 @@ INTEL_CFLAGS=$(COMMON_CFLAGS)
 LDFLAGS=-L/opt/homebrew/lib -lm
 
 # All source files
-SOURCES=main.c permutations.c round.c utils.c aead.c
+SOURCES=main.c permutations.c round.c utils.c aead.c cJSON/cJSON.c
 
 # Convert source files to object files
 OBJECTS=$(SOURCES:.c=.o)
