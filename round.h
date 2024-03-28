@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "constants.h"
-#include "aead.h"
+#include "encrypt.h"
 #include "api.h"
 
 #define N 8

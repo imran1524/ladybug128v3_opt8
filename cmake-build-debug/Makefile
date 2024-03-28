@@ -129,30 +129,6 @@ diffusion_layer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/diffusion_layer.dir/build.make CMakeFiles/diffusion_layer.dir/build
 .PHONY : diffusion_layer/fast
 
-aead.o: aead.c.o
-.PHONY : aead.o
-
-# target to build an object file
-aead.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/diffusion_layer.dir/build.make CMakeFiles/diffusion_layer.dir/aead.c.o
-.PHONY : aead.c.o
-
-aead.i: aead.c.i
-.PHONY : aead.i
-
-# target to preprocess a source file
-aead.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/diffusion_layer.dir/build.make CMakeFiles/diffusion_layer.dir/aead.c.i
-.PHONY : aead.c.i
-
-aead.s: aead.c.s
-.PHONY : aead.s
-
-# target to generate assembly for a file
-aead.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/diffusion_layer.dir/build.make CMakeFiles/diffusion_layer.dir/aead.c.s
-.PHONY : aead.c.s
-
 cJSON/cJSON.o: cJSON/cJSON.c.o
 .PHONY : cJSON/cJSON.o
 
@@ -176,6 +152,30 @@ cJSON/cJSON.s: cJSON/cJSON.c.s
 cJSON/cJSON.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/diffusion_layer.dir/build.make CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.s
 .PHONY : cJSON/cJSON.c.s
+
+encrypt.o: encrypt.c.o
+.PHONY : encrypt.o
+
+# target to build an object file
+encrypt.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/diffusion_layer.dir/build.make CMakeFiles/diffusion_layer.dir/encrypt.c.o
+.PHONY : encrypt.c.o
+
+encrypt.i: encrypt.c.i
+.PHONY : encrypt.i
+
+# target to preprocess a source file
+encrypt.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/diffusion_layer.dir/build.make CMakeFiles/diffusion_layer.dir/encrypt.c.i
+.PHONY : encrypt.c.i
+
+encrypt.s: encrypt.c.s
+.PHONY : encrypt.s
+
+# target to generate assembly for a file
+encrypt.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/diffusion_layer.dir/build.make CMakeFiles/diffusion_layer.dir/encrypt.c.s
+.PHONY : encrypt.c.s
 
 main.o: main.c.o
 .PHONY : main.o
@@ -282,12 +282,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... diffusion_layer"
-	@echo "... aead.o"
-	@echo "... aead.i"
-	@echo "... aead.s"
 	@echo "... cJSON/cJSON.o"
 	@echo "... cJSON/cJSON.i"
 	@echo "... cJSON/cJSON.s"
+	@echo "... encrypt.o"
+	@echo "... encrypt.i"
+	@echo "... encrypt.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

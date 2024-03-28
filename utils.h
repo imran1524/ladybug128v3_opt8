@@ -2,7 +2,7 @@
 #define DIFFUSION_LAYER_UTILS_H
 
 #include "round.h"
-#include "aead.h"
+#include "encrypt.h"
 #include "cJSON/cJSON.h"
 
 void print_vector(uint8_t *vector, size_t vector_size);

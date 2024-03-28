@@ -1,5 +1,5 @@
 #include "api.h"
-#include "aead.h"
+#include "encrypt.h"
 #include "permutations.h"
 #include "utils.h"
 
@@ -26,15 +26,17 @@
  * */
 
 //ENCRYPTION
-size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
-                           const unsigned char* m, size_t mlen,
-                           const unsigned char* ad, size_t adlen,
-                           const unsigned char* nsec,
-                           const unsigned char* npub,
-                           const unsigned char* k){
+int crypto_aead_encrypt(
+        unsigned char *c, unsigned long long *clen,
+        const unsigned char *m, unsigned long long mlen,
+        const unsigned char *ad, unsigned long long adlen,
+        const unsigned char *nsec,
+        const unsigned char *npub,
+        const unsigned char *k
+){
     (void)nsec;
     //SET THE POINTER OF CIPHERTEXT BY ADDING MESSAGE LENGTH AND ASSOCIATED DATA LENGTH
-    *clen = mlen + AD_BYTES;
+    *clen = mlen + CRYPTO_ABYTES;
 
 //    printf("NONCE USED IN AEAD ENCRYPTION\n");
 //    print_vector(npub, 16);
@@ -266,12 +268,16 @@ size_t crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
 
 //======================================================================================================================
 //DECRYPTION AEAD
-size_t crypto_aead_decrypt(unsigned char* m, unsigned long long* mlen,
-                           const unsigned char* c, size_t clen,
-                           const unsigned char* ad, size_t adlen,
-                           const unsigned char* nsec,
-                           const unsigned char* npub,
-                           const unsigned char* k){
+
+int crypto_aead_decrypt(
+            unsigned char *m, unsigned long long *mlen,
+            unsigned char *nsec,
+            const unsigned char *c, unsigned long long clen,
+            const unsigned char *ad, unsigned long long adlen,
+            const unsigned char *npub,
+            const unsigned char *k
+    ){
+
     (void)nsec;
 //    printf("NONCE USED IN AEAD DECRYPTION\n");
 //    print_vector(npub, 16);b
@@ -285,12 +291,12 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long* mlen,
 //    print_vector(k, 16);
 //    printf("\n");
 
-    if(clen < AD_BYTES){
+    if(clen < CRYPTO_ABYTES){
         return -1;
     }
 
     //SET PLAINTEXT SIZE
-    *mlen = clen - AD_BYTES;
+    *mlen = clen - CRYPTO_ABYTES;
 
     //LOAD KEY AND NONCE
     const uint64_t K0 = LOAD_BYTES(k, 8);
@@ -376,7 +382,7 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long* mlen,
 //START OF CIPHERTEXT DOMAIN
     //FULL CIPHERTWEXT BLOCK
     //ADJUSTING CIPHERTEXT BY SUBTRACTING THE TAG LENGTH
-    clen -= AD_BYTES;
+    clen -= CRYPTO_ABYTES;
     size_t block = 0;
     while(clen >= RATE){
         uint64_t c0 = LOAD_BYTES(c, 8);
@@ -465,7 +471,7 @@ size_t crypto_aead_decrypt(unsigned char* m, unsigned long long* mlen,
     //VERIFY TAG BY COMPARING THE GENERATED TAG WITH THE ORIGINAL TAG
     size_t i;
     size_t result = 0;
-    for(i = 0; i < AD_BYTES; i++){
+    for(i = 0; i < CRYPTO_ABYTES; i++){
         result |= c[i] ^ t[i];
 //        printf("Result = %zu\n", result);
     }

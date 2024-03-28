@@ -54,7 +54,7 @@ CMakeFiles/diffusion_layer.dir/permutations.c.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_strings.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_string.h \
   /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/constants.h \
-  /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.h \
+  /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.h \
   /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/word.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/stdlib.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/wait.h \

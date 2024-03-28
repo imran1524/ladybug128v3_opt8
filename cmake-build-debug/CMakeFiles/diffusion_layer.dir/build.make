@@ -125,19 +125,19 @@ CMakeFiles/diffusion_layer.dir/round.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/diffusion_layer.dir/round.c.s"
 	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/round.c" -o CMakeFiles/diffusion_layer.dir/round.c.s
 
-CMakeFiles/diffusion_layer.dir/aead.c.o: CMakeFiles/diffusion_layer.dir/flags.make
-CMakeFiles/diffusion_layer.dir/aead.c.o: /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.c
-CMakeFiles/diffusion_layer.dir/aead.c.o: CMakeFiles/diffusion_layer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/diffusion_layer.dir/aead.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/aead.c.o -MF CMakeFiles/diffusion_layer.dir/aead.c.o.d -o CMakeFiles/diffusion_layer.dir/aead.c.o -c "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.c"
+CMakeFiles/diffusion_layer.dir/encrypt.c.o: CMakeFiles/diffusion_layer.dir/flags.make
+CMakeFiles/diffusion_layer.dir/encrypt.c.o: /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.c
+CMakeFiles/diffusion_layer.dir/encrypt.c.o: CMakeFiles/diffusion_layer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/diffusion_layer.dir/encrypt.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/diffusion_layer.dir/encrypt.c.o -MF CMakeFiles/diffusion_layer.dir/encrypt.c.o.d -o CMakeFiles/diffusion_layer.dir/encrypt.c.o -c "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.c"
 
-CMakeFiles/diffusion_layer.dir/aead.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/diffusion_layer.dir/aead.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.c" > CMakeFiles/diffusion_layer.dir/aead.c.i
+CMakeFiles/diffusion_layer.dir/encrypt.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/diffusion_layer.dir/encrypt.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.c" > CMakeFiles/diffusion_layer.dir/encrypt.c.i
 
-CMakeFiles/diffusion_layer.dir/aead.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/diffusion_layer.dir/aead.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.c" -o CMakeFiles/diffusion_layer.dir/aead.c.s
+CMakeFiles/diffusion_layer.dir/encrypt.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/diffusion_layer.dir/encrypt.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.c" -o CMakeFiles/diffusion_layer.dir/encrypt.c.s
 
 CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.o: CMakeFiles/diffusion_layer.dir/flags.make
 CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.o: /Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON.c
@@ -159,7 +159,7 @@ diffusion_layer_OBJECTS = \
 "CMakeFiles/diffusion_layer.dir/utils.c.o" \
 "CMakeFiles/diffusion_layer.dir/permutations.c.o" \
 "CMakeFiles/diffusion_layer.dir/round.c.o" \
-"CMakeFiles/diffusion_layer.dir/aead.c.o" \
+"CMakeFiles/diffusion_layer.dir/encrypt.c.o" \
 "CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.o"
 
 # External object files for target diffusion_layer
@@ -169,7 +169,7 @@ diffusion_layer: CMakeFiles/diffusion_layer.dir/main.c.o
 diffusion_layer: CMakeFiles/diffusion_layer.dir/utils.c.o
 diffusion_layer: CMakeFiles/diffusion_layer.dir/permutations.c.o
 diffusion_layer: CMakeFiles/diffusion_layer.dir/round.c.o
-diffusion_layer: CMakeFiles/diffusion_layer.dir/aead.c.o
+diffusion_layer: CMakeFiles/diffusion_layer.dir/encrypt.c.o
 diffusion_layer: CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.o
 diffusion_layer: CMakeFiles/diffusion_layer.dir/build.make
 diffusion_layer: CMakeFiles/diffusion_layer.dir/link.txt

@@ -4,7 +4,7 @@
 #include "utils.h"
 #include "constants.h"
 #include "round.h"
-#include "aead.h"
+#include "encrypt.h"
 
 void FP1 (state_t *s);
 void IP1 (state_t *s);

@@ -80,12 +80,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.c">
-			<Option target="diffusion_layer"/>
-		</Unit>
-		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/aead.h">
-			<Option target="diffusion_layer"/>
-		</Unit>
 		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/api.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
@@ -96,6 +90,12 @@
 			<Option target="diffusion_layer"/>
 		</Unit>
 		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/constants.h">
+			<Option target="diffusion_layer"/>
+		</Unit>
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.c">
+			<Option target="diffusion_layer"/>
+		</Unit>
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
 		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/main.c">

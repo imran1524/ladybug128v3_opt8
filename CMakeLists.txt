@@ -14,9 +14,9 @@ add_executable(diffusion_layer main.c
         permutations.h
         round.c
         round.h
-        aead.c
+        encrypt.c
         api.h
-        aead.h
+        encrypt.h
         word.h
         cJSON/cJSON.c
 )

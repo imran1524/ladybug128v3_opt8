@@ -1,7 +1,7 @@
 #include "utils.h"
 #include "permutations.h"
 #include "round.h"
-#include "aead.h"
+#include "encrypt.h"
 #include <string.h> // For strlen
 #include "cJSON/cJSON.h"
 
@@ -64,19 +64,6 @@ int main() {
             if (!tests) {
                 fprintf(stderr, "tests not found.\n");
             } else {
-
-                //                    "tcId": 1,
-//                            "comment": "",
-//                            "key": "00000000000000000000000000000000",
-//                            "iv": "00000000000000000000000000000000",
-//                            "nonce": "00000000000000000000000000000000",
-//                            "aad": "",
-//                            "msg": "",
-//                            "ct": "",
-//                            "tag": "0f3a56aa8add61cae8aa70b51b0dbc6b",
-//                            "result": "valid",
-//                            "flags": []
-
                 cJSON* test = NULL;
                 cJSON_ArrayForEach(test, tests) {
                     cJSON* key_item = cJSON_GetObjectItem(test, "key");
@@ -118,8 +105,6 @@ int main() {
                         printf("tag = %s\n", tag);
                     }
 
-
-
                     // Extract the values from the test case
                     const char* key_str = key_item -> valuestring;
                     const char* iv_str = iv_item -> valuestring;
@@ -129,27 +114,26 @@ int main() {
                     const char* ct_str = ct_item -> valuestring;
                     const char* tag_str = tag_item->valuestring;
 
+                    unsigned long long key_len = strlen(key_str) / 2;
+                    printf("key_len = %llu\n", key_len);
 
-                    size_t key_len = strlen(key_str) / 2;
-                    printf("key_len = %zu\n", key_len);
+                    unsigned long long iv_len= strlen(iv_str) / 2;
+                    printf("iv_len = %llu\n", iv_len);
 
-                    size_t iv_len = strlen(iv_str) / 2;
-                    printf("iv_len = %zu\n", iv_len);
+                    unsigned long long nonce_len = strlen(nonce_str) / 2;
+                    printf("nonce_len = %llu\n", nonce_len);
 
-                    size_t nonce_len = strlen(nonce_str) / 2;
-                    printf("nonce_len = %zu\n", nonce_len);
+                    unsigned long long aad_len = strlen(aad_str) / 2;
+                    printf("aad_len = %llu\n", aad_len);
 
-                    size_t aad_len = strlen(aad_str) / 2;
-                    printf("aad_len = %zu\n", aad_len);
+                    unsigned long long msg_len = strlen(msg_str) / 2;
+                    printf("message_len = %llu\n", msg_len);
 
-                    size_t msg_len = strlen(msg_str) / 2;
-                    printf("message_len = %zu\n", msg_len);
+                    unsigned long long ct_len = strlen(ct_str) / 2;
+                    printf("ct_len = %llu\n", ct_len);
 
-                    size_t ct_len = strlen(ct_str) / 2;
-                    printf("ct_len = %zu\n", ct_len);
-
-                    size_t tag_len = strlen(tag_str) / 2;
-                    printf("tag_len = %zu\n", tag_len);
+                    unsigned long long tag_len = strlen(tag_str) / 2;
+                    printf("tag_len = %llu\n", tag_len);
 
                     unsigned char key[key_len];
                     unsigned char iv[iv_len];
@@ -168,24 +152,32 @@ int main() {
                     hex_string_to_binary(msg_str, msg, msg_len);
 
                     // Perform AEAD encryption
-                    size_t max_ciphertext_len = msg_len + tag_len; // Maximum possible ciphertext length
-                    unsigned char* ciphertext = (unsigned char*)malloc(max_ciphertext_len);
+                    unsigned long long ciphertext_len = msg_len + tag_len; // Maximum possible ciphertext length
+                    unsigned char *ciphertext = (unsigned char*)malloc(ciphertext_len);
                     if (!ciphertext) {
                         fprintf(stderr, "Memory allocation failed.\n");
                         cJSON_Delete(root);
                         free(json_string);
                         return 1;
                     }
-                    unsigned long long ciphertext_len;
 
-                    /*int crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
-                        const unsigned char* m, unsigned long long mlen,
-                        const unsigned char* ad, unsigned long long adlen,
-                        const unsigned char* nsec, const unsigned char* npub,
-                        const unsigned char* k)
-                     * */
+//                    int crypto_aead_encrypt(
+//                            unsigned char *c, unsigned long long *clen,
+//                            const unsigned char *m, unsigned long long mlen,
+//                            const unsigned char *ad, unsigned long long adlen,
+//                            const unsigned char *nsec,
+//                            const unsigned char *npub,
+//                            const unsigned char *k
+//                    );
 
-                    int encryption_result = crypto_aead_encrypt(ciphertext, &ciphertext_len, msg, msg_len, aad, aad_len, NULL, nonce, key);
+                    int encryption_result = crypto_aead_encrypt(
+                            ciphertext, &ciphertext_len,
+                            msg, msg_len,
+                            aad, aad_len,
+                            NULL,
+                            nonce,
+                            key);
+
                     if (encryption_result != 0) {
                         fprintf(stderr, "Encryption failed.\n");
                         free(ciphertext);
@@ -203,13 +195,26 @@ int main() {
                     print_vector(ciphertext, ciphertext_len);
                     printf("\n");
 
-                    size_t decrypted_len = msg_len;
-                    int decryption_result = crypto_aead_decrypt(msg, &decrypted_len, ciphertext, ciphertext_len, aad, aad_len, NULL, nonce, key);
+//                    int crypto_aead_decrypt(
+//                            unsigned char *m, unsigned long long *mlen,
+//                            unsigned char *msec,
+//                            const unsigned char *c, unsigned long long clen,
+//                            const unsigned char *ad, unsigned long long adlen,
+//                            const unsigned char *npub,
+//                            const unsigned char *k
+//                    );
+                    size_t decrypted_len = ciphertext_len;
+                    int decryption_result = crypto_aead_decrypt(
+                            msg, &msg_len,
+                            NULL,
+                            ciphertext, ciphertext_len,
+                            aad, aad_len,
+                            nonce, key);
                     if (decryption_result != 0) {
                         printf("Tag verification failed.\n");
                     } else {
                         printf("RECOVERED PLAINTEXT:\n");
-                        print_vector(msg, decrypted_len);
+                        print_vector(msg, msg_len);
                         printf("\n");
                     }
 
