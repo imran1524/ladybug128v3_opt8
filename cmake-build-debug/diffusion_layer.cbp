@@ -8,119 +8,119 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="diffusion_layer">
-				<Option output="C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/diffusion_layer.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug"/>
+				<Option output="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/diffusion_layer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Users/imran/CLionProjects/diffusion_layer/cJSON/cJSON"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 diffusion_layer"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 diffusion_layer"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="diffusion_layer/fast">
-				<Option output="C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/diffusion_layer.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug"/>
+				<Option output="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/diffusion_layer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Users/imran/CLionProjects/diffusion_layer/cJSON/cJSON"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
-					<Add directory="C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/15.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 diffusion_layer/fast"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 diffusion_layer/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug"/>
+				<Option working_dir="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~1/JETBRA~1/CLION2~1.4/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/imran/CLionProjects/diffusion_layer/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/ik/Library/Mobile\ Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/api.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/api.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/cJSON/cJSON.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/cJSON/cJSON.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/constants.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/constants.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/encrypt.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/encrypt.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/main.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/main.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/permutations.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/permutations.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/permutations.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/permutations.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/round.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/round.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/round.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/round.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/utils.c">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/utils.c">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/utils.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/utils.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/word.h">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/word.h">
 			<Option target="diffusion_layer"/>
 		</Unit>
-		<Unit filename="C:/Users/imran/CLionProjects/diffusion_layer/CMakeLists.txt">
+		<Unit filename="/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

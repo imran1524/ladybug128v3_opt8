@@ -84,9 +84,6 @@ int main() {
                         printf("iv = %s\n", iv);
                     }
 
-                    if(nonce_item){
-
-                    }
                     if (aad_item && cJSON_IsString(aad_item)) {
                         const char* aad = aad_item->valuestring;
                         printf("AD = %s\n", aad);
@@ -160,15 +157,6 @@ int main() {
                         return 1;
                     }
 
-//                    int crypto_aead_encrypt(
-//                            unsigned char *c, unsigned long long *clen,
-//                            const unsigned char *m, unsigned long long mlen,
-//                            const unsigned char *ad, unsigned long long adlen,
-//                            const unsigned char *nsec,
-//                            const unsigned char *npub,
-//                            const unsigned char *k
-//                    );
-
                     int encryption_result = crypto_aead_encrypt(
                             ciphertext, &ciphertext_len,
                             msg, msg_len,
@@ -194,14 +182,6 @@ int main() {
                     print_vector(ciphertext, ciphertext_len);
                     printf("\n");
 
-//                    int crypto_aead_decrypt(
-//                            unsigned char *m, unsigned long long *mlen,
-//                            unsigned char *msec,
-//                            const unsigned char *c, unsigned long long clen,
-//                            const unsigned char *ad, unsigned long long adlen,
-//                            const unsigned char *npub,
-//                            const unsigned char *k
-//                    );
                     size_t decrypted_len = ciphertext_len;
                     int decryption_result = crypto_aead_decrypt(
                             msg, &msg_len,
