@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON.c" "CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.o" "gcc" "CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.o.d"
-  "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/encrypt.c" "CMakeFiles/diffusion_layer.dir/encrypt.c.o" "gcc" "CMakeFiles/diffusion_layer.dir/encrypt.c.o.d"
-  "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/main.c" "CMakeFiles/diffusion_layer.dir/main.c.o" "gcc" "CMakeFiles/diffusion_layer.dir/main.c.o.d"
-  "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/permutations.c" "CMakeFiles/diffusion_layer.dir/permutations.c.o" "gcc" "CMakeFiles/diffusion_layer.dir/permutations.c.o.d"
-  "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/round.c" "CMakeFiles/diffusion_layer.dir/round.c.o" "gcc" "CMakeFiles/diffusion_layer.dir/round.c.o.d"
-  "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/utils.c" "CMakeFiles/diffusion_layer.dir/utils.c.o" "gcc" "CMakeFiles/diffusion_layer.dir/utils.c.o.d"
+  "C:/Users/imran/CLionProjects/diffusion_layer/cJSON/cJSON.c" "CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.obj" "gcc" "CMakeFiles/diffusion_layer.dir/cJSON/cJSON.c.obj.d"
+  "C:/Users/imran/CLionProjects/diffusion_layer/encrypt.c" "CMakeFiles/diffusion_layer.dir/encrypt.c.obj" "gcc" "CMakeFiles/diffusion_layer.dir/encrypt.c.obj.d"
+  "C:/Users/imran/CLionProjects/diffusion_layer/main.c" "CMakeFiles/diffusion_layer.dir/main.c.obj" "gcc" "CMakeFiles/diffusion_layer.dir/main.c.obj.d"
+  "C:/Users/imran/CLionProjects/diffusion_layer/permutations.c" "CMakeFiles/diffusion_layer.dir/permutations.c.obj" "gcc" "CMakeFiles/diffusion_layer.dir/permutations.c.obj.d"
+  "C:/Users/imran/CLionProjects/diffusion_layer/round.c" "CMakeFiles/diffusion_layer.dir/round.c.obj" "gcc" "CMakeFiles/diffusion_layer.dir/round.c.obj.d"
+  "C:/Users/imran/CLionProjects/diffusion_layer/utils.c" "CMakeFiles/diffusion_layer.dir/utils.c.obj" "gcc" "CMakeFiles/diffusion_layer.dir/utils.c.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

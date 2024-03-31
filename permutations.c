@@ -109,7 +109,7 @@ void inverse_permutation(state_t *s){
 
     // INVERSE TRANSFORM
     // TRANSPOSE ONMNT MATRIX
-    uint8_t transposedONMNT[N][N];
+    uint8_t transposedONMNT[BLOCK_SIZE][BLOCK_SIZE];
 //    transpose_ONMNT(ONMNT, transposedONMNT);
 
     inverse_transform(s, NMNT);  // Directly passing 's' since it's a pointer

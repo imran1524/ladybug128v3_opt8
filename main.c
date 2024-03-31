@@ -7,7 +7,7 @@
 
 int main() {
     long file_size;
-    char* file_location = "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/custom_test_vector.json";
+    char* file_location = "custom_test_vector.json";
     char* json_string = parseJsonFile(file_location, &file_size);
 
     if (json_string == NULL) {
@@ -35,7 +35,6 @@ int main() {
         const uint64_t numberOfTests = numberOfTestsItem->valueint;
         printf("numberOfTests = %llu\n", numberOfTests);
     }
-
     cJSON* testGroups = cJSON_GetObjectItem(root, "testGroups");
 
     if (!testGroups) {

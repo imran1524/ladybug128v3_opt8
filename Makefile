@@ -1,51 +1,69 @@
-# Compiler in use
-CC=clang
+# Detect OS and Compiler
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+    CC ?= gcc
+    LIB_PATH = /mingw64/bin/lib
+    INCLUDE_PATH = /mingw64/bin/include
+    RM := rm -f
+    RMDIR := rm -rf
+endif
 
-# Compilation flags for both architectures
-COMMON_CFLAGS=-Wall -g -I/opt/homebrew/include
+ifeq ($(UNAME_S),Darwin)
+    CC ?= clang
+    LIB_PATH = /opt/homebrew/lib
+    INCLUDE_PATH = /opt/homebrew/include
+    RM := rm -f
+    RMDIR := rm -rf
+endif
+ifeq ($(OS),Windows_NT)
+    CC := gcc
+    INCLUDE_PATH := C:/Users/imran/Libraries/include
+    RM := cmd /c del /Q
 
-# Compilation flags for ARM64 architecture
-ARM64_CFLAGS=$(COMMON_CFLAGS) -arch arm64
+    RMDIR := cmd /c rmdir /S /Q
+endif
 
-# Compilation flags for Intel architecture
-INTEL_CFLAGS=$(COMMON_CFLAGS)
+# Default compilation flags
+CFLAGS := -Wall -g -I$(INCLUDE_PATH)
 
-# Linking flags, example for the math library
-LDFLAGS=-L/opt/homebrew/lib -lm
+# Linking flags
+LDFLAGS := -L$(LIB_PATH) -lm
 
-# All source files
-SOURCES=main.c permutations.c round.c utils.c aead.c cJSON/cJSON.c
+# Architecture-specific flags
+ARM64_CFLAGS := $(CFLAGS) -arch arm64
+INTEL_CFLAGS := $(CFLAGS)
 
-# Convert source files to object files
-OBJECTS=$(SOURCES:.c=.o)
+# Source and object files
+SOURCES := main.c permutations.c round.c utils.c encrypt.c cJSON/cJSON.c
+OBJECTS := $(SOURCES:.c=.o)
+EXECUTABLE := diffusion_layer
 
-# Name of the final executable
-EXECUTABLE=diffusion_layer
-
-# Default target builds the executable
+# Default target
 all: $(EXECUTABLE)
 
-# Link the program using object files and output an executable
+# Executable linking
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
-
-# Compile the source files into object files for ARM64 architecture
-arm64: CFLAGS=$(ARM64_CFLAGS)
-arm64: clean $(EXECUTABLE)
-
-# Compile the source files into object files for Intel architecture
-intel: CFLAGS=$(INTEL_CFLAGS)
-intel: clean $(EXECUTABLE)
-
-# Rule to compile individual source files into object files
-.c.o:
+# Object files compilation
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-
-# Clean the workspace
+# Clean workspace
 clean:
-	rm -f $(OBJECTS) $(EXECUTABLE)
+ifeq ($(OS),Windows_NT)
+	@$(foreach file,$(OBJECTS) $(EXECUTABLE),cmd /c if exist $(subst /,\,$(file)) del /Q $(subst /,\,$(file)) &)
+else
+	$(RM) $(OBJECTS) $(EXECUTABLE)
+endif
 
-# Target to run AddressSanitizer
+
+# AddressSanitizer target
 asan: CFLAGS += -fsanitize=address
 asan: LDFLAGS += -fsanitize=address
 asan: clean $(EXECUTABLE)
+
+# Architecture-specific targets
+arm64: CFLAGS := $(ARM64_CFLAGS)
+arm64: clean $(EXECUTABLE)
+
+intel: CFLAGS := $(INTEL_CFLAGS)
+intel: clean $(EXECUTABLE)

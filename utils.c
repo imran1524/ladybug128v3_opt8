@@ -10,8 +10,41 @@
 #include <ctype.h>
 
 
+//void generate_nonce(uint8_t *nonce, size_t nonce_len) {
+//    arc4random_buf(nonce, nonce_len);
+//}
+
+#include <stdint.h>
+#include <stdlib.h>
+
+#if defined(_WIN32) || defined(_WIN64)
+#include <Windows.h>
+#include <Wincrypt.h>
+#else
+#include <stdio.h>
+#endif
+
 void generate_nonce(uint8_t *nonce, size_t nonce_len) {
-    arc4random_buf(nonce, nonce_len);
+    if (nonce == NULL) return;
+
+#if defined(_WIN32) || defined(_WIN64)
+    HCRYPTPROV prov = 0;
+    if (!CryptAcquireContext(&prov, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT | CRYPT_SILENT)) {
+        exit(EXIT_FAILURE); // Consider a more graceful error handling strategy
+    }
+    if (!CryptGenRandom(prov, (DWORD)nonce_len, nonce)) {
+        CryptReleaseContext(prov, 0);
+        exit(EXIT_FAILURE); // Consider a more graceful error handling strategy
+    }
+    CryptReleaseContext(prov, 0);
+#else
+    FILE *file = fopen("/dev/urandom", "rb");
+    if (!file) {
+        exit(EXIT_FAILURE); // Consider a more graceful error handling strategy
+    }
+    fread(nonce, 1, nonce_len, file);
+    fclose(file);
+#endif
 }
 
 void print_vector(uint8_t *vector, size_t vector_size){
