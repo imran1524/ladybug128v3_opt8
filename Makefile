@@ -17,14 +17,13 @@ ifeq ($(UNAME_S),Darwin)
 endif
 ifeq ($(OS),Windows_NT)
     CC := gcc
-    INCLUDE_PATH := C:/Users/imran/Libraries/include
+    INCLUDE_PATH := include
     RM := cmd /c del /Q
-
     RMDIR := cmd /c rmdir /S /Q
 endif
 
 # Default compilation flags
-CFLAGS := -Wall -g -I$(INCLUDE_PATH)
+CFLAGS := -Wall -g -I./$(INCLUDE_PATH)
 
 # Linking flags
 LDFLAGS := -L$(LIB_PATH) -lm
