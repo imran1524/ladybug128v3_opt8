@@ -49,7 +49,7 @@ $(EXECUTABLE): $(OBJECTS)
 # Clean workspace
 clean:
 ifeq ($(OS),Windows_NT)
-	@$(foreach file,$(OBJECTS) $(EXECUTABLE),cmd /c if exist $(subst /,\,$(file)) del /Q $(subst /,\,$(file)) &)
+	@$(foreach file,$(OBJECTS) $(EXECUTABLE).exe, $(RM), $(subst /,\,$(file)) del /Q $(subst /,\,$(file)) &)
 else
 	$(RM) $(OBJECTS) $(EXECUTABLE)
 endif
