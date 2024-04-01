@@ -2,8 +2,8 @@
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
     CC ?= gcc
-    LIB_PATH = /mingw64/bin/lib
-    INCLUDE_PATH = /mingw64/bin/include
+    LIB_PATH = /usr/lib
+    INCLUDE_PATH = /usr/include
     RM := rm -f
     RMDIR := rm -rf
 endif
@@ -54,7 +54,6 @@ ifeq ($(OS),Windows_NT)
 else
 	$(RM) $(OBJECTS) $(EXECUTABLE)
 endif
-
 
 # AddressSanitizer target
 asan: CFLAGS += -fsanitize=address
