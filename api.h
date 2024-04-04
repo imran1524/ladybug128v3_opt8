@@ -1,5 +1,5 @@
-#ifndef DIFFUSION_LAYER_API_H
-#define DIFFUSION_LAYER_API_H
+#ifndef LADYBUG128_API_H
+#define LADYBUG128_API_H
 
 #define VERSION "0.1.0"
 #define CRYPT0_KEYBYTES 16 //Key size 16 byte or 128-bit
@@ -18,4 +18,4 @@
  * */
 
 
-#endif //DIFFUSION_LAYER_API_H
+#endif //LADYBUG128_API_H

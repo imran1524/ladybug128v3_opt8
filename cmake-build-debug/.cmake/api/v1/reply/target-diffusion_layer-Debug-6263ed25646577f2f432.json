@@ -2,7 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "diffusion_layer"
+			"path" : "diffusion_layer.exe"
+		},
+		{
+			"path" : "diffusion_layer.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -42,14 +45,14 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics"
+					"fragment" : "-g -fdiagnostics-color=always"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/Users/ik/Library/Mobile Documents/com~apple~CloudDocs/Yousuf/MacbookAir/cJSON/cJSON"
+					"path" : "C:/Users/imran/CLionProjects/ladybug128v1/cJSON/cJSON"
 				}
 			],
 			"language" : "C",
@@ -84,12 +87,16 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
+			},
+			{
+				"fragment" : "-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32",
+				"role" : "libraries"
 			}
 		],
 		"language" : "C"
 	},
 	"name" : "diffusion_layer",
-	"nameOnDisk" : "diffusion_layer",
+	"nameOnDisk" : "diffusion_layer.exe",
 	"paths" : 
 	{
 		"build" : ".",
