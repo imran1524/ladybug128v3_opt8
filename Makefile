@@ -35,7 +35,7 @@ INTEL_CFLAGS := $(CFLAGS)
 # Source and object files
 SOURCES := main.c permutations.c round.c utils.c encrypt.c cJSON/cJSON.c
 OBJECTS := $(SOURCES:.c=.o)
-EXECUTABLE := ladybug128v1
+EXECUTABLE := ladybug128v2
 
 # Default target
 all: $(EXECUTABLE)
