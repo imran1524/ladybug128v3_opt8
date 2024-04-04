@@ -3,27 +3,6 @@
 #include "permutations.h"
 #include "utils.h"
 
-/*int crypto_aead_encrypt(
-    unsigned char *c,unsigned long long *clen,
-    const unsigned char *m,unsigned long long mlen,
-    const unsigned char *ad,unsigned long long adlen,
-    const unsigned char *nsec,
-    const unsigned char *npub,
-    const unsigned char *k){
-
-    //Plaintext m[0],m[1],...,m[mlen-1]
-
-    //Generating a ciphertext c[0],c[1],...,c[*clen-1]
-
-    //Associated data ad[0],ad[1],...,ad[adlen-1]
-
-    //Nonce npub[0],npub[1],...
-
-    //Secret key k[0],k[1],...
-
-
- }
- * */
 
 //ENCRYPTION
 int crypto_aead_encrypt(
@@ -88,7 +67,7 @@ int crypto_aead_encrypt(
 //    printf("=======================PROCESSING ASSOCIATED DATA (AD) =======================\n");
     if (adlen){
         //FULL ASSOCIATED DATA BLOCKS
-        while(adlen >= RATE){
+        while(adlen >= LADYBUG_AEAD_RATE){
 //            printf("adlen in encryption = %zu\n", adlen);
             s.x[0] ^= LOAD_BYTES(ad, 8);
 //            printf("4. AEAD ENCRYPTION AD: STATE PROCESSING FULL AD BEFORE APPLYING FORWARD PERMUTATION\n");
@@ -102,8 +81,8 @@ int crypto_aead_encrypt(
 //            printf("\n");
 
 //            printf("adlen_final = %d\n", adlen);
-            ad += RATE;
-            adlen -= RATE;
+            ad += LADYBUG_AEAD_RATE;
+            adlen -= LADYBUG_AEAD_RATE;
         }
 
         //FINAL ASSOCIATED DATA BLOCK
@@ -134,7 +113,7 @@ int crypto_aead_encrypt(
     //END OF ASSOCIATED DOMAIN
     //======================== FINAL PLAINTEXT BLOCK PROCESSING =======================================
     size_t block = 0;
-    while (mlen >= RATE){
+    while (mlen >= LADYBUG_AEAD_RATE){
         //LOADING 8 BYTES FROM THE MESSAGE AND XOR WITH THE FIRST BLOCK OF THE STATE
 //        printf("Message block: %d\n", block + 1);
 //        printf("mlen = %d\n", mlen);
@@ -160,9 +139,9 @@ int crypto_aead_encrypt(
 //        printf("STATE AFTER ABSORBING PLAINTEXT AFTER APPLYING PERMUTATION\n");
 //        print_state(&s);
 //        printf("\n");
-        m += RATE;
-        c += RATE;
-        mlen -= RATE;
+        m += LADYBUG_AEAD_RATE;
+        c += LADYBUG_AEAD_RATE;
+        mlen -= LADYBUG_AEAD_RATE;
         block++;
     }
 
@@ -331,7 +310,7 @@ int crypto_aead_decrypt(
 //START OF ASSOCIATED DATA DOMAIN
     if(adlen){
         //FULL ASSOCIATED DATA BLOCKS
-        while(adlen >= RATE){
+        while(adlen >= LADYBUG_AEAD_RATE){
 //            printf("adlen in decryption = %d\n", adlen);
             s.x[0] ^= LOAD_BYTES(ad, 8);
 //            printf("4. AEAD DECRYPTION AD: STATE BEFORE PROCESSING FULL ASSOCIATED DATA\n");
@@ -344,8 +323,8 @@ int crypto_aead_decrypt(
 //            print_state(&s);
 //            printf("\n");
 
-            ad += RATE;
-            adlen -= RATE;
+            ad += LADYBUG_AEAD_RATE;
+            adlen -= LADYBUG_AEAD_RATE;
         }
 
         //FINAL ASSOCIATED DATA BLOCK
@@ -384,7 +363,7 @@ int crypto_aead_decrypt(
     //ADJUSTING CIPHERTEXT BY SUBTRACTING THE TAG LENGTH
     clen -= CRYPTO_ABYTES;
     size_t block = 0;
-    while(clen >= RATE){
+    while(clen >= LADYBUG_AEAD_RATE){
         uint64_t c0 = LOAD_BYTES(c, 8);
 //        printf("Ciphetext block = %d\n", block + 1);
 //        print_vector(c, 8);
@@ -402,9 +381,9 @@ int crypto_aead_decrypt(
 
         //INVERSE PERMUTATION
         FP1(&s);
-        m += RATE;
-        c += RATE;
-        clen -= RATE;
+        m += LADYBUG_AEAD_RATE;
+        c += LADYBUG_AEAD_RATE;
+        clen -= LADYBUG_AEAD_RATE;
         block++;
     }
 

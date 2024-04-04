@@ -14,7 +14,7 @@ add_executable(ladybug128v1 main.c
         permutations.h
         round.c
         round.h
-        encrypt.c
+        aead.c
         api.h
         encrypt.h
         word.h

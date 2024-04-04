@@ -33,7 +33,7 @@ ARM64_CFLAGS := $(CFLAGS) -arch arm64
 INTEL_CFLAGS := $(CFLAGS)
 
 # Source and object files
-SOURCES := main.c permutations.c round.c utils.c encrypt.c cJSON/cJSON.c
+SOURCES := main.c permutations.c round.c utils.c aead.c cJSON/cJSON.c
 OBJECTS := $(SOURCES:.c=.o)
 EXECUTABLE := ladybug128v2
 
