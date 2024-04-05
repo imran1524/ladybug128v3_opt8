@@ -4,7 +4,7 @@
 #include "utils.h"
 #include "constants.h"
 #include "round.h"
-#include "encrypt.h"
+#include "ladybug.h"
 
 void FP1 (state_t *s);
 void IP1 (state_t *s);

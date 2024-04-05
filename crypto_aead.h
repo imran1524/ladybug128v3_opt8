@@ -1,14 +1,3 @@
-#ifndef DIFFUSION_LAYER_ENCRYPT_H
-#define DIFFUSION_LAYER_ENCRYPT_H
-
-#include <stdint.h>
-#include "constants.h"
-#include "word.h"
-
-typedef struct {
-    uint64_t x[BLOCK_NUMBER];
-}state_t;
-
 int crypto_aead_encrypt(
         unsigned char *c, unsigned long long *clen,
         const unsigned char *m, unsigned long long mlen,
@@ -26,5 +15,3 @@ int crypto_aead_decrypt(
         const unsigned char *npub,
         const unsigned char *k
         );
-
-#endif //DIFFUSION_LAYER_ENCRYPT_H

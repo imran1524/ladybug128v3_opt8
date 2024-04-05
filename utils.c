@@ -4,7 +4,6 @@
 
 #include "utils.h"
 #include "constants.h"
-#include "encrypt.h"
 #include "api.h"
 
 #include <ctype.h>

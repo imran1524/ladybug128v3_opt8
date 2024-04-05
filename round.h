@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdint.h>
 #include "constants.h"
-#include "encrypt.h"
+#include "ladybug.h"
 #include "api.h"
 
 #define BLOCK_SIZE 8

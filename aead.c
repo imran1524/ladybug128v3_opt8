@@ -1,33 +1,20 @@
 #include "api.h"
-#include "encrypt.h"
+#include "ladybug.h"
+#include "crypto_aead.h"
 #include "permutations.h"
 #include "utils.h"
-
 
 //ENCRYPTION
 int crypto_aead_encrypt(
         unsigned char *c, unsigned long long *clen,
         const unsigned char *m, unsigned long long mlen,
         const unsigned char *ad, unsigned long long adlen,
-        const unsigned char *nsec,
-        const unsigned char *npub,
+        const unsigned char *nsec, const unsigned char *npub,
         const unsigned char *k
 ){
     (void)nsec;
     //SET THE POINTER OF CIPHERTEXT BY ADDING MESSAGE LENGTH AND ASSOCIATED DATA LENGTH
     *clen = mlen + CRYPTO_ABYTES;
-
-//    printf("NONCE USED IN AEAD ENCRYPTION\n");
-//    print_vector(npub, 16);
-//    printf("\n");
-//
-//    printf("ASSOCIATED DATA USED IN AEAD ENCRYPTION\n");
-//    print_vector(ad, adlen);
-//    printf("\n");
-//
-//    printf("KEY USED IN AEAD ENCRYPTION\n");
-//    print_vector(k, 16);
-//    printf("\n");
 
     //LOAD KEY AND NONCE
     //key, k is 128-bits that is divided into two 64-bit keys, public nonce, npub is 128-bits
@@ -38,8 +25,7 @@ int crypto_aead_encrypt(
 
     //INITIALIZATION:
     state_t s;
-//    printf("IV: %0llx\n", AEAD_128_IV);
-    s.x[0] = AEAD_128_IV;
+    s.x[0] = LADYBUG_128_IV;
     s.x[1] = K0;
     s.x[2] = K1;
     s.x[3] = N0;
@@ -285,7 +271,7 @@ int crypto_aead_decrypt(
 
 //START OF INITIALIZATION DOMAIN
     state_t s;
-    s.x[0] = AEAD_128_IV;
+    s.x[0] = k=LADYBUG_128_IV;
     s.x[1] = K0;
     s.x[2] = K1;
     s.x[3] = N0;
