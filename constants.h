@@ -9,7 +9,7 @@
 #define SBOX_SIZE 5
 #define TRANSFORM_P 7
 #define TRANSFORM_N 8
-#define AEAD_RATE_BYTES 8
+#define LADYBUG_128_RATE_BYTES 8
 #define PRF_IN_RATE 32
 #define ROUNDS 1
 
