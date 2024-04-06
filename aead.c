@@ -215,7 +215,6 @@ int crypto_aead_decrypt(
 
     //VERIFY TAG (THIS OPERATION MUST BE CONSTANT TIME)
     result = (((result - 1) >> 8) & 1) - 1;
-
     return  result;
 }
 
