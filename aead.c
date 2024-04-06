@@ -1,3 +1,4 @@
+#include "crypto_aead.h"
 #include "api.h"
 #include "ladybug.h"
 #include "crypto_aead.h"
