@@ -4,13 +4,11 @@
 #include <stdint.h>
 
 #define LADYBUG_128_KEYBYTES 16
-#define LADYBUG_128_RATE_BYTES 16
 #define BLOCK_NUMBER 5
 #define SBOX_SIZE 5
 #define TRANSFORM_P 7
 #define TRANSFORM_N 8
 #define LADYBUG_128_RATE_BYTES 8
-#define PRF_IN_RATE 32
 #define ROUNDS 1
 
 #define LADYBUG_128_IV \
