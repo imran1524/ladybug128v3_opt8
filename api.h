@@ -2,7 +2,7 @@
 #define LADYBUG128V2_API_H  // Also corrected the typo here to match the initial #ifndef directive
 
 #define CRYPTO_VERSION "0.1.0"
-#define CRYPT0_KEYBYTES 16 // Key size 16 byte or 128-bit
+#define CRYPTO_KEYBYTES 16 // Key size 16 byte or 128-bit
 #define CRYPTO_NSECBYTES 0 // Secret nonce is zero byte as it's only added for compatibility but not used in implementation
 #define CRYPTO_NPUBBYTES 16 // Public nonce is 16 byte or 128-bit
 #define CRYPTO_ABYTES 16 // Associated data size 16 byte or 128-bit
