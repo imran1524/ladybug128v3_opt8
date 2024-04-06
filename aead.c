@@ -48,7 +48,6 @@ int crypto_aead_encrypt(
             //APPLY A FORWARD PERMUTATION OPERATION
             FP1(&s);
 
-
 //            printf("adlen_final = %d\n", adlen);
             ad += LADYBUG_128_RATE_BYTES;
             adlen -= LADYBUG_128_RATE_BYTES;
@@ -103,12 +102,22 @@ int crypto_aead_encrypt(
 
 //DECRYPTION AEAD
 
+/*int crypto_aead_decrypt(
+        unsigned char *m, unsigned long long *mlen,
+        unsigned char *nsec,const unsigned char *c, 
+        unsigned long long clen, const unsigned char *ad, 
+        unsigned long long adlen, const unsigned char *npub,
+        const unsigned char *k);
+
+*/
+
+
+
 int crypto_aead_decrypt(
             unsigned char *m, unsigned long long *mlen,
-            unsigned char *nsec,
-            const unsigned char *c, unsigned long long clen,
-            const unsigned char *ad, unsigned long long adlen,
-            const unsigned char *npub,
+            unsigned char *nsec, const unsigned char *c,
+            unsigned long long clen, const unsigned char *ad, 
+            unsigned long long adlen, const unsigned char *npub,
             const unsigned char *k
     ){
 
@@ -129,7 +138,7 @@ int crypto_aead_decrypt(
 
 //START OF INITIALIZATION DOMAIN
     state_t s;
-    s.x[0] =LADYBUG_128_IV;
+    s.x[0] = LADYBUG_128_IV;
     s.x[1] = K0;
     s.x[2] = K1;
     s.x[3] = N0;
@@ -210,7 +219,7 @@ int crypto_aead_decrypt(
     size_t result = 0;
     for(i = 0; i < CRYPTO_ABYTES; i++){
         result |= c[i] ^ t[i];
-//        printf("Result = %zu\n", result);
+    //    printf("Result = %zu\n", result);
     }
 
     //VERIFY TAG (THIS OPERATION MUST BE CONSTANT TIME)
@@ -218,13 +227,13 @@ int crypto_aead_decrypt(
     return  result;
 }
 
-void print_binary(unsigned char* binary, size_t binary_len) {
-    for(size_t i = 0; i < binary_len; i++) {
-        // Print each byte in binary
-        for(int bit = 7; bit >= 0; bit--) {
-            putchar((binary[i] >> bit) & 1 ? '1' : '0');
-        }
-        putchar(' ');
-    }
-    putchar('\n');
-}
+// void print_binary(unsigned char* binary, size_t binary_len) {
+//     for(size_t i = 0; i < binary_len; i++) {
+//         // Print each byte in binary
+//         for(int bit = 7; bit >= 0; bit--) {
+//             putchar((binary[i] >> bit) & 1 ? '1' : '0');
+//         }
+//         putchar(' ');
+//     }
+//     putchar('\n');
+// }
