@@ -128,7 +128,7 @@ int crypto_aead_decrypt(
 
 //START OF INITIALIZATION DOMAIN
     state_t s;
-    s.x[0] = k=LADYBUG_128_IV;
+    s.x[0] =LADYBUG_128_IV;
     s.x[1] = K0;
     s.x[2] = K1;
     s.x[3] = N0;
