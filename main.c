@@ -2,7 +2,7 @@
 #include "permutations.h"
 #include "round.h"
 #include "ladybug.h"
-#include <string.h> // For strlen
+#include <string.h> // 
 #include "cJSON/cJSON.h"
 
 int main() {
