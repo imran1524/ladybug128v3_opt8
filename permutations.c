@@ -6,35 +6,25 @@
  void FP1(state_t *s){
 //    printf("Round # 1\n");
     forward_permutation(s);
-//    forward_permutation(s);
-//    forward_permutation(s);
-//    forward_permutation(s);
-//    forward_permutation(s);
-//    forward_permutation(s);
 };
 
 //IP: INVERSE PERMUTATION WITH 3 ROUNDS
 void IP1(state_t *s){
-//    printf("Round # 1\n");
-    inverse_permutation(s);
-//    printf("Round # 2\n");
-//    inverse_permutation(s);
-//    printf("Round # 3\n");
-//    inverse_permutation(s);
+    // inverse_permutation(s);
 };
 
 //FORWARD PERMUTATION
 void forward_permutation(state_t *s) {
-//    printf("FORWARD PERMUTATION:\n");
-//    printf("State before applying forward permutation:\n");
-//    print_state(s);  // Correctly passing 's' as it's already a pointer
-//    printf("\n");
+   printf("FORWARD PERMUTATION:\n");
+   printf("State before applying forward permutation:\n");
+   print_state(s);  // Correctly passing 's' as it's already a pointer
+   printf("\n");
 
     //FORWARD TRANSFORM
     forward_transform(s, NMNT);  // Directly passing 's' since it's a pointer
-//    printf("State after applying forward transform:\n");
-//    print_state(s);  // Correctly passing 's'
-//    printf("\n");
+   printf("State after applying forward transform:\n");
+   print_state(s);  // Correctly passing 's'
+   printf("\n");
 
     //Creating 64 5-bit bundles from 5 64-bit blocks
     uint8_t bundles[64] = {0};
@@ -45,16 +35,16 @@ void forward_permutation(state_t *s) {
         }
     }
 
-//    printf("Before applying S-box:\n");
-//    print_bundles(bundles, 64);
-//    printf("\n");
+   printf("Before applying S-box:\n");
+   print_bundles(bundles, 64);
+   printf("\n");
     //APPLY FORWARD S-BOX
     for(size_t i = 0; i < 64; i++) {
         bundles[i] = forward_s_box[bundles[i]]; // Assuming forward_s_box is correctly defined
     }
 
-//    printf("After applying S-box:\n");
-//    print_bundles(bundles, 64);
+   printf("After applying S-box:\n");
+   print_bundles(bundles, 64);
 
     // Clear the blocks before reassembling
     memset(s->x, 0, sizeof(s->x));  // Clear existing blocks to ensure accurate reassembly
