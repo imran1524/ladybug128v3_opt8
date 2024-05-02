@@ -44,13 +44,13 @@ static const uint8_t O2NMNT[BLOCK_SIZE][BLOCK_SIZE] = {{72, 19, 19, 72, 5, 99, 2
                                      {122, 28, 99, 5, 72, 19, 19, 72}};
 
 
-//void forward_transform_round_function(state_t *state,  const uint8_t transform_matrix[N][N]);
-//void inverse_transform_round_function(state_t *state,  const uint8_t transform_matrix[N][N],  uint8_t inverseN)// ;
-void forward_transform_round_function(state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]);
-void forward_transform(state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]);
-void inverse_transform(state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]);
-void split_state_into_data_bytes(state_t *state, uint8_t *data_byte, int block_index);
-void combine_data_bytes_to_state(const uint8_t *data_byte, state_t *state, int block_index);
+//void forward_transform_round_function(ladybug_state_t *state,  const uint8_t transform_matrix[N][N]);
+//void inverse_transform_round_function(ladybug_state_t *state,  const uint8_t transform_matrix[N][N],  uint8_t inverseN)// ;
+void forward_transform_round_function(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]);
+void forward_transform(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]);
+void inverse_transform(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]);
+void split_state_into_data_bytes(ladybug_state_t *state, uint8_t *data_byte, int block_index);
+void combine_data_bytes_to_state(const uint8_t *data_byte, ladybug_state_t *state, int block_index);
 void transpose_ONMNT(const uint8_t input[BLOCK_SIZE][BLOCK_SIZE], uint8_t output[BLOCK_SIZE][BLOCK_SIZE]);
-void print_data_byte(state_t *state);
+void print_data_byte(ladybug_state_t *state);
 #endif //DIFFUSION_LAYER_ROUND_H

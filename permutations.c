@@ -3,18 +3,18 @@
 
 //TODO: Add round constant as input parameter
 //FORWARD PERMUTATION WITH 3 ROUNDS
- void FP1(state_t *s){
+ void FP1(ladybug_state_t *s){
 //    printf("Round # 1\n");
     forward_permutation(s);
 };
 
 //IP: INVERSE PERMUTATION WITH 3 ROUNDS
-void IP1(state_t *s){
+void IP1(ladybug_state_t *s){
     // inverse_permutation(s);At 
 };
 
 //FORWARD PERMUTATION
-void forward_permutation(state_t *s) {
+void forward_permutation(ladybug_state_t *s) {
 
     //Creating 64 5-bit bundles from 5 64-bit blocks
     uint8_t bundles[64] = {0};
@@ -79,7 +79,7 @@ void forward_permutation(state_t *s) {
 
 //INVERSE PERMUTATION
 //TODO: Add round constant as input parameter
-void inverse_permutation(state_t *s){
+void inverse_permutation(ladybug_state_t *s){
 //    printf("INVERSE PERMUTATION:\n");
 //    printf("State before applying inverse S-box\n");
 //    print_state(s);

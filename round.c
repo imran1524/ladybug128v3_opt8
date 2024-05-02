@@ -6,7 +6,7 @@ uint8_t inverse_s_box[32] = {2, 20, 22, 17, 25, 27, 7, 29, 9, 16, 3, 23, 24, 30,
                              11, 19,14, 4, 6, 5, 8, 13, 1, 10, 15, 0, 12, 26, 21};
 
 //ENCRYPTION ROUND FUNCTION
-void forward_transform_round_function(state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
+void forward_transform_round_function(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
     for(int block_index = 0; block_index < 5; block_index++){
         uint64_t sum_NMNT[BLOCK_SIZE] = {0}; // Initialize sum array to zero
         uint8_t data_byte[BLOCK_SIZE] = {0};
@@ -25,12 +25,12 @@ void forward_transform_round_function(state_t *state, const uint8_t transform_ma
     }
 }
 
-void forward_transform(state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
+void forward_transform(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
     forward_transform_round_function(state, transform_matrix); // Corrected passing of state
 }
 
 //DECRYPTION ROUND FUNCTION
-void inverse_transform_round_function(state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE], uint8_t inverseN){
+void inverse_transform_round_function(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE], uint8_t inverseN){
     for(int block_index = 0; block_index < BLOCK_NUMBER; block_index++){
         uint64_t sum_NMNT[BLOCK_SIZE] = {0}; // Initialize sum array to zero
         uint8_t data_byte[BLOCK_SIZE] = {0};
@@ -49,7 +49,7 @@ void inverse_transform_round_function(state_t *state, const uint8_t transform_ma
     }
 }
 
-void inverse_transform(state_t *state,  const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
+void inverse_transform(ladybug_state_t *state,  const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
     inverse_transform_round_function(state, transform_matrix,  invN);
 }
 
@@ -61,7 +61,7 @@ void transpose_ONMNT(const uint8_t input[BLOCK_SIZE][BLOCK_SIZE], uint8_t output
         }
     }
 }
-void split_state_into_data_bytes(state_t *state, uint8_t *data_byte, int block_index) {
+void split_state_into_data_bytes(ladybug_state_t *state, uint8_t *data_byte, int block_index) {
     // Only work on the specific block at block_index
     for (int i = 0; i < BLOCK_SIZE; ++i) {
         uint8_t byte_offset = 8 * i;
@@ -69,7 +69,7 @@ void split_state_into_data_bytes(state_t *state, uint8_t *data_byte, int block_i
     }
 }
 
-void combine_data_bytes_to_state(const uint8_t *data_byte, state_t *state, int block_index){
+void combine_data_bytes_to_state(const uint8_t *data_byte, ladybug_state_t *state, int block_index){
     // Reconstruct state->x[0] from data_byte array in little endian format
     state->x[block_index] = 0; // Reset state->x[0]
     for (int i = 0; i < BLOCK_SIZE; i++) {
@@ -79,7 +79,7 @@ void combine_data_bytes_to_state(const uint8_t *data_byte, state_t *state, int b
     }
 }
 
-void print_data_byte(state_t *state) {
+void print_data_byte(ladybug_state_t *state) {
     for (int block_index = 0; block_index < BLOCK_NUMBER; block_index++) {
         printf("BLOCK #%d\n", block_index + 1);
         printf("state: 0x%llx\n", state->x[block_index]);

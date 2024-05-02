@@ -1,5 +1,5 @@
 {
-  "algorithm": "ASCON128",
+  "algorithm": "ladybug128",
   "generatorVersion": "0.1",
   "numberOfTests": 3,
   "header": [
