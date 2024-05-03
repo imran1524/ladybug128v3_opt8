@@ -38,8 +38,6 @@ forceinline void ladybug_initaead(ladybug_state_t* s, const ladybug_key_t* key,
   INSERT(s->b[4], npub + 8, 8);
   printstate("init 1st key xor", s);
 
-
-
 #if CRYPTO_KEYBYTES == 16
   memxor(s->b[3], key->b[0], 16);
 #else /* CRYPTO_KEYBYTES == 20 */
@@ -84,6 +82,7 @@ forceinline void ladybug_adata(ladybug_state_t* s, const uint8_t* ad,
   printstate("domain separation", s);
 }
 
+//Force inline function to encrypt the plaintext
 forceinline void ladybug_encrypt(ladybug_state_t* s, uint8_t* c, const uint8_t* m,
                                uint64_t mlen) {
   const int nr = (LADYBUG_AEAD_RATE == 8) ? 6 : 8;
@@ -179,7 +178,7 @@ int crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     ladybug_initaead(&s, &key, npub);
     ladybug_adata(&s, ad, adlen);
     ladybug_encrypt(&s, c, m, mlen);
-    ascon_final(&s, &key);
+    ladybug_final(&s, &key);
     /* set tag */
     SQUEEZE(c + mlen, s.b[3], 8);
     SQUEEZE(c + mlen + 8, s.b[4], 8);
@@ -210,7 +209,7 @@ int crypto_aead_decrypt(
     ladybug_initaead(&s, &key, npub);
     ladybug_adata(&s, ad, adlen);
     ladybug_decrypt(&s, m, c, *mlen);
-    ascon_final(&s, &key);
+    ladybug_final(&s, &key);
 
     //VERIFY TAG
     uint8_t r = 0;
