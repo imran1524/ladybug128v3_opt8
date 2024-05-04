@@ -5,6 +5,8 @@
 #include "constants.h"
 #include "round.h"
 #include "ladybug.h"
+#include "printstate.h"
+#include "config.h"
 
 void FP1 (ladybug_state_t *s);
 void IP1 (ladybug_state_t *s);

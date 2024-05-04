@@ -17,8 +17,8 @@ Purpose: Controls whether the permutation functions within Ascon are inlined.
 Default Value: 0 (disabled)
 Effect: This is set to 0 by default, meaning that permutation functions are not inlined. This choice could be due to permutations possibly being large or complex functions where inlining could adversely affect performance or binary size.
 */
-#ifndef LADYBUG_INLINE_PERMUTATIONS
-#define LADYBUG_INLINE_PERMUTATIONS 1
+#ifndef LADYBUG_INLINE_PERM
+#define LADYBUG_INLINE_PERM 0
 #endif
 
 //UNROLL PERMUTATION LOOPS

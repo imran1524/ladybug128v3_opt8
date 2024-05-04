@@ -3,10 +3,14 @@
 
 //TODO: Add round constant as input parameter
 //FORWARD PERMUTATION WITH 3 ROUNDS
- void FP1(ladybug_state_t *s){
+
+#if !LADYBUG_INLINE_PERM && LADYBUG_UNROLL_LOOPS
+     void FP1(ladybug_state_t *s){
 //    printf("Round # 1\n");
     forward_permutation(s);
 };
+#endif
+
 
 //IP: INVERSE PERMUTATION WITH 3 ROUNDS
 void IP1(ladybug_state_t *s){
