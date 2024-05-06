@@ -8,7 +8,7 @@
 #include "printstate.h"
 #include "config.h"
 
-void FP1 (ladybug_state_t *s);
+void P1 (ladybug_state_t *s);
 
 void forward_permutation(ladybug_state_t *s);
 

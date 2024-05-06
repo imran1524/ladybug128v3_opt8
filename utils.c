@@ -1,20 +1,16 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
 
 #include "utils.h"
 #include "constants.h"
 #include "api.h"
 
-#include <ctype.h>
-
-
 //void generate_nonce(uint8_t *nonce, size_t nonce_len) {
 //    arc4random_buf(nonce, nonce_len);
 //}
-
-#include <stdint.h>
-#include <stdlib.h>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <Windows.h>
@@ -138,7 +134,6 @@ void create_blocks_from_bundles(uint8_t bundles[64], ladybug_state_t* s) {
     }
 }
 
-
 char* parseJsonFile(char *filename, long *outFileSize) {
     FILE *jsonFile = fopen(filename, "r");
     if (jsonFile == NULL) {
@@ -164,7 +159,6 @@ char* parseJsonFile(char *filename, long *outFileSize) {
     *outFileSize = fileSize;
     return jsonString;
 }
-
 
 void hex_string_to_binary(const char* hex_str, unsigned char* binary, size_t binary_len) {
     size_t hex_len = strlen(hex_str);

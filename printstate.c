@@ -1,4 +1,4 @@
-#ifdef LADYBUG_PRINT_STATE
+#ifdef ASCON_PRINT_STATE
 
 #include "printstate.h"
 
@@ -38,4 +38,4 @@ void printstate(const char* text, const ascon_state_t* s) {
   printf("\n");
 }
 
-#endif // ASCON_PRINT_STATE
+#endif
