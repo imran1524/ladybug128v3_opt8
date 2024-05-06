@@ -2,6 +2,7 @@
 uint8_t forward_s_box[32] = {28, 25, 0, 10, 20, 22, 21, 6, 23, 8, 26, 17, 29, 24, 19, 27, 9,
                              3, 15, 18,1, 31, 2, 11, 12, 4, 30, 5, 16, 7, 13, 14};
 
+
 void forward_transform_round_function(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
    for (int block_index = 0; block_index < 5; block_index++) {
         uint16_t sum_NMNT[BLOCK_SIZE] = {0}; // Use uint16_t for intermediate sums
@@ -20,6 +21,7 @@ void forward_transform_round_function(ladybug_state_t *state, const uint8_t tran
         for (int i = 0; i < BLOCK_SIZE; i++) {
             data_byte[i] = sum_NMNT[i] % Mp; // Apply modulus and update data
             printf("data_byte[%d] = %d\n", i, data_byte[i]);
+
         }
         combine_data_bytes_to_state(data_byte, state, block_index);
     }
