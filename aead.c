@@ -177,10 +177,23 @@ int crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
   /* perform ascon computation */
   ladybug_key_t key;
   ladybug_loadkey(&key, k);
+  
   ladybug_initaead(&s, &key, npub);
+  printf("State after initialization:\n");
+  print_data_byte(&s);
+
   ladybug_adata(&s, ad, adlen);
+  printf("State after processing associated data:\n");
+  print_data_byte(&s);
+
   ladybug_encrypt(&s, c, m, mlen);
+  printf("State after encryption:\n");
+  print_data_byte(&s);
+
   ladybug_final(&s, &key);
+  printf("State after finalization:\n");
+  print_data_byte(&s);
+
     /* set tag */
   SQUEEZE(c + mlen, s.b[3], 8);
   SQUEEZE(c + mlen + 8, s.b[4], 8);
@@ -208,17 +221,28 @@ int crypto_aead_decrypt(
   //Perform ladybug computation
   ladybug_key_t key;
   ladybug_loadkey(&key, k);
+
   ladybug_initaead(&s, &key, npub);
+  printf("State after initialization:\n");
+  print_data_byte(&s);
+  
   ladybug_adata(&s, ad, adlen);
+  printf("State after processing associated data:\n");
+  print_data_byte(&s);
+  
   ladybug_decrypt(&s, m, c, *mlen);
+  printf("State after decryption:\n");
+  print_data_byte(&s);
+
   ladybug_final(&s, &key);
+  printf("State after finalization:\n");
+  print_data_byte(&s);
 
   //VERIFY TAG
   uint8_t r = 0;
   r |= VERIFY(s.b[3], c + clen, 8);
   r |= VERIFY(s.b[4], c + clen + 8, 8);
   return ((((int)r - 1) >> 8) & 1) - 1;
-
 }
     
 #endif // LADYBUG_AEAD_RATE

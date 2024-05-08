@@ -8,19 +8,19 @@ void forward_transform_round_function(ladybug_state_t *state, const uint8_t tran
         uint16_t sum_NMNT[BLOCK_SIZE] = {0}; // Use uint16_t for intermediate sums
         uint8_t data_byte[BLOCK_SIZE] = {0};
         split_state_into_data_bytes(state, data_byte, block_index);
-        printf("Data input:\n");        
+        // printf("Data input:\n");        
         for (int j = 0; j < BLOCK_SIZE; ++j) {
             for (int i = 0; i < BLOCK_SIZE; ++i) {
-                printf("data_byte[%d] = %d\n", i, data_byte[i]);
+                // printf("data_byte[%d] = %d\n", i, data_byte[i]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
             }
-            printf("\n");
+            // printf("\n");
         }
         
-        printf("NMNT Output:\n");
+        // printf("NMNT Output:\n");
         for (int i = 0; i < BLOCK_SIZE; i++) {
             data_byte[i] = sum_NMNT[i] % Mp; // Apply modulus and update data
-            printf("data_byte[%d] = %d\n", i, data_byte[i]);
+            // printf("data_byte[%d] = %d\n", i, data_byte[i]);
 
         }
         combine_data_bytes_to_state(data_byte, state, block_index);
@@ -38,16 +38,6 @@ void split_state_into_data_bytes(ladybug_state_t *state, uint8_t *data_byte, int
         data_byte[i] = (state->x[block_index] >> byte_offset) & 0xFF;
     }
 }
-
-// void combine_data_bytes_to_state(const uint8_t *data_byte, ladybug_state_t *state, int block_index){
-//     // Reconstruct state->x[0] from data_byte array in little endian format
-//     state->x[block_index] = 0; // Reset state->x[0]
-//     for (int i = 0; i < BLOCK_SIZE; i++) {
-//         uint64_t temp = data_byte[i];
-//         uint8_t byte_offset = 8 * i;
-//         state->x[block_index] |= temp << byte_offset;
-//     }
-// }
 
 void combine_data_bytes_to_state(const uint8_t *data_byte, ladybug_state_t *state, int block_index) {
     for (int i = 0; i < BLOCK_SIZE; i++) {

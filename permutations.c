@@ -13,29 +13,6 @@
 
 #if 0
 
-#if ((defined(LADYBUG_AEAD_RATE) && LADYBUG_AEAD_RATE == 16) || \
-    (defined(LADYBUG_PRF_ROUNDS) && LADYBUG_PRF_ROUNDS == 1)) &&  \
-    !LADYBUG_INLINE_PERM && LADYBUG_UNROLL_LOOPS
-
-    void PFP1(ladybug_state_t* s){
-        FP1(s);
-    }
-#endif
-
-#if(defined(LADYBUG_AEAD_RATE) && LADYBUG_AEAD_RATE == 8) && \
-    !LADYBUG_INLINE_PERM && LADYBUG_UNROLL_LOOPS
-
-    void P6(ladybug_state_t *s){
-        P6ROUNDS(s);
-    }
-
-#endif
-
-#if !LADYBUG_INLINE_PERM && LADYBUG_UNROLL_LOOPS
-    void P(ladybug_state_t *s){
-        P6(s);
-    }
-#endif
 #endif
 
 //FORWARD PERMUTATION
