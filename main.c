@@ -1,13 +1,17 @@
+#include <stdlib.h>
+#include <string.h>
+
 #include "utils.h"
 #include "permutations.h"
 #include "round.h"
 #include "ladybug.h"
-#include <string.h> // 
 #include "cJSON/cJSON.h"
+#include "crypto_aead.h"
+
 
 int main() {
     long file_size;
-    char* file_location = "custom_test_vector.json";
+    char* file_location = "test_vector.json";
     char* json_string = parseJsonFile(file_location, &file_size);
 
     if (json_string == NULL) {

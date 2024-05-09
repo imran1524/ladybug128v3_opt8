@@ -3,236 +3,251 @@
 #include "crypto_aead.h"
 #include "permutations.h"
 #include "utils.h"
+#include "printstate.h"
 
-//ENCRYPTION
-int crypto_aead_encrypt(
-        unsigned char *c, unsigned long long *clen,
-        const unsigned char *m, unsigned long long mlen,
-        const unsigned char *ad, unsigned long long adlen,
-        const unsigned char *nsec, const unsigned char *npub,
-        const unsigned char *k
-){
-    (void)nsec;
-    //SET THE POINTER OF CIPHERTEXT BY ADDING MESSAGE LENGTH AND ASSOCIATED DATA LENGTH
-    *clen = mlen + CRYPTO_ABYTES;
 
-    //LOAD KEY AND NONCE
-    const uint64_t K0 = LOAD_BYTES(k, 8);
-    const uint64_t K1 = LOAD_BYTES(k + 8, 8);
-    const uint64_t N0 = LOAD_BYTES(npub, 8);
-    const uint64_t N1 = LOAD_BYTES(npub + 8, 8);
+#if !ASCON_INLINE_MODE
+#undef forceinline
+#define forceinline
+#endif
 
-    //INITIALIZATION:
-    state_t s;
-    s.x[0] = LADYBUG_128_IV;
-    s.x[1] = K0;
-    s.x[2] = K1;
-    s.x[3] = N0;
-    s.x[4] = N1;
+#ifdef LADYBUG_AEAD_RATE
 
-    //APPLY FORWARD PERMUTATION LAYER
-    FP1(&s);
+//Force inline function to load the key
+forceinline void ladybug_loadkey(ladybug_key_t* key, const uint8_t* k) {
+  #if CRYPTO_KEYBYTES == 16
+    // INSERT(key->b[0], k, 8);
+    // INSERT(key->b[1], k + 8, 8);
+    memcpy(key->b[0], k, 8);
+    memcpy(key->b[1], k + 8, 8);
+  #endif
+}
 
-    //XORING KEY 0*||K
-    s.x[3] ^= K0;
-    s.x[4] ^= K1;
+//Force inline function to initialize the AEAD
+forceinline void ladybug_initaead(ladybug_state_t* s, const ladybug_key_t* key,
+                                const uint8_t* npub) {
+  // #if CRYPTO_KEYBYTES == 16
+  //   if (LADYBUG_AEAD_RATE == 8) s->x[0] = LADYBUG_128_IV;
+  //   memcpy(s->b[1], key->b[0], 16);
+  // #endif
 
-//PROCESSING ASSOCIATED DATA
-    if (adlen){
-        //FULL ASSOCIATED DATA BLOCKS
-        while(adlen >= LADYBUG_128_RATE_BYTES){
-//            printf("adlen in encryption = %zu\n", adlen);
-            s.x[0] ^= LOAD_BYTES(ad, 8);
+  //Initialize the state with zeros
+  memset(s, 0, sizeof(ladybug_state_t));
 
-            //APPLY A FORWARD PERMUTATION OPERATION
-            FP1(&s);
+  //Copy the key bytes to the state
+  memcpy(s->b[0], key->b[0], 8);
+  memcpy(s->b[1], key->b[1], 8);
 
-//            printf("adlen_final = %d\n", adlen);
-            ad += LADYBUG_128_RATE_BYTES;
-            adlen -= LADYBUG_128_RATE_BYTES;
-        }
+  //Insert the nonce to the state
+  INSERT(s->b[3], npub, 8);
+  INSERT(s->b[4], npub + 8, 8);
+  printstate("init 1st key xor", s);
 
-        //FINAL ASSOCIATED DATA BLOCK
-        s.x[0] ^= LOAD_BYTES(ad, adlen);
-        s.x[0] ^= PAD(adlen);
+//XOR the key with the state
+  memxor(s->b[3], key->b[0], 16);
+  printstate("init 2nd key xor", s);
+}
 
-        //APPLY FORWARD PERMUTATION
-        FP1(&s);
+//Force inline function to process the associated data
+forceinline void ladybug_adata(ladybug_state_t* s, const uint8_t* ad, uint64_t adlen) {
+  const int nr = (LADYBUG_AEAD_RATE == 8) ? 6 : 8;
+  if (adlen) {
+    /* full associated data blocks */
+    while (adlen >= LADYBUG_AEAD_RATE) {
+      ABSORB(s->b[0], ad, 8);
+      if (LADYBUG_AEAD_RATE == 16) ABSORB(s->b[1], ad + 8, 8);
+      printstate("absorb adata", s);
+      // P(s, nr);
+      P1(s);
+      ad += LADYBUG_AEAD_RATE;
+      adlen -= LADYBUG_AEAD_RATE;
+    }
+    
+    /* final associated data block */
+    int i = 0;
+    if (LADYBUG_AEAD_RATE == 16 && adlen >= 8) {
+      ABSORB(s->b[0], ad, 8);
+      i = 1;
+      ad += 8;
+      adlen -= 8;
     }
 
-    //DOMAIN SEPARATION BETWEEN ASSOCIATED DATA AND PLAINTEXT
-    s.x[4] ^= 1;
-    size_t block = 0;
-    while (mlen >= LADYBUG_AEAD_RATE){
-        s.x[0] ^= LOAD_BYTES(m, 8);
-        STORE_BYTES(c, s.x[0], 8);
+    ABSORB(s->b[i], ad, adlen);
+    s->b[i][7 - adlen] ^= 0x80;
+    printstate("pad adata", s);
+    // P(s, nr);
+    P1(s);
+  }
 
-        //APPLY FORWARD PERMUTATION
-        FP1(&s);
+  /* domain separation */
+  s->b[4][0] ^= 1;
+  printstate("domain separation", s);
+}
 
-        m += LADYBUG_128_RATE_BYTES;
-        c += LADYBUG_128_RATE_BYTES;
-        mlen -= LADYBUG_128_RATE_BYTES;
-        block++;
-    }
+//Force inline function to encrypt the plaintext
+forceinline void ladybug_encrypt(ladybug_state_t* s, uint8_t* c, const uint8_t* m, uint64_t mlen){
+  const int nr = (LADYBUG_AEAD_RATE == 8) ? 6 : 8;
 
-    //LOADING FINAL MESSAGE BLOCK AND XOR WITH THE STATE
-    s.x[0] ^= LOAD_BYTES(m, mlen); 
-    STORE_BYTES(c, s.x[0], mlen);
-    s.x[0] ^= PAD(mlen);
-    c += mlen;
+  /* full plaintext blocks */
+  while (mlen >= LADYBUG_AEAD_RATE) {
+    ENCRYPT(s->b[0], c, m, 8);
+    if (LADYBUG_AEAD_RATE == 16) ENCRYPT(s->b[1], c + 8, m + 8, 8);
+    printstate("absorb plaintext", s);
+    // P(s, nr);
+    P1(s);
+    m += LADYBUG_AEAD_RATE;
+    c += LADYBUG_AEAD_RATE;
+    mlen -= LADYBUG_AEAD_RATE;
+  }
 
-    //FINALISE
-    s.x[1] ^= K0;
-    s.x[2] ^= K1;
+  /* final plaintext block */
+  int i = 0;
+  if (LADYBUG_AEAD_RATE == 16 && mlen >= 8) {
+    ENCRYPT(s->b[0], c, m, 8);
+    i = 1;
+    m += 8;
+    c += 8;
+    mlen -= 8;
+  }
 
-    //APPLY FORWARD PERMUTATION
-    FP1(&s);
+  ENCRYPT(s->b[i], c, m, mlen);
+  s->b[i][7 - mlen] ^= 0x80;
+  printstate("pad plaintext", s);
+}
 
-    //XORING K||0*
-    s.x[3] ^= K0;
-    s.x[4] ^= K1;
+forceinline void ladybug_decrypt(ladybug_state_t* s, uint8_t* m, const uint8_t* c, uint64_t clen) {
+  const int nr = (LADYBUG_AEAD_RATE == 8) ? 6 : 8;
+  /* full ciphertext blocks */
+  while (clen >= LADYBUG_AEAD_RATE) {
+    DECRYPT(s->b[0], m, c, 8);
+    if (LADYBUG_AEAD_RATE == 16) DECRYPT(s->b[1], m + 8, c + 8, 8);
+    printstate("insert ciphertext", s);
+    // P(s, nr);
+    P1(s);
 
-    //SET TAG
-    STORE_BYTES(c, s.x[3], 8); 
-    STORE_BYTES(c + 8, s.x[4], 8);
-    return 0;
+    m += LADYBUG_AEAD_RATE;
+    c += LADYBUG_AEAD_RATE;
+    clen -= LADYBUG_AEAD_RATE;
+  }
+
+  /* final ciphertext block */
+  int i = 0;
+  if (LADYBUG_AEAD_RATE == 16 && clen >= 8) {
+    DECRYPT(s->b[0], m, c, 8);
+    i = 1;
+    m += 8;
+    c += 8;
+    clen -= 8;
+  }
+
+  DECRYPT(s->b[i], m, c, clen);
+  s->b[i][7 - clen] ^= 0x80;
+  printstate("pad ciphertext", s);
+}
+
+forceinline void ladybug_final(ladybug_state_t* s, const ladybug_key_t* key){
+  #if CRYPTO_KEYBYTES == 16
+    memxor(s->b[LADYBUG_AEAD_RATE / 8], key->b[0], 16);
+  #else /* CRYPTO_KEYBYTES == 20 */
+    s->x[1] ^= KEYROT(key->x[0], key->x[1]);
+    s->x[2] ^= KEYROT(key->x[1], key->x[2]);
+    s->x[3] ^= KEYROT(key->x[2], 0);
+  #endif
+
+  printstate("final 1st key xor", s);
+  // P(s, 12);
+  P1(s);
+    
+  #if CRYPTO_KEYBYTES == 16
+    memxor(s->b[3], key->b[0], 16);
+  #else /* CRYPTO_KEYBYTES == 20 */
+    memxor(s->b[3], key->b[1], 16);
+  #endif
+    printstate("final 2nd key xor", s);
+  }
+
+//ENCRYPTION AEAD
+int crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
+                        const unsigned char* m, unsigned long long mlen,
+                        const unsigned char* ad, unsigned long long adlen,
+                        const unsigned char* nsec, const unsigned char* npub,
+                        const unsigned char* k) {
+  ladybug_state_t s;
+  (void)nsec;
+  *clen = mlen + CRYPTO_ABYTES;
+  /* perform ascon computation */
+  ladybug_key_t key;
+  ladybug_loadkey(&key, k);
+  printf("Encryption: Key loaded:\n");
+  print_data_byte(&key);
+  
+  ladybug_initaead(&s, &key, npub);
+  // printf("Encryption: State after initialization:\n");
+  // print_data_byte(&s);
+
+  ladybug_adata(&s, ad, adlen);
+  // printf("Encryption: State after processing associated data:\n");
+  // print_data_byte(&s);
+
+  ladybug_encrypt(&s, c, m, mlen);
+  // printf("Encryption: State after encryption:\n");
+  // print_data_byte(&s);
+
+  ladybug_final(&s, &key);
+  // printf("Encryption: State after finalization:\n");
+  // print_data_byte(&s);
+
+    /* set tag */
+  SQUEEZE(c + mlen, s.b[3], 8);
+  SQUEEZE(c + mlen + 8, s.b[4], 8);
+  return 0;
 }
 
 //DECRYPTION AEAD
-
-/*int crypto_aead_decrypt(
-        unsigned char *m, unsigned long long *mlen,
-        unsigned char *nsec,const unsigned char *c, 
-        unsigned long long clen, const unsigned char *ad, 
-        unsigned long long adlen, const unsigned char *npub,
-        const unsigned char *k);
-
-*/
-
-
-
 int crypto_aead_decrypt(
             unsigned char *m, unsigned long long *mlen,
             unsigned char *nsec, const unsigned char *c,
             unsigned long long clen, const unsigned char *ad, 
             unsigned long long adlen, const unsigned char *npub,
-            const unsigned char *k
-    ){
+            const unsigned char *k ){
 
-    (void)nsec;
+  ladybug_state_t s;
+  (void)nsec;
 
-    if(clen < CRYPTO_ABYTES){
-        return -1;
-    }
+  if(clen < CRYPTO_ABYTES){
+    return -1;
+  }
 
-    //SET PLAINTEXT SIZE
-    *mlen = clen - CRYPTO_ABYTES;
+  //SET PLAINTEXT SIZE
+  *mlen = clen - CRYPTO_ABYTES;
 
-    //LOAD KEY AND NONCE
-    const uint64_t K0 = LOAD_BYTES(k, 8);
-    const uint64_t K1 = LOAD_BYTES(k + 8, 8);
-    const uint64_t N0 = LOAD_BYTES(npub, 8);
-    const uint64_t N1 = LOAD_BYTES(npub + 8, 8);
+  //Perform ladybug computation
+  ladybug_key_t key;
+  ladybug_loadkey(&key, k);
+  printf("Decryption: Key loaded:\n");
+  print_data_byte(&key);
 
-//START OF INITIALIZATION DOMAIN
-    state_t s;
-    s.x[0] = LADYBUG_128_IV;
-    s.x[1] = K0;
-    s.x[2] = K1;
-    s.x[3] = N0;
-    s.x[4] = N1;
+  ladybug_initaead(&s, &key, npub);
+  // printf("Decryption: State after initialization:\n");
+  // print_data_byte(&s);
+  
+  ladybug_adata(&s, ad, adlen);
+  // printf("Decryption: State after processing associated data:\n");
+  // print_data_byte(&s);
+  
+  ladybug_decrypt(&s, m, c, *mlen);
+  // printf("Decryption: State after decryption:\n");
+  // print_data_byte(&s);
 
-    //APPLY FORWARD PERMUTATION
-    FP1(&s);
+  ladybug_final(&s, &key);
+  // printf("Decryption: State after finalization:\n");
+  // print_data_byte(&s);
 
-    s.x[3] ^= K0;
-    s.x[4] ^= K1;
-
-//START OF ASSOCIATED DATA DOMAIN
-    if(adlen){
-        //FULL ASSOCIATED DATA BLOCKS
-        while(adlen >= LADYBUG_128_RATE_BYTES){
-//            printf("adlen in decryption = %d\n", adlen);
-            s.x[0] ^= LOAD_BYTES(ad, 8);
-
-            //APPLY FORWARD PERMUTATION
-            FP1(&s);
-
-            ad += LADYBUG_128_RATE_BYTES;
-            adlen -= LADYBUG_128_RATE_BYTES;
-        }
-
-        //FINAL ASSOCIATED DATA BLOCK
-        s.x[0] ^= LOAD_BYTES(ad, adlen);
-        s.x[0] ^= PAD(adlen);
-
-        //APPLY FORWARD PERMUTATION
-        FP1(&s);
-    }
-
-//DOMAIN SEPARATION BETWEEN ASSOCIATED DATA AND CIPHERTEXT
-    s.x[4] ^= 1;
-
-//START OF CIPHERTEXT DOMAIN
-    clen -= CRYPTO_ABYTES;
-    size_t block = 0;
-    while(clen >= LADYBUG_128_RATE_BYTES){
-        uint64_t c0 = LOAD_BYTES(c, 8);
-        STORE_BYTES(m, s.x[0] ^ c0, 8);
-        s.x[0] = c0;
-
-        //INVERSE PERMUTATION
-        FP1(&s);
-        m += LADYBUG_128_RATE_BYTES;
-        c += LADYBUG_128_RATE_BYTES;
-        clen -= LADYBUG_128_RATE_BYTES;
-        block++;
-    }
-
-    //FINAL CIPHERTEXT BLOCK
-//    printf("clen = %zu\n", clen);
-    uint64_t c0 = LOAD_BYTES(c, clen);
-    STORE_BYTES(m, s.x[0] ^c0, clen);
-    s.x[0] = CLEAR_BYTES(s.x[0], clen);
-    s.x[0] |= c0;
-    s.x[0] ^= PAD(clen);
-    c += clen;
-
-    //FINALIZE
-    s.x[1] ^= K0;
-    s.x[2] ^= K1;
-
-    //APPLY INVERSE PERMUTATION
-    FP1(&s);
-    s.x[3] ^= K0;
-    s.x[4] ^= K1;
-
-    //SET TAG
-    uint8_t t[16];
-    STORE_BYTES(t, s.x[3], 8); 
-    STORE_BYTES(t + 8, s.x[4], 8); 
-    
-    //VERIFY TAG BY COMPARING THE GENERATED TAG WITH THE ORIGINAL TAG
-    size_t i;
-    size_t result = 0;
-    for(i = 0; i < CRYPTO_ABYTES; i++){
-        result |= c[i] ^ t[i];
-    //    printf("Result = %zu\n", result);
-    }
-
-    //VERIFY TAG (THIS OPERATION MUST BE CONSTANT TIME)
-    result = (((result - 1) >> 8) & 1) - 1;
-    return  result;
+  //VERIFY TAG
+  uint8_t r = 0;
+  r |= VERIFY(s.b[3], c + *mlen, 8);
+  r |= VERIFY(s.b[4], c + *mlen + 8, 8);
+  return ((((int)r - 1) >> 8) & 1) - 1;
 }
-
-// void print_binary(unsigned char* binary, size_t binary_len) {
-//     for(size_t i = 0; i < binary_len; i++) {
-//         // Print each byte in binary
-//         for(int bit = 7; bit >= 0; bit--) {
-//             putchar((binary[i] >> bit) & 1 ? '1' : '0');
-//         }
-//         putchar(' ');
-//     }
-//     putchar('\n');
-// }
+    
+#endif // LADYBUG_AEAD_RATE`

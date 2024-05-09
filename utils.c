@@ -1,20 +1,16 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
 
 #include "utils.h"
 #include "constants.h"
 #include "api.h"
 
-#include <ctype.h>
-
-
 //void generate_nonce(uint8_t *nonce, size_t nonce_len) {
 //    arc4random_buf(nonce, nonce_len);
 //}
-
-#include <stdint.h>
-#include <stdlib.h>
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <Windows.h>
@@ -64,7 +60,7 @@ void print_bundles(uint8_t *bundle, uint8_t size){
     }
 }
 
-void print_state(state_t *state) {
+void print_state(ladybug_state_t *state) {
     for (int i = 0; i < BLOCK_NUMBER; i++) {
         printf("state.x[%d] = ", i);
         for (int bit = 63; bit >= 0; bit--) {
@@ -82,7 +78,7 @@ void print_bitstring(uint8_t vector, uint8_t bit_number) {
 }
 
 // Function to convert text to 64-bit blocks and store in data_struct
-void text_to_64bit_blocks_data_struct(const char* text, state_t* s) {
+void text_to_64bit_blocks_data_struct(const char* text, ladybug_state_t* s) {
     size_t maxTextLength = BLOCK_NUMBER * 8; // Max text length to fit in 5 x 64-bit blocks
     size_t textLength = strlen(text);
 
@@ -106,7 +102,7 @@ void text_to_64bit_blocks_data_struct(const char* text, state_t* s) {
 }
 
 // Function to combine the data from data_struct and get the text back
-void blocks_to_text(state_t* s, char* outText, size_t maxTextLength) {
+void blocks_to_text(ladybug_state_t* s, char* outText, size_t maxTextLength) {
     size_t byteIndex = 0;
     for (size_t i = 0; i < BLOCK_NUMBER; ++i) {
         for (size_t j = 0; j < 8; ++j) { // 8 bytes per block
@@ -121,7 +117,7 @@ void blocks_to_text(state_t* s, char* outText, size_t maxTextLength) {
     outText[byteIndex] = '\0'; // Null-terminate the output string
 }
 
-void create_blocks_from_bundles(uint8_t bundles[64], state_t* s) {
+void create_blocks_from_bundles(uint8_t bundles[64], ladybug_state_t* s) {
     // Clear the blocks to start with a clean state
     memset(s->x, 0, sizeof(s->x[0]) * BLOCK_NUMBER);
 
@@ -137,7 +133,6 @@ void create_blocks_from_bundles(uint8_t bundles[64], state_t* s) {
         }
     }
 }
-
 
 char* parseJsonFile(char *filename, long *outFileSize) {
     FILE *jsonFile = fopen(filename, "r");
@@ -164,7 +159,6 @@ char* parseJsonFile(char *filename, long *outFileSize) {
     *outFileSize = fileSize;
     return jsonString;
 }
-
 
 void hex_string_to_binary(const char* hex_str, unsigned char* binary, size_t binary_len) {
     size_t hex_len = strlen(hex_str);
