@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "printstate.h"
 
+
 #if !ASCON_INLINE_MODE
 #undef forceinline
 #define forceinline
@@ -15,36 +16,36 @@
 //Force inline function to load the key
 forceinline void ladybug_loadkey(ladybug_key_t* key, const uint8_t* k) {
   #if CRYPTO_KEYBYTES == 16
-    INSERT(key->b[0], k, 8);
-    INSERT(key->b[1], k + 8, 8);
-  #else /* CRYPTO_KEYBYTES == 20 */
-    key->x[0] = KEYROT(0, LOADBYTES(k, 4));
-    key->x[1] = LOADBYTES(k + 4, 8);
-    key->x[2] = LOADBYTES(k + 12, 8);
+    // INSERT(key->b[0], k, 8);
+    // INSERT(key->b[1], k + 8, 8);
+    memcpy(key->b[0], k, 8);
+    memcpy(key->b[1], k + 8, 8);
   #endif
 }
 
 //Force inline function to initialize the AEAD
 forceinline void ladybug_initaead(ladybug_state_t* s, const ladybug_key_t* key,
                                 const uint8_t* npub) {
-  #if CRYPTO_KEYBYTES == 16
-    if (LADYBUG_AEAD_RATE == 8) s->x[0] = LADYBUG_128_IV;
-    memcpy(s->b[1], key->b[0], 16);
-  #else /* CRYPTO_KEYBYTES == 20 */
-    s->x[0] = key->x[0] ^ ASCON_80PQ_IV;
-    memcpy(s->b[1], key->b[1], 16);
-  #endif
+  // #if CRYPTO_KEYBYTES == 16
+  //   if (LADYBUG_AEAD_RATE == 8) s->x[0] = LADYBUG_128_IV;
+  //   memcpy(s->b[1], key->b[0], 16);
+  // #endif
 
+  //Initialize the state with zeros
+  memset(s, 0, sizeof(ladybug_state_t));
+
+  //Copy the key bytes to the state
+  memcpy(s->b[0], key->b[0], 8);
+  memcpy(s->b[1], key->b[1], 8);
+
+  //Insert the nonce to the state
   INSERT(s->b[3], npub, 8);
   INSERT(s->b[4], npub + 8, 8);
   printstate("init 1st key xor", s);
 
-  #if CRYPTO_KEYBYTES == 16
-    memxor(s->b[3], key->b[0], 16);
-  #else /* CRYPTO_KEYBYTES == 20 */
-    memxor(s->b[2], key->b[0], 24);
-  #endif
-    printstate("init 2nd key xor", s);
+//XOR the key with the state
+  memxor(s->b[3], key->b[0], 16);
+  printstate("init 2nd key xor", s);
 }
 
 //Force inline function to process the associated data
@@ -177,22 +178,24 @@ int crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
   /* perform ascon computation */
   ladybug_key_t key;
   ladybug_loadkey(&key, k);
+  printf("Encryption: Key loaded:\n");
+  print_data_byte(&key);
   
   ladybug_initaead(&s, &key, npub);
-  printf("State after initialization:\n");
-  print_data_byte(&s);
+  // printf("Encryption: State after initialization:\n");
+  // print_data_byte(&s);
 
   ladybug_adata(&s, ad, adlen);
-  printf("State after processing associated data:\n");
-  print_data_byte(&s);
+  // printf("Encryption: State after processing associated data:\n");
+  // print_data_byte(&s);
 
   ladybug_encrypt(&s, c, m, mlen);
-  printf("State after encryption:\n");
-  print_data_byte(&s);
+  // printf("Encryption: State after encryption:\n");
+  // print_data_byte(&s);
 
   ladybug_final(&s, &key);
-  printf("State after finalization:\n");
-  print_data_byte(&s);
+  // printf("Encryption: State after finalization:\n");
+  // print_data_byte(&s);
 
     /* set tag */
   SQUEEZE(c + mlen, s.b[3], 8);
@@ -221,28 +224,30 @@ int crypto_aead_decrypt(
   //Perform ladybug computation
   ladybug_key_t key;
   ladybug_loadkey(&key, k);
+  printf("Decryption: Key loaded:\n");
+  print_data_byte(&key);
 
   ladybug_initaead(&s, &key, npub);
-  printf("State after initialization:\n");
-  print_data_byte(&s);
+  // printf("Decryption: State after initialization:\n");
+  // print_data_byte(&s);
   
   ladybug_adata(&s, ad, adlen);
-  printf("State after processing associated data:\n");
-  print_data_byte(&s);
+  // printf("Decryption: State after processing associated data:\n");
+  // print_data_byte(&s);
   
   ladybug_decrypt(&s, m, c, *mlen);
-  printf("State after decryption:\n");
-  print_data_byte(&s);
+  // printf("Decryption: State after decryption:\n");
+  // print_data_byte(&s);
 
   ladybug_final(&s, &key);
-  printf("State after finalization:\n");
-  print_data_byte(&s);
+  // printf("Decryption: State after finalization:\n");
+  // print_data_byte(&s);
 
   //VERIFY TAG
   uint8_t r = 0;
-  r |= VERIFY(s.b[3], c + clen, 8);
-  r |= VERIFY(s.b[4], c + clen + 8, 8);
+  r |= VERIFY(s.b[3], c + *mlen, 8);
+  r |= VERIFY(s.b[4], c + *mlen + 8, 8);
   return ((((int)r - 1) >> 8) & 1) - 1;
 }
     
-#endif // LADYBUG_AEAD_RATE
+#endif // LADYBUG_AEAD_RATE`

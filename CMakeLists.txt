@@ -12,7 +12,6 @@ add_executable(ladybug128v2 main.c
         crypto_aead.h
         permutations.c
         permutations.h
-        permutations.h
         round.c
         round.h
         aead.c

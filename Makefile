@@ -10,8 +10,13 @@ endif
 
 ifeq ($(UNAME_S),Darwin)
     CC ?= clang
-    LIB_PATH = /opt/homebrew/lib
-    INCLUDE_PATH = /opt/homebrew/include
+    ifeq ($(UNAME_M), arm64)
+        LIB_PATH = /opt/homebrew/lib
+        INCLUDE_PATH = /opt/homebrew/include
+    else
+        LIB_PATH = /usr/lib
+        INCLUDE_PATH = /usr/include
+    endif
     RM := rm -f
     RMDIR := rm -rf
 endif

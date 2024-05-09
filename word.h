@@ -40,9 +40,13 @@ forceinline uint64_t ROR(uint64_t x, int n) {
 }
 
 forceinline uint8_t NOT8(uint8_t a) { return ~a; }
+
 forceinline uint8_t XOR8(uint8_t a, uint8_t b) { return a ^ b; }
+
 forceinline uint8_t AND8(uint8_t a, uint8_t b) { return a & b; }
+
 forceinline uint8_t OR8(uint8_t a, uint8_t b) { return a | b; }
+
 forceinline uint64_t KEYROT(uint64_t lo2hi, uint64_t hi2lo) {
   return lo2hi << 32 | hi2lo >> 32;
 }
