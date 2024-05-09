@@ -1,1 +1,2 @@
-# Diffusion Layer #
+# Diffusion Layer 
+## 8-bit implementation 
