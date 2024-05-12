@@ -17,6 +17,10 @@
 
 //FORWARD PERMUTATION
 void forward_permutation(ladybug_state_t *s) {
+
+    // FORWARD TRANSFORM
+    forward_transform(s, NMNT);
+
     uint8_t bundles[64] = {0};
 
     // Creating 64 5-bit bundles from 5 8-bit blocks
@@ -41,7 +45,6 @@ void forward_permutation(ladybug_state_t *s) {
         }
     }
 
-    // FORWARD TRANSFORM
-    forward_transform(s, NMNT);
+
 }
 

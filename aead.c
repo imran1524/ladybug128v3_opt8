@@ -5,7 +5,6 @@
 #include "utils.h"
 #include "printstate.h"
 
-
 #if !ASCON_INLINE_MODE
 #undef forceinline
 #define forceinline
@@ -178,8 +177,8 @@ int crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
   /* perform ascon computation */
   ladybug_key_t key;
   ladybug_loadkey(&key, k);
-  printf("Encryption: Key loaded:\n");
-  print_data_byte(&key);
+  // printf("Encryption: Key loaded:\n");
+  // print_data_byte(&key);
   
   ladybug_initaead(&s, &key, npub);
   // printf("Encryption: State after initialization:\n");

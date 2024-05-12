@@ -186,6 +186,10 @@ int main() {
                     print_vector(ciphertext, ciphertext_len);
                     printf("\n");
 
+                    // Modify the AAD
+                    aad[0] = aad[0] &0x1;
+
+                    // Perform AEAD decryption
                     size_t decrypted_len = ciphertext_len;
                     int decryption_result = crypto_aead_decrypt(
                             msg, &msg_len,
