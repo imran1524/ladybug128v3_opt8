@@ -187,8 +187,7 @@ int main() {
                     printf("\n");
 
                     // Modify the AAD
-                    aad[0] = aad[0] &0x1;
-
+                    //aad[0] = aad[0] &0x1;
                     // Perform AEAD decryption
                     size_t decrypted_len = ciphertext_len;
                     int decryption_result = crypto_aead_decrypt(
