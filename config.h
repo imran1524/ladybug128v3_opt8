@@ -8,7 +8,7 @@ Default Value: 1 (enabled)
 Effect: When set to 1, the compiler is suggested to inline the Ascon mode functions. Inlining is a common optimization that attempts to reduce function call overhead by substituting the function call with its actual code, potentially making the code faster at the cost of increased binary size.
 */
 #ifndef LADYBUG_INLINE_MODE
-#define LADYBUG_INLINE_MODE 1
+#define LADYBUG_INLINE_MODE 0
 #endif
 
 //INLINE ALL PERMUTATIONS

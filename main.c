@@ -8,7 +8,6 @@
 #include "cJSON/cJSON.h"
 #include "crypto_aead.h"
 
-
 int main() {
     long file_size;
     char* file_location = "test_vector.json";
@@ -178,13 +177,13 @@ int main() {
                     }
                     printf("\n");
 
-                    printf("PLAINTEXT:\n");
-                    print_vector(msg, msg_len);
-                    printf("\n");
+                    // printf("PLAINTEXT:\n");
+                    // print_vector(msg, msg_len);
+                    // printf("\n");
 
-                    printf("CIPHERTEXT:\n");
-                    print_vector(ciphertext, ciphertext_len);
-                    printf("\n");
+                    // printf("CIPHERTEXT:\n");
+                    // print_vector(ciphertext, ciphertext_len);
+                    // printf("\n");
 
                     // Modify the AAD
                     //aad[0] = aad[0] &0x1;

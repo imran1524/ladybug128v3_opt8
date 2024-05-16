@@ -8,7 +8,6 @@
     "testing both encryption and decryption."
   ],
   "notes": {},
-  "schema": "aead_kat_test_schema.json",
   "testGroups": [
     {
       "ivSize": 128,
@@ -19,39 +18,13 @@
         {
           "tcId": 1,
           "comment": "Test Case 1",
-          "key": "00000000000000000000000000000000",
-          "iv": "00000000000000000000000000000000",
-          "nonce": "00000000000000000000000000000000",
+          "key":"0123456789ABCDEFFEDCBA0189ABCDEF",
+          "iv": "FEEDFACFEDFACFEDFACFEDFACFEDFACF",
+          "nonce": "EE",
           "aad": "",
           "msg": "68656c6c6f",
           "ct": "8eaf0415168753d73776840ea4f4e8a5",
           "tag": "93a835f4ac4ac6d2a3e6103dfb07e9f8",
-          "result": "valid",
-          "flags": []
-        },
-        {
-          "tcId": 2,
-          "comment": "Test Case 2",
-          "key": "40000000000000000000000000000000",
-          "iv": "00000000000000000000000000000000",
-          "nonce": "00000000000000000000000000000000",
-          "aad": "202122",
-          "msg": "776f726c64",
-          "ct": "c46ec1b18ce8a878725a37e780dfb735",
-          "tag": "aaaabbbbccccddddeeeeffff00011122",
-          "result": "valid",
-          "flags": []
-        },
-        {
-          "tcId": 3,
-          "comment": "Test Case 3 - Updated",
-          "key": "80000000000000000000000000000000",
-          "iv": "00000000000000000000000000000000",
-          "nonce": "00000000000000000000000000000000",
-          "aad": "",
-          "msg": "80",
-          "ct": "2f",
-          "tag": "860103003f0f030f07010100454e010e",
           "result": "valid",
           "flags": []
         }

@@ -102,13 +102,24 @@ forceinline void memxor(uint8_t* dst, const uint8_t* src, int n) {
   }
 }
 
+// forceinline void memxor(uint8_t* dest, const uint8_t* src, size_t n) {
+//     for (size_t i = 0; i < n; ++i) {
+//         dest[i] ^= src[i];
+//     }
+// }
+
+// Force-inline macro definition (depends on the compiler)
 forceinline void INSERT(uint8_t* s, const uint8_t* d, int n) {
-  s += 7;
-  while (n > 0) {
-    *s-- = *d++;
-    --n;
-  }
+    s += 7; // Offset the destination pointer by 7 bytes
+    while (n > 0) {
+        *s-- = *d++; // Copy from source to destination in reverse order
+        --n; // Decrement the number of bytes left to copy
+    }
 }
+
+// void INSERT(uint8_t* dest, const uint8_t* src, size_t n) {
+//     memcpy(dest, src, n);
+// }
 
 forceinline void SQUEEZE(uint8_t* d, const uint8_t* s, int n) {
   s += 7;
@@ -146,7 +157,7 @@ forceinline void DECRYPT(uint8_t* s, uint8_t* m, const uint8_t* c, int n) {
 
 forceinline uint8_t VERIFY(const uint8_t* s, const uint8_t* d, int n) {
   uint8_t r = 0;
-  s += 7;
+  // s += 7;
   while (n > 0) {
     r |= *s-- ^ *d++;
     --n;

@@ -1,15 +1,13 @@
 #include "round.h"
-uint8_t forward_s_box[32] = {28, 25, 0, 10, 20, 22, 21, 6, 23, 8, 26, 17, 29, 24, 19, 27, 9,
-                             3, 15, 18,1, 31, 2, 11, 12, 4, 30, 5, 16, 7, 13, 14};
-
 
 void forward_transform_round_function(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
    for (int block_index = 0; block_index < 5; block_index++) {
         uint16_t sum_NMNT[BLOCK_SIZE] = {0}; // Use uint16_t for intermediate sums
         uint8_t data_byte[BLOCK_SIZE] = {0};
         split_state_into_data_bytes(state, data_byte, block_index);
-        // printf("Data input:\n");        
+        // printf("Data input for Block # %d\n", block_index + 1);        
         for (int j = 0; j < BLOCK_SIZE; ++j) {
+            // printf("data_byte[%d] = %d\n", j, data_byte[j]);
             for (int i = 0; i < BLOCK_SIZE; ++i) {
                 // printf("data_byte[%d] = %d\n", i, data_byte[i]);
                 sum_NMNT[j] += data_byte[i] * transform_matrix[i][j];
@@ -21,30 +19,63 @@ void forward_transform_round_function(ladybug_state_t *state, const uint8_t tran
         for (int i = 0; i < BLOCK_SIZE; i++) {
             data_byte[i] = sum_NMNT[i] % Mp; // Apply modulus and update data
             // printf("data_byte[%d] = %d\n", i, data_byte[i]);
-
         }
+        // printf("\n");
         combine_data_bytes_to_state(data_byte, state, block_index);
     }
 }
 
 void forward_transform(ladybug_state_t *state, const uint8_t transform_matrix[BLOCK_SIZE][BLOCK_SIZE]) {
+    // printf("Calling forward_transform for state forward_transform\n");
+    // printf("State before forward_transform_round_function\n");
+    // print_data_byte(state);
     forward_transform_round_function(state, transform_matrix); // Corrected passing of state
+    // printf("State after forward_transform_round_function\n");
+    // print_data_byte(state);
 }
 
 void split_state_into_data_bytes(ladybug_state_t *state, uint8_t *data_byte, int block_index) {
-    // Only work on the specific block at block_index
-    for (int i = 0; i < BLOCK_SIZE; ++i) {
-        uint8_t byte_offset = 8 * i;
-        data_byte[i] = (state->x[block_index] >> byte_offset) & 0xFF;
+    //Null pointer check
+    if(state == NULL || data_byte == NULL) {
+        fprintf(stderr, "Error: Null pointer passed to split_state_into_data_bytes\n");
+        return;
     }
+
+    // Boundary check
+    if (block_index < 0 || block_index >= BLOCK_NUMBER) {
+        fprintf(stderr, "Error: Invalid block_index passed to split_state_into_data_bytes\n");
+        return;
+    }
+
+    // Convert the 64-bit value to an array of 8-bit values
+    uint64_t value = state->x[block_index];
+    for (int i = 0; i < BLOCK_SIZE; ++i) {
+        data_byte[i] = (value >> (i * 8)) & 0xFF;
+    }
+
 }
 
 void combine_data_bytes_to_state(const uint8_t *data_byte, ladybug_state_t *state, int block_index) {
-    for (int i = 0; i < BLOCK_SIZE; i++) {
-        state -> b[block_index][i] = data_byte[i]; // Set the byte at byte_offset
+    
+    // Null pointer check
+    if (state == NULL || data_byte == NULL) {
+        fprintf(stderr, "Error: Null pointer passed to combine_data_bytes_to_state\n");
+        return;
     }
-}
 
+    // Boundary check
+    if (block_index < 0 || block_index >= BLOCK_NUMBER) {
+        fprintf(stderr, "Error: Invalid block_index passed to combine_data_bytes_to_state\n");
+        return;
+    }
+
+      // Convert the array of 8-bit values back to a 64-bit value
+    uint64_t value = 0;
+    for (int i = 0; i < BLOCK_SIZE; ++i) {
+        value |= ((uint64_t)data_byte[i] << (i * 8));
+    }
+    state->x[block_index] = value;
+}
 void print_data_byte(ladybug_state_t *state) {
     for (int block_index = 0; block_index < BLOCK_NUMBER; block_index++) {
         printf("BLOCK #%d\n", block_index + 1);
@@ -58,3 +89,4 @@ void print_data_byte(ladybug_state_t *state) {
         printf("\n");
     }
 }
+
