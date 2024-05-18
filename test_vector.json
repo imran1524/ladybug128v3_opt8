@@ -19,7 +19,7 @@
           "tcId": 1,
           "comment": "Test Case 1",
           "key":"0123456789ABCDEFFEDCBA0189ABCDEF",
-          "iv": "FEEDFACFEDFACFEDFACFEDFACFEDFACF",
+          "iv": "80400c0600000000",
           "nonce": "EE",
           "aad": "",
           "msg": "68656c6c6f",

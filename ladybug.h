@@ -4,10 +4,11 @@
 #include <stdint.h>
 #include "constants.h"
 #include "word.h"
+#include "api.h"
+#include "config.h"
 #define BLOCK_SIZE 8
 
-typedef struct
-{
+typedef union{
     uint64_t x[BLOCK_NUMBER];
     uint32_t w[BLOCK_NUMBER][2];
     uint16_t h[BLOCK_NUMBER][4];
@@ -17,8 +18,7 @@ typedef struct
 #ifdef LADYBUG_AEAD_RATE
 #define LADYBUG_KEYWORDS ((CRYPTO_KEYBYTES + 7) / 8)
 
-typedef union
-{
+typedef union{
     uint64_t x[LADYBUG_KEYWORDS];
     uint32_t w[LADYBUG_KEYWORDS][2];
     uint8_t b[LADYBUG_KEYWORDS][8];
@@ -26,7 +26,7 @@ typedef union
 
 #if !LADYBUG_INLINE_MODE
 void ladybug_state_init(ladybug_state_t* state);
-void loadkey(ladybug_key_t *key, const uint8_t *k);
+void ladybug_loadkey(ladybug_key_t *key, const uint8_t *k);
 void ladybug_initaead(ladybug_state_t *s, const ladybug_key_t *key,
                     const uint8_t *npub);
 void ladybug_adata(ladybug_state_t *s, const uint8_t *ad, uint64_t adlen);
@@ -35,7 +35,7 @@ void ladybug_encrypt(ladybug_state_t *s, uint8_t *c, const uint8_t *m,
 void ladybug_decrypt(ladybug_state_t *s, uint8_t *m, const uint8_t *c,
                    uint64_t clen);
 void ladybug_final(ladybug_state_t *s, const ladybug_key_t *k);
-void print_key_byte(ladybug_key_t *key);
+// void print_key_byte(ladybug_key_t *key);
 #endif // LADYBUG_INLINE_MODE
 #endif // LADYBUG_AEAD_RATE
 #endif // LADYBUG_LAYER_ENCRYPT_H

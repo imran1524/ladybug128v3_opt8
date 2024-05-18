@@ -102,24 +102,13 @@ forceinline void memxor(uint8_t* dst, const uint8_t* src, int n) {
   }
 }
 
-// forceinline void memxor(uint8_t* dest, const uint8_t* src, size_t n) {
-//     for (size_t i = 0; i < n; ++i) {
-//         dest[i] ^= src[i];
-//     }
-// }
-
-// Force-inline macro definition (depends on the compiler)
 forceinline void INSERT(uint8_t* s, const uint8_t* d, int n) {
-    s += 7; // Offset the destination pointer by 7 bytes
-    while (n > 0) {
-        *s-- = *d++; // Copy from source to destination in reverse order
-        --n; // Decrement the number of bytes left to copy
-    }
+  s += 7;
+  while (n > 0) {
+    *s-- = *d++;
+    --n;
+  }
 }
-
-// void INSERT(uint8_t* dest, const uint8_t* src, size_t n) {
-//     memcpy(dest, src, n);
-// }
 
 forceinline void SQUEEZE(uint8_t* d, const uint8_t* s, int n) {
   s += 7;
@@ -162,7 +151,7 @@ forceinline uint8_t VERIFY(const uint8_t* s, const uint8_t* d, int n) {
     r |= *s-- ^ *d++;
     --n;
   }
-  return r;
+  return r != 0;
 }
 
 #endif // DIFFUSION_LAYER_WORD_H
