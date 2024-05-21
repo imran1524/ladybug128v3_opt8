@@ -170,13 +170,13 @@ int main(int argc, char* argv[]) {
                     }
                     // printf("\n");
 
-                    // printf("PLAINTEXT:\n");
-                    // print_vector(msg, msg_len);
-                    // printf("\n");
+                    printf("PLAINTEXT:\n");
+                    print_vector(msg, msg_len);
+                    printf("\n");
 
-                    // printf("CIPHERTEXT:\n");
-                    // print_vector(ciphertext, ciphertext_len);
-                    // printf("\n");
+                    printf("CIPHERTEXT:\n");
+                    print_vector(ciphertext, ciphertext_len);
+                    printf("\n");
 
                     // Perform AEAD decryption
                     int decryption_result = crypto_aead_decrypt(
