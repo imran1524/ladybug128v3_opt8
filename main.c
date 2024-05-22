@@ -10,7 +10,7 @@
 
 int main(int argc, char* argv[]) {
 
-    const char* file_location = "./test_vector.json";
+    const char* file_location = "./custom_test_vector.json";
     long file_size;
     char* json_string = parseJsonFile(file_location, &file_size);
 

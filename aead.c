@@ -29,17 +29,10 @@ forceinline void ladybug_initaead(ladybug_state_t* s, const ladybug_key_t* key, 
         s->x[0] = (LADYBUG_AEAD_RATE == 8) ? LADYBUG_128_IV : 0;
         memcpy(s->b[1], key->b[0], 16);
     #endif
-    
-     // Insert nonce
-    // printf("Nonce before insertion:\n");
-    // print_data_byte((void*)npub);
 
     // Insert nonce
     INSERT(s->b[3], npub, 8);
     INSERT(s->b[4], npub + 8, 8);
-
-    // printf("State after nonce insertion:\n");
-    // print_data_byte(s);
 
     // Apply permutation
     P1(s);
@@ -141,55 +134,27 @@ int crypto_aead_encrypt(unsigned char* c, unsigned long long* clen,
     (void)nsec;
     *clen = mlen + CRYPTO_ABYTES;
 
-    // // Print the key and nonce before initialization
-    // printf("Encryption: Key before initialization\n");
-    // for (int i = 0; i < CRYPTO_KEYBYTES; i++) {
-    //     printf("%02x", k[i]);
-    // }
-    // printf("\n");
-
-    // printf("Encryption: Nonce before initialization\n");
-    // for (int i = 0; i < CRYPTO_NPUBBYTES; i++) {
-    //     printf("%02x", npub[i]);
-    // }
-    // printf("\n");
-
-    //Print the state before initialization
-    // printf("Encryption: State before initialization\n");
-    // print_data_byte(&s);
-
     // Explicitly initialize the state during AEAD initialization
     ladybug_key_t key;
     ladybug_loadkey(&key, k);
 
     ladybug_initaead(&s, &key, npub);
-    // printf("Encryption: State after initialization\n");
-    // print_data_byte(&s);
 
     ladybug_adata(&s, ad, adlen);
-    // printf("Encryption: State after associated data\n");
-    // print_data_byte(&s);
 
     ladybug_encrypt(&s, c, m, mlen);
-    // printf("Encryption: State after encryption\n");
-    // print_data_byte(&s);
 
     ladybug_final(&s, &key);
-    printf("Encryption: State after finalization\n");
-    print_data_byte(&s);
 
     // Generate the tag
-    // SQUEEZE(c + mlen, s.b[3], 8);
-    // SQUEEZE(c + mlen + 8, s.b[4], 8);
+    uint8_t tag[16];
+    memcpy(tag, s.b[3], 8);
+    memcpy(tag + 8, s.b[4], 8);
 
-    // Generate the tag
-        uint8_t tag[16];
-        memcpy(tag, s.b[3], 8);
-        memcpy(tag + 8, s.b[4], 8);
+    // Append the tag to the ciphertext
+    memcpy(c + mlen, tag, 16);
 
-// Append the tag to the ciphertext
-        memcpy(c + mlen, tag, 16);
-            return 0;
+    return 0;
 }
 
 // DECRYPTION AEAD
@@ -201,65 +166,20 @@ int crypto_aead_decrypt(unsigned char* m, unsigned long long* mlen,
     ladybug_state_t s = {0};  // Zero-initialize the state
     (void)nsec;
 
-      // Print the key and nonce before initialization
-    // printf("Decryption: Key before initialization\n");
-    // for (int i = 0; i < CRYPTO_KEYBYTES; i++) {
-    //     printf("%02x", k[i]);
-    // }
-    // printf("\n");
-
-    // printf("Decryption: Nonce before initialization\n");
-    // for (int i = 0; i < CRYPTO_NPUBBYTES; i++) {
-    //     printf("%02x", npub[i]);
-    // }
-    // printf("\n");
-
     if (clen < CRYPTO_ABYTES) return -1;
     *mlen = clen - CRYPTO_ABYTES;
-
-    //Print the state before initialization
-    // printf("Decryption:State before initialization\n");
-    // print_data_byte(&s);
 
     // Explicitly initialize the state during AEAD initialization
     ladybug_key_t key;
     ladybug_loadkey(&key, k);
 
     ladybug_initaead(&s, &key, npub);
-    // printf("Decryption: State after initialization\n");
-    // print_data_byte(&s);
 
     ladybug_adata(&s, ad, adlen);
-    // printf("Decryption: State after associated data\n");
-    // print_data_byte(&s);
-
-    // printf("Decryption: Ciphertext as input\n");
-    
 
     ladybug_decrypt(&s, m, c, *mlen);
-    // printf("Decryption: State after decryption\n");
-    // print_data_byte(&s);
 
     ladybug_final(&s, &key);
-    printf("Decryption: State after finalization\n");
-    print_data_byte(&s);
-
-    // printf("Computed Tag:\n");
-    // for (int i = 0; i < 8; i++) {
-    //     printf("%02x", s.b[3][i]);
-    // }
-
-    // for (int i = 0; i < 8; i++) {
-    //     printf("%02x", s.b[4][i]);
-    // }
-    // printf("\n");
-
-    // printf("Expected Tag:\n");
-    // for (int i = 0; i < 16; i++) {
-    //     printf("%02x", c[*mlen + i]);
-    // }
-
-    // printf("\n");
 
     // Extract the expected tag from the ciphertext
     uint8_t expected_tag[16];
@@ -267,16 +187,13 @@ int crypto_aead_decrypt(unsigned char* m, unsigned long long* mlen,
 
     // Verify the tag
     uint8_t r = 0;
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 8; i++) {
         r |= s.b[3][i] ^ expected_tag[i];
     }
-    return ((((int)r - 1) >> 8) & 1) - 1;
-
-        // Verify the tag
-        // uint8_t r = 0;
-        // r |= VERIFY(s.b[3], c + *mlen, 8);
-        // r |= VERIFY(s.b[4], c + *mlen + 8, 8);
-        // return ((((int)r - 1) >> 8) & 1) - 1;
+    for (int i = 0; i < 8; i++) {
+        r |= s.b[4][i] ^ expected_tag[i + 8];
     }
+    return ((((int)r - 1) >> 8) & 1) - 1;
+}
 
 #endif // LADYBUG_AEAD_RATE
